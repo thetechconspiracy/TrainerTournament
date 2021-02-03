@@ -14,11 +14,9 @@ import os
 import sys
 import re
 import mwparserfromhell
-import webbrowser
-from html.parser import HTMLParser
 from bs4 import BeautifulSoup
 import requests
-import urllib.request
+
 
 if(len(sys.argv) != 2):
     print("Usage: parseBulbapedia.py <wiki page from local drive>")
@@ -44,6 +42,7 @@ class Trainer:
         self.tGame = tGame
         self.tPokes = []
         getTrainerSprite(self.tSprite)
+        self.findGameFromSprite()
     def __str__(self):
         list = self.getList()
         output = ""
@@ -51,6 +50,58 @@ class Trainer:
             output += str(line)
             output += '\n'
         return output
+    def findGameFromSprite(self):
+        sprName = self.tSprite.replace("_"," ")
+        if " RG " in sprName or " RB " in sprName:
+            self.tGame = "RGB"
+        elif " Y " in sprName:
+            self.tGame = "Y"
+        elif " GS " in sprName or " GSC " in sprName:
+            self.tGame = "GS"
+        elif " C " in sprName:
+            self.tGame = "C"
+        elif " RS " in sprName or " RSE " in sprName:
+            self.tGame = "RS"
+        elif " E " in sprName:
+            self.tGame = "E"
+        elif " FRLG " in sprName:
+            self.tGame = "FRLG"
+        elif " DP " in sprName or " DPPt " in sprName:
+            self.tGame = "DP"
+        elif " Pt " in sprName:
+            self.tGame = "Pt"
+        elif " HGSS " in sprName:
+            self.tGame = "HGSS"
+        elif " BW " in sprName:
+            self.tGame = "BW"
+        elif " B2W2 " in sprName:
+            self.tGame = "B2W2"
+        elif " XY " in sprName:
+            self.tGame = "XY"
+        elif " ORAS " in sprName:
+            self.tGame = "ORAS"
+        elif " SM " in sprName or " USUM " in sprName:
+            self.tGame = "SM"
+        elif " LGPE " in sprName:
+            self.tGame = "LGPE"
+        elif " SwSh " in sprName:
+            self.tGame = "SwSh"
+        else:
+            #Manually determine game
+            found = False
+            for sprite in lookupTable:
+                result = sprite.lookup(sprName)
+                if(result != False):
+                    found = True
+                    self.tGame = result
+            if not found:
+                print("Game undetermined")
+                print("Sprite Name: " + sprName)
+                print("Enter game acronym:")
+                self.tGame = input().upper()
+                lookupTable.append(manualSpriteLookup(sprName, self.tGame))
+
+
     def printName(self):
         print(self.tName)
     def printSelf(self):
@@ -68,6 +119,16 @@ class Trainer:
         #    print("***************************************************")
         #    print("*            POKEMON COUNT EXCEEDS 6!             *")
         #    print("***************************************************")
+
+class manualSpriteLookup:
+    def __init__(self, sprName, originGame):
+        self.sprName = sprName
+        self.originGame = originGame
+    def lookup(self, sprName):
+        if self.sprName == sprName:
+            return self.originGame
+        else:
+            return False
 
 class BasicPokemon:
     def __init__(self, pDexNo, pSpecies, pGender, pLevel):
@@ -175,8 +236,6 @@ def findTrainerList():
                 foundTrainers = True
     return trainerLines
 def findRegularTrainers(trainerList):
-    #TODO: Figure out what game the trainer is from to determine proper sprites
-    parsedTrainers = []
     for line in trainerList:
         if(line[0] == '='):
             #Header
@@ -204,7 +263,8 @@ def findRegularTrainers(trainerList):
                 pokeLevel = str(template.get(offset + 3).value)
                 tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel))
                 offset += 5 # 4 fields make up Pokemon data
-            tempTrainer.printSelf()
+            #tempTrainer.printSelf()
+            parsedTrainers.append(tempTrainer)
 def findBossTrainers(trainerList):
     foundTrainer = False
 
@@ -310,8 +370,8 @@ def findBossTrainers(trainerList):
                     except ValueError:
                         1+1 #Do nothing, filler line to stop Python from fussing
                     tempTrainer.addPoke(FinishedPokemon(pDexNo, pSpecies, pGender, pLevel, pMoves, pHold, pAbility))
-            print(tempTrainer)
-            print("<END OF LINE")
+            #print(tempTrainer)
+            parsedTrainers.append(tempTrainer)
 
 
 def getTrainerSprite(spriteName):
@@ -336,8 +396,18 @@ def getTrainerSprite(spriteName):
 def init():
     for file in os.listdir("sprites"):
         foundSprites.append(file)
+    #Import lookup table
+
+def saveData():
+    print("Not implemented")
 
 foundSprites = []
+lookupTable = []
+parsedTrainers = []
+
+
+
+
 init()
 endHeader = re.compile("^==[A-Z][a-z]+")
 wikiPage = open(sys.argv[1], "r", encoding="utf8")
@@ -350,12 +420,14 @@ for line in wikiPage:
         if region == "innoh":
             region = "Sinnoh"
         break
-
 trainerList = findTrainerList()
+wikiPage.close()
 #print(trainerList)
 #for line in trainerList:
 #    print(line)
 #    print(",")
 findRegularTrainers(trainerList)
 findBossTrainers(trainerList)
+for trainer in parsedTrainers:
+    print(trainer)
 
