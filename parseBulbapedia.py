@@ -1,7 +1,24 @@
-from os import error
+'''
+TODO:
+* Download sprites based on the filename
+** This will need to parse HTML
+
+* Convert basic Pokes into finished Pokes based on PokeAPI (Find moves, pick random ability)
+* Dump trainers to JSON file
+'''
+
+
+
+
+import os
 import sys
 import re
 import mwparserfromhell
+import webbrowser
+from html.parser import HTMLParser
+from bs4 import BeautifulSoup
+import requests
+import urllib.request
 
 if(len(sys.argv) != 2):
     print("Usage: parseBulbapedia.py <wiki page from local drive>")
@@ -26,6 +43,7 @@ class Trainer:
         self.tRegion = tRegion
         self.tGame = tGame
         self.tPokes = []
+        getTrainerSprite(self.tSprite)
     def __str__(self):
         list = self.getList()
         output = ""
@@ -158,7 +176,6 @@ def findTrainerList():
     return trainerLines
 def findRegularTrainers(trainerList):
     #TODO: Figure out what game the trainer is from to determine proper sprites
-    #TODO: Create trainer objects
     parsedTrainers = []
     for line in trainerList:
         if(line[0] == '='):
@@ -172,19 +189,19 @@ def findRegularTrainers(trainerList):
             templates = wikicode.filter_templates()
             template = templates[0]
             #Found trainer, parse them out
-            trainerSprite = template.get(1).value
-            trainerClass = template.get(2).value
-            trainerName = template.get(3).value
-            trainerMoney = template.get(4).value
-            trainerPokeCount = template.get(5).value
+            trainerSprite = str(template.get(1).value)
+            trainerClass = str(template.get(2).value)
+            trainerName = str(template.get(3).value)
+            trainerMoney = str(template.get(4).value)
+            trainerPokeCount = str(template.get(5).value)
             #TODO: Iterate through Pokemon list, parse Pokes and create objects
             tempTrainer = Trainer(trainerSprite, trainerClass, trainerName, trainerMoney, trainerPokeCount, location, region, game)
             offset = 6
             for i in range(0,int(trainerPokeCount[0])):
-                pokeDexNo = template.get(offset + 0).value
-                pokeSpecies = template.get(offset + 1).value
-                pokeGender = template.get(offset + 2).value
-                pokeLevel = template.get(offset + 3).value
+                pokeDexNo = str(template.get(offset + 0).value)
+                pokeSpecies = str(template.get(offset + 1).value)
+                pokeGender = str(template.get(offset + 2).value)
+                pokeLevel = str(template.get(offset + 3).value)
                 tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel))
                 offset += 5 # 4 fields make up Pokemon data
             tempTrainer.printSelf()
@@ -295,9 +312,33 @@ def findBossTrainers(trainerList):
                     tempTrainer.addPoke(FinishedPokemon(pDexNo, pSpecies, pGender, pLevel, pMoves, pHold, pAbility))
             print(tempTrainer)
             print("<END OF LINE")
-            
 
 
+def getTrainerSprite(spriteName):
+    if not spriteName in foundSprites:
+        URL = "https://bulbapedia.bulbagarden.net/wiki/File:"+spriteName.replace(" ","_")
+        #webbrowser.open(URL)
+        imgPageCode=requests.get(URL)
+        imgPage = imgPageCode.content
+        #Get link by class and title: https://stackoverflow.com/a/32542575
+        soup = BeautifulSoup(imgPage, "html.parser")
+        links = soup.findAll('a', {"class": "internal"})
+        for link in links:
+            href = link.get('href')
+            title = link.get('title')
+            href = "https:"+href
+            print(href)
+            img = requests.get(href)
+            with open("sprites/" + title, 'wb') as f:
+                f.write(img.content)
+        foundSprites.append(spriteName)
+
+def init():
+    for file in os.listdir("sprites"):
+        foundSprites.append(file)
+
+foundSprites = []
+init()
 endHeader = re.compile("^==[A-Z][a-z]+")
 wikiPage = open(sys.argv[1], "r", encoding="utf8")
 location = sys.argv[1]
@@ -306,13 +347,15 @@ game = ""
 for line in wikiPage:
     if "region=" in line:
         region=line[-6:-1] #Sinnoh will just be "innoh".  All other region names are 5 letters long
+        if region == "innoh":
+            region = "Sinnoh"
         break
 
 trainerList = findTrainerList()
 #print(trainerList)
-for line in trainerList:
-    print(line)
-    print(",")
+#for line in trainerList:
+#    print(line)
+#    print(",")
 findRegularTrainers(trainerList)
 findBossTrainers(trainerList)
 
