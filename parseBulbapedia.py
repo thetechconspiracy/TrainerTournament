@@ -129,6 +129,9 @@ class manualSpriteLookup:
             return self.originGame
         else:
             return False
+    def __str__(self):
+        #Returns a CSV line
+        return self.sprName + "," + self.originGame + "\n"
 
 class BasicPokemon:
     def __init__(self, pDexNo, pSpecies, pGender, pLevel):
@@ -397,9 +400,26 @@ def init():
     for file in os.listdir("sprites"):
         foundSprites.append(file)
     #Import lookup table
+    try:
+        lookupFile = open("manualLookup.csv", "r")
+        for line in lookupFile:
+            cleanLine = line.replace("\n", "")
+            splitLine = cleanLine.split(",")
+            print(splitLine)
+            if(len(splitLine) == 2):
+                lookupTable.append(manualSpriteLookup(splitLine[0], splitLine[1]))
+        lookupFile.close()
+    except FileNotFoundError:
+        print("Lookup file not found!")
 
 def saveData():
-    print("Not implemented")
+    lookupOut = ""
+    for entry in lookupTable:
+        lookupOut += str(entry)
+    #Write CSV file for manual lookup
+    lookupFile = open("manualLookup.csv", 'w')
+    lookupFile.write(lookupOut)
+    lookupFile.close()
 
 foundSprites = []
 lookupTable = []
@@ -430,4 +450,5 @@ findRegularTrainers(trainerList)
 findBossTrainers(trainerList)
 for trainer in parsedTrainers:
     print(trainer)
+saveData()
 
