@@ -16,7 +16,7 @@ import re
 import mwparserfromhell
 from bs4 import BeautifulSoup
 import requests
-
+import pickle
 
 if(len(sys.argv) != 2):
     print("Usage: parseBulbapedia.py <wiki page from local drive>")
@@ -54,34 +54,49 @@ class Trainer:
         sprName = self.tSprite.replace("_"," ")
         if " RG " in sprName or " RB " in sprName:
             self.tGame = "RGB"
+            self.tLongGame = "red-blue"
         elif " Y " in sprName:
             self.tGame = "Y"
+            self.tLongGame = "yellow"
         elif " GS " in sprName or " GSC " in sprName:
             self.tGame = "GS"
+            self.tLongGame = "gold-silver"
         elif " C " in sprName:
             self.tGame = "C"
+            self.tLongGame = "crystal"
         elif " RS " in sprName or " RSE " in sprName:
             self.tGame = "RS"
+            self.tLongGame = "ruby-sapphire"
         elif " E " in sprName:
             self.tGame = "E"
+            self.tLongGame = "emerald"
         elif " FRLG " in sprName:
             self.tGame = "FRLG"
+            self.tLongGame = "firered-leafgreen"
         elif " DP " in sprName or " DPPt " in sprName:
             self.tGame = "DP"
+            self.tLongGame = "diamond-pearl"
         elif " Pt " in sprName:
             self.tGame = "Pt"
+            self.tLongGame = "platinum"
         elif " HGSS " in sprName:
             self.tGame = "HGSS"
+            self.tLongGame = "heartgold-soulsilver"
         elif " BW " in sprName:
             self.tGame = "BW"
+            self.tLongGame = "black-white"
         elif " B2W2 " in sprName:
             self.tGame = "B2W2"
+            self.tLongGame = "black-2-white-2"
         elif " XY " in sprName:
             self.tGame = "XY"
+            self.tLongGame = "x-y"
         elif " ORAS " in sprName:
             self.tGame = "ORAS"
+            self.tLongGame = "omega-ruby-alpha-sapphire"
         elif " SM " in sprName or " USUM " in sprName:
             self.tGame = "SM"
+            self.tLongGame = "sun-moon"
         elif " LGPE " in sprName:
             self.tGame = "LGPE"
         elif " SwSh " in sprName:
@@ -94,13 +109,61 @@ class Trainer:
                 if(result != False):
                     found = True
                     self.tGame = result
+                    self.tLongGame = self.getLongGame(self.tGame)
             if not found:
                 print("Game undetermined")
                 print("Sprite Name: " + sprName)
                 print("Enter game acronym:")
                 self.tGame = input().upper()
                 lookupTable.append(manualSpriteLookup(sprName, self.tGame))
-
+                self.tLongGame = self.getLongGame(self.tGame)
+    def getLongGame(self, short):
+            sprName = short
+            if "RG" in sprName or "RB" in sprName:
+                # self.tGame = "RGB"
+                return "red-blue"
+            elif "Y" in sprName:
+                # self.tGame = "Y"
+                return "yellow"
+            elif "GS" in sprName or "GSC" in sprName:
+                # self.tGame = "GS"
+                return "gold-silver"
+            elif "C" in sprName:
+                # self.tGame = "C"
+                return "crystal"
+            elif "RS" in sprName or "RSE" in sprName:
+                # self.tGame = "RS"
+                return "ruby-sapphire"
+            elif "E" in sprName:
+                # self.tGame = "E"
+                return "emerald"
+            elif "FRLG" in sprName:
+                # self.tGame = "FRLG"
+                return "firered-leafgreen"
+            elif "DP" in sprName or "DPPt" in sprName:
+                # self.tGame = "DP"
+                return "diamond-pearl"
+            elif "Pt" in sprName:
+                # self.tGame = "Pt"
+                return "platinum"
+            elif "HGSS" in sprName:
+                # self.tGame = "HGSS"
+                return "heartgold-soulsilver"
+            elif "BW" in sprName:
+                # self.tGame = "BW"
+                return "black-white"
+            elif "B2W2" in sprName:
+                # self.tGame = "B2W2"
+                return "black-2-white-2"
+            elif "XY" in sprName:
+                # self.tGame = "XY"
+                return "x-y"
+            elif "ORAS" in sprName:
+                # self.tGame = "ORAS"
+                return "omega-ruby-alpha-sapphire"
+            elif "SM" in sprName or " USUM " in sprName:
+                # self.tGame = "SM"
+                return "sun-moon"
 
     def printName(self):
         print(self.tName)
@@ -110,7 +173,7 @@ class Trainer:
             print(line)
         print('\n')
     def getList(self):
-        return [self.tSprite, self.tClass, self.tName, self.tMoney, self.tPokeCount, self.tLocation, self.tRegion, self.tGame, self.tPokes]
+        return [self.tSprite, self.tClass, self.tName, self.tMoney, self.tPokeCount, self.tLocation, self.tRegion, self.tGame, self.tLongGame, self.tPokes]
     def getPokes(self):
         return self.tPokes
     def addPoke(self, poke):
@@ -160,7 +223,8 @@ class BasicPokemon:
         return str(self)
 
     def makeFinishedPoke(self):
-        print("Not implemented!")
+        getJSON(self.pSpecies)
+        return self
 
 class FinishedPokemon:
     def __init__(self, pDexNo, pSpecies, pGender, pLevel, pMoves = [], pHold = "", pAbility = ""):
@@ -194,6 +258,21 @@ class FinishedPokemon:
     def __repr__(self):
         return str(self)
 
+def getJSON(pokeName):
+    pokeName = pokeName.lower()
+    for file in os.listdir("json"):
+        if(file == (pokeName + ".json")):
+            retFile = open("json/" + file, "r")
+            retStr = ""
+            for line in retFile:
+                retStr += line
+            retFile.close()
+            return retStr
+    #Not found, download the JSON file from PokeAPI
+    URL = "https://pokeapi.co/api/v2/pokemon/"+pokeName
+    jsonCode=requests.get(URL).content
+    with open("json/" + pokeName + ".json", 'wb') as file:
+        file.write(jsonCode)
 
 def findTrainerList():
     foundTrainers = False
@@ -264,10 +343,12 @@ def findRegularTrainers(trainerList):
                 pokeSpecies = str(template.get(offset + 1).value)
                 pokeGender = str(template.get(offset + 2).value)
                 pokeLevel = str(template.get(offset + 3).value)
-                tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel))
+                tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel).makeFinishedPoke())
                 offset += 5 # 4 fields make up Pokemon data
             #tempTrainer.printSelf()
             parsedTrainers.append(tempTrainer)
+
+
 def findBossTrainers(trainerList):
     foundTrainer = False
 
@@ -412,6 +493,8 @@ def init():
     except FileNotFoundError:
         print("Lookup file not found!")
 
+    
+
 def saveData():
     lookupOut = ""
     for entry in lookupTable:
@@ -421,6 +504,11 @@ def saveData():
     lookupFile.write(lookupOut)
     lookupFile.close()
 
+    #Dump trainer list
+    pickleFile = sys.argv[1] + ".pkl"
+    with open(pickleFile, 'wb') as output:
+        pickle.dump(parsedTrainers, output, 0)
+
 foundSprites = []
 lookupTable = []
 parsedTrainers = []
@@ -429,6 +517,11 @@ parsedTrainers = []
 
 
 init()
+#try:
+#    with open('trainerList.pkl', 'rb') as input:
+#        parsedTrainers = pickle.load(input)
+#except FileNotFoundError:
+#    print("TrainerList file not found!")
 endHeader = re.compile("^==[A-Z][a-z]+")
 wikiPage = open(sys.argv[1], "r", encoding="utf8")
 location = sys.argv[1]
@@ -446,9 +539,13 @@ wikiPage.close()
 #for line in trainerList:
 #    print(line)
 #    print(",")
+
+
+
 findRegularTrainers(trainerList)
 findBossTrainers(trainerList)
 for trainer in parsedTrainers:
     print(trainer)
 saveData()
 
+#getJSON("magikarp")

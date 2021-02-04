@@ -1,2 +1,6 @@
 UnovaRt3.txt
+*.pkl
+*.csv
 sprites/*
+json/*
+wiki/*
