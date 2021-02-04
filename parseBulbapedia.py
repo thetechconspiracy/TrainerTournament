@@ -17,6 +17,8 @@ import mwparserfromhell
 from bs4 import BeautifulSoup
 import requests
 import pickle
+import json
+import random
 
 if(len(sys.argv) != 2):
     print("Usage: parseBulbapedia.py <wiki page from local drive>")
@@ -50,6 +52,16 @@ class Trainer:
             output += str(line)
             output += '\n'
         return output
+
+    def makeShowdown(self):
+        outStr = ""
+        for poke in self.tPokes:
+            if(type(poke) == FinishedPokemon):
+                outStr += poke.makeShowdown() + "\r\n"
+            else:
+                print("Not a finished Pokemon!")
+        return outStr
+
     def findGameFromSprite(self):
         sprName = self.tSprite.replace("_"," ")
         if " RG " in sprName or " RB " in sprName:
@@ -197,7 +209,7 @@ class manualSpriteLookup:
         return self.sprName + "," + self.originGame + "\n"
 
 class BasicPokemon:
-    def __init__(self, pDexNo, pSpecies, pGender, pLevel):
+    def __init__(self, pDexNo, pSpecies, pGender, pLevel, pHold = ""):
         self.pDexNo = pDexNo
         self.pSpecies = pSpecies
         #Determine gender
@@ -213,18 +225,43 @@ class BasicPokemon:
             levelTemplates = levelCode.filter_templates()
             levelTemplate = levelTemplates[0]
             parsedLevel = levelTemplate.get(1).value
-            self.pLevel = parsedLevel
+            self.pLevel = str(parsedLevel)
         else:
             self.pLevel = pLevel
+        self.pHold = pHold
 
     def __str__(self):
-        return str(self.pDexNo) + "," + str(self.pSpecies) + "," + str(self.pGender) + "," + str(self.pLevel)
+        return str(self.pDexNo) + "," + str(self.pSpecies) + "," + str(self.pGender) + "," + str(self.pLevel) + "," + str(self.pHold)
     def __repr__(self):
         return str(self)
 
-    def makeFinishedPoke(self):
-        getJSON(self.pSpecies)
-        return self
+    def makeFinishedPoke(self, gameID):
+        jsonCode = getJSON(self.pSpecies)
+        parsed = json.loads(jsonCode)
+        abilityChoices = []
+        for ability in parsed["abilities"]:
+            #parsedAbility = json.loads(ability)
+            #print(ability)
+            if not ability['is_hidden']:
+                #Don't want to give hidden abilities
+                abilityChoices.append(ability["ability"]["name"])
+        #Randomly choose an ability
+        pAbility = random.choice(abilityChoices)
+
+        #Find moves
+        #Assume PokeAPI is already sorted
+        pMoves = []
+        for move in parsed["moves"]:
+            #if move["version_group_details"]["version_group"] == gameID:
+                #print(move)
+            for moveVer in (move["version_group_details"]):
+                if moveVer["level_learned_at"] != 0:
+                    if moveVer["version_group"]["name"] == gameID:
+                        pMoves.append(move["move"]["name"])
+        pMoves = pMoves[-4:]
+        print(pMoves)
+
+        return FinishedPokemon(self.pDexNo, self.pSpecies, self.pGender, self.pLevel, pMoves, self.pHold, pAbility)
 
 class FinishedPokemon:
     def __init__(self, pDexNo, pSpecies, pGender, pLevel, pMoves = [], pHold = "", pAbility = ""):
@@ -257,9 +294,28 @@ class FinishedPokemon:
         return str(self.pDexNo) + "," + str(self.pSpecies) + "," + str(self.pGender) + "," + str(self.pLevel) + "," + str(self.pMoves) + "," + str(self.pHold) + "," + str(self.pAbility)
     def __repr__(self):
         return str(self)
+    
+    def makeShowdown(self):
+        outStr = ""
+        if(self.pGender == 'U'):
+            outStr += self.pSpecies + " @ " + self.pHold + "\r\n"
+        else:
+            outStr += self.pSpecies +" (" + self.pGender + ")"
+            if(self.pHold == ""):
+                outStr += "\r\n"
+            else:
+                outStr += " @ " + self.pHold + "\r\n"
+        outStr += "Ability: " + self.pAbility + "\r\n"
+        outStr += "Level: " + self.pLevel + "\r\n"
+        outStr += "EVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe  \r\n"
+        for move in self.pMoves:
+            outStr += "- " + move + "\r\n"
+        return outStr
+
 
 def getJSON(pokeName):
     pokeName = pokeName.lower()
+    #Search local cache
     for file in os.listdir("json"):
         if(file == (pokeName + ".json")):
             retFile = open("json/" + file, "r")
@@ -273,6 +329,7 @@ def getJSON(pokeName):
     jsonCode=requests.get(URL).content
     with open("json/" + pokeName + ".json", 'wb') as file:
         file.write(jsonCode)
+    return jsonCode.decode("utf-8")
 
 def findTrainerList():
     foundTrainers = False
@@ -335,16 +392,24 @@ def findRegularTrainers(trainerList):
             trainerName = str(template.get(3).value)
             trainerMoney = str(template.get(4).value)
             trainerPokeCount = str(template.get(5).value)
-            #TODO: Iterate through Pokemon list, parse Pokes and create objects
+            #Iterate through Pokemon list, parse Pokes and create objects
             tempTrainer = Trainer(trainerSprite, trainerClass, trainerName, trainerMoney, trainerPokeCount, location, region, game)
             offset = 6
             for i in range(0,int(trainerPokeCount[0])):
+                #print(template)
+                #print("Offset "+str(offset))
                 pokeDexNo = str(template.get(offset + 0).value)
                 pokeSpecies = str(template.get(offset + 1).value)
                 pokeGender = str(template.get(offset + 2).value)
                 pokeLevel = str(template.get(offset + 3).value)
-                tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel).makeFinishedPoke())
-                offset += 5 # 4 fields make up Pokemon data
+                try:
+                    pokeItem = str(template.get(offset + 4))
+                except ValueError:
+                    pokeItem = ""
+                if(pokeItem.lower() == "none"):
+                    pokeItem = ""
+                tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel).makeFinishedPoke(tempTrainer.tLongGame))
+                offset += 5 # 5 fields make up Pokemon data
             #tempTrainer.printSelf()
             parsedTrainers.append(tempTrainer)
 
@@ -437,10 +502,6 @@ def findBossTrainers(trainerList):
                         pGender = 'U'
                     #Parse moves
                     pMoves.append(str(template.get("move1").value))
-                    try:
-                        pMoves.append(str(template.get("move2").value))
-                    except ValueError:
-                        1+1 #Do nothing, filler line to stop Python from fussing
                     try:
                         pMoves.append(str(template.get("move2").value))
                     except ValueError:
@@ -540,7 +601,5 @@ wikiPage.close()
 findRegularTrainers(trainerList)
 findBossTrainers(trainerList)
 for trainer in parsedTrainers:
-    print(trainer)
+    print(trainer.makeShowdown())
 saveData()
-
-#getJSON("magikarp")
