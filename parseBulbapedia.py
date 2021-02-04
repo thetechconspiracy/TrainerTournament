@@ -505,7 +505,7 @@ def saveData():
     lookupFile.close()
 
     #Dump trainer list
-    pickleFile = sys.argv[1] + ".pkl"
+    pickleFile = "pkl/" + sys.argv[1] + ".pkl"
     with open(pickleFile, 'wb') as output:
         pickle.dump(parsedTrainers, output, 0)
 
@@ -517,11 +517,6 @@ parsedTrainers = []
 
 
 init()
-#try:
-#    with open('trainerList.pkl', 'rb') as input:
-#        parsedTrainers = pickle.load(input)
-#except FileNotFoundError:
-#    print("TrainerList file not found!")
 endHeader = re.compile("^==[A-Z][a-z]+")
 wikiPage = open(sys.argv[1], "r", encoding="utf8")
 location = sys.argv[1]
