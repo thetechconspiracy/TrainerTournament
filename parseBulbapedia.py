@@ -402,7 +402,7 @@ def findTrainerList():
                         if not splitLine:
                             trainerLines.append(cleanLine)
         else:
-            print(line)
+            #print(line)
             line = line.rstrip()
             line.replace(' ','') #Remove any extra spaces
             if(line == "==Trainers==" or line == "===Trainers==="):
@@ -411,6 +411,7 @@ def findTrainerList():
     return trainerLines
 
 def findRegularTrainers(trainerList):
+    game = ""
     for line in trainerList:
         if(line[0] == '='):
             #Header
@@ -438,7 +439,7 @@ def findRegularTrainers(trainerList):
                 return
 
             for i in range(0,int(trainerPokeCount[0])):
-                #print(template)
+                print(template)
                 #print("Offset "+str(offset))
                 pokeDexNo = str(template.get(offset + 0).value)
                 pokeSpecies = str(template.get(offset + 1).value)
@@ -647,23 +648,25 @@ def saveData():
     lookupFile.close()
 
     #Dump trainer list
-    pickleFile = "pkl/" + sys.argv[1] + ".pkl"
+    outFile = sys.argv[1].replace("wiki/","")
+    pickleFile = "pkl/" + outFile + ".pkl"
     with open(pickleFile, 'wb') as output:
         pickle.dump(parsedTrainers, output, 0)
+
+
+
+
 
 foundSprites = []
 lookupTable = []
 parsedTrainers = []
-
-
-
 
 init()
 endHeader = re.compile("^==[A-Z][a-z]+")
 wikiPage = open(sys.argv[1], "r", encoding="utf8")
 location = sys.argv[1]
 region = ""
-game = ""
+game = "a"
 for line in wikiPage:
     if "region=" in line:
         region=line[-6:-1] #Sinnoh will just be "innoh".  All other region names are 5 letters long
@@ -676,8 +679,6 @@ wikiPage.close()
 #for line in trainerList:
 #    print(line)
 #    print(",")
-
-
 
 findRegularTrainers(trainerList)
 findBossTrainers(trainerList)
