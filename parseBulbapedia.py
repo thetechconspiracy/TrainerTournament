@@ -19,6 +19,8 @@ import requests
 import pickle
 import json
 import random
+import os.path
+import traceback
 
 if(len(sys.argv) != 2):
     print("Usage: parseBulbapedia.py <wiki page from local drive>")
@@ -214,6 +216,7 @@ class BasicPokemon:
         self.pDexNo = pDexNo
         self.pSpecies = pSpecies
         #Determine gender
+        self.pGender = ''
         if(pGender == ''):
             self.pGender = 'U'
         if(pGender == '♀' or pGender.upper() == 'F'):
@@ -278,12 +281,16 @@ class FinishedPokemon:
         self.pDexNo = pDexNo
         self.pSpecies = pSpecies
         #Determine gender
+        #print(pGender)
         if(pGender == ''):
             self.pGender = 'U'
-        if(pGender == '♀'):
+        elif(pGender == '♀'):
             self.pGender = 'F'
-        if(pGender == '♂'):
+        elif(pGender == '♂'):
             self.pGender = 'M'
+        else:
+            self.pGender = ''
+
         if(pGender == 'M' or pGender == 'F' or pGender == 'U'):
             #Gender is already set normally
             self.pGender = pGender
@@ -439,7 +446,7 @@ def findRegularTrainers(trainerList):
                 return
 
             for i in range(0,int(trainerPokeCount[0])):
-                print(template)
+                #print(template)
                 #print("Offset "+str(offset))
                 pokeDexNo = str(template.get(offset + 0).value)
                 pokeSpecies = str(template.get(offset + 1).value)
@@ -452,7 +459,7 @@ def findRegularTrainers(trainerList):
                 if(pokeItem.lower() == "none"):
                     pokeItem = ""
                 #print(tempTrainer.tGame)
-                print(pokeSpecies)
+                #print(pokeSpecies)
                 tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel).makeFinishedPoke(tempTrainer.tLongGame))
                 offset += 5 # 5 fields make up Pokemon data
             #tempTrainer.printSelf()
@@ -600,10 +607,12 @@ def findBossTrainers(trainerList):
 
 def getTrainerSprite(spriteName):
     spriteName = spriteName.replace("{{!}}90px","")
+    spriteName = spriteName.replace("{{!}}150px","")
     if not spriteName in foundSprites:
         URL = "https://bulbapedia.bulbagarden.net/wiki/File:"+spriteName.replace(" ","_")
         URL = URL.replace("{{!}}90px","")
-        print(URL)
+        URL = URL.replace("{{!}}150px","")
+        #print(URL)
         #webbrowser.open(URL)
         imgPageCode=requests.get(URL)
         imgPage = imgPageCode.content
@@ -614,7 +623,7 @@ def getTrainerSprite(spriteName):
             href = link.get('href')
             title = link.get('title')
             href = "https:"+href
-            print(href)
+            #print(href)
             img = requests.get(href)
             with open("sprites/" + title, 'wb') as f:
                 f.write(img.content)
@@ -638,20 +647,8 @@ def init():
 
     
 
-def saveData():
-    lookupOut = ""
-    for entry in lookupTable:
-        lookupOut += str(entry)
-    #Write CSV file for manual lookup
-    lookupFile = open("manualLookup.csv", 'w')
-    lookupFile.write(lookupOut)
-    lookupFile.close()
+#def saveData():
 
-    #Dump trainer list
-    outFile = sys.argv[1].replace("wiki/","")
-    pickleFile = "pkl/" + outFile + ".pkl"
-    with open(pickleFile, 'wb') as output:
-        pickle.dump(parsedTrainers, output, 0)
 
 
 
@@ -662,6 +659,12 @@ lookupTable = []
 parsedTrainers = []
 
 init()
+
+#Check if PKL already exists
+if(path.exists("pkl/"+sys.argv[1])):
+    print("PKL already exists.  Exiting")
+    exit()
+
 endHeader = re.compile("^==[A-Z][a-z]+")
 wikiPage = open(sys.argv[1], "r", encoding="utf8")
 location = sys.argv[1]
@@ -678,6 +681,7 @@ if not trainerList:
     outFile = sys.argv[1].replace("wiki/","")
     pickleFile = "pkl/" + outFile + ".err"
     with open(pickleFile, 'w') as output:
+        print("No trainers found")
         output.writelines("No trainers found")
 wikiPage.close()
 #print(trainerList)
@@ -687,10 +691,28 @@ wikiPage.close()
 try:
     findRegularTrainers(trainerList)
     findBossTrainers(trainerList)
-except:
+except Exception as e:
+    print("Parse error")
+    print(e)
     outFile = sys.argv[1].replace("wiki/","")
     pickleFile = "pkl/" + outFile + ".err"
     with open(pickleFile, 'w') as output:
         output.writelines("Error parsing")
 else:
-    saveData()
+
+    #for trainer in parsedTrainers:
+    #    print(trainer)
+
+    lookupOut = ""
+    for entry in lookupTable:
+        lookupOut += str(entry)
+    #Write CSV file for manual lookup
+    lookupFile = open("manualLookup.csv", 'w')
+    lookupFile.write(lookupOut)
+    lookupFile.close()
+
+    #Dump trainer list
+    outFile = sys.argv[1].replace("wiki/","")
+    pickleFile = "pkl/" + outFile + ".pkl"
+    with open(pickleFile, 'wb') as output:
+        pickle.dump(parsedTrainers, output, 0)
