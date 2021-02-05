@@ -674,14 +674,23 @@ for line in wikiPage:
             region = "Sinnoh"
         break
 trainerList = findTrainerList()
+if not trainerList:
+    outFile = sys.argv[1].replace("wiki/","")
+    pickleFile = "pkl/" + outFile + ".err"
+    with open(pickleFile, 'w') as output:
+        output.writelines("No trainers found")
 wikiPage.close()
 #print(trainerList)
 #for line in trainerList:
 #    print(line)
 #    print(",")
-
-findRegularTrainers(trainerList)
-findBossTrainers(trainerList)
-for trainer in parsedTrainers:
-    print(trainer)
-saveData()
+try:
+    findRegularTrainers(trainerList)
+    findBossTrainers(trainerList)
+except:
+    outFile = sys.argv[1].replace("wiki/","")
+    pickleFile = "pkl/" + outFile + ".err"
+    with open(pickleFile, 'w') as output:
+        output.writelines("Error parsing")
+else:
+    saveData()
