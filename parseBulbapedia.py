@@ -43,7 +43,7 @@ class Trainer:
         self.tRegion = tRegion
         self.tGame = tGame
         self.tPokes = []
-        getTrainerSprite(self.tSprite)
+        getTrainerSprite(self.tSprite.replace("{{!}}90px",""))
         self.findGameFromSprite()
     def __str__(self):
         list = self.getList()
@@ -109,8 +109,9 @@ class Trainer:
         elif " SM " in sprName or " USUM " in sprName:
             self.tGame = "SM"
             self.tLongGame = "sun-moon"
-        elif " LGPE " in sprName:
+        elif " LGPE " in sprName or " PE "  in sprName or " PE." in sprName:
             self.tGame = "LGPE"
+            self.tLongGame = "sun-moon"
         elif " SwSh " in sprName:
             self.tGame = "SwSh"
         else:
@@ -146,7 +147,7 @@ class Trainer:
             elif "RS" in sprName or "RSE" in sprName:
                 # self.tGame = "RS"
                 return "ruby-sapphire"
-            elif "E" in sprName:
+            elif "E" in sprName and "P" not in sprName:
                 # self.tGame = "E"
                 return "emerald"
             elif "FRLG" in sprName:
@@ -173,7 +174,7 @@ class Trainer:
             elif "ORAS" in sprName:
                 # self.tGame = "ORAS"
                 return "omega-ruby-alpha-sapphire"
-            elif "SM" in sprName or " USUM " in sprName:
+            elif "SM" in sprName or "USUM" in sprName or "LGPE"  in sprName or "PE"  in sprName or "PE." in sprName:
                 # self.tGame = "SM"
                 return "sun-moon"
 
@@ -215,9 +216,9 @@ class BasicPokemon:
         #Determine gender
         if(pGender == ''):
             self.pGender = 'U'
-        if(pGender == '♀'):
+        if(pGender == '♀' or pGender.upper() == 'F'):
             self.pGender = 'F'
-        if(pGender == '♂'):
+        if(pGender == '♂' or pGender.upper() == 'M'):
             self.pGender = 'M'
         #For B2W2 trainers, do extra work to parse level info
         if(pLevel[0] == '{'):
@@ -237,6 +238,15 @@ class BasicPokemon:
 
     def makeFinishedPoke(self, gameID):
         jsonCode = getJSON(self.pSpecies)
+        #print(self.pSpecies)
+        if self.pSpecies == "Mr. Mime": #Mr. Mime causes issues once again.  Hardcode a solution.
+            jsonCode = getJSON("mr-mime")
+        if self.pSpecies == "Nidoran♂":
+            jsonCode = getJSON("nidoran-m")
+        if self.pSpecies == "Nidoran♀":
+            jsonCode = getJSON("nidoran-f")
+        if self.pSpecies == "Farfetch'd":
+            jsonCode = getJSON("farfetchd")
         parsed = json.loads(jsonCode)
         abilityChoices = []
         for ability in parsed["abilities"]:
@@ -259,7 +269,7 @@ class BasicPokemon:
                     if moveVer["version_group"]["name"] == gameID:
                         pMoves.append(move["move"]["name"])
         pMoves = pMoves[-4:]
-        print(pMoves)
+        #print(pMoves)
 
         return FinishedPokemon(self.pDexNo, self.pSpecies, self.pGender, self.pLevel, pMoves, self.pHold, pAbility)
 
@@ -335,6 +345,7 @@ def findTrainerList():
     foundTrainers = False
     bossTrainer = False
     bossLine = ""
+    splitLine = False
     trainerLines = []
     for line in wikiPage:
         if(foundTrainers):
@@ -352,6 +363,16 @@ def findTrainerList():
                     #Verify that we aren't at the end of the trainer
                     bossLine += (cleanLine)
                 #trainerLines.append(line)
+            #elif splitLine and not bossTrainer:
+            #    print("Not boss, but split")
+            #    bossLine += line.strip()
+            #    bossLine = bossLine.strip("\r")
+            #    bossLine = bossLine.strip("\n")
+            #    if(bossLine[-1] == '}'):
+            #        print("found end")
+            #        trainerLines.append(bossLine)
+            #        bossLine = ""
+            #        splitLine = False
             else:
                 if(line[0] == '='):
                     line = line.strip()
@@ -359,21 +380,36 @@ def findTrainerList():
                     if(endHeader.match(line)):
                         foundTrainers = False
                         break
+                    if("side series" in line.lower()):
+                        foundTrainers = False
+                        break
                 if line.strip(): #https://stackoverflow.com/questions/7896495/python-how-to-check-if-a-line-is-an-empty-line
-                    if(line.strip() == "{{Party/Single"):
+                    if "{{Party/Single" in line:
                         print("Found boss trainer")
                         bossTrainer = True
                         bossLine += (line.strip())
                         #trainerLines.append(line.strip())
                     else:
-                        trainerLines.append(line.strip())
+                        cleanLine = line.strip()
+                        cleanLine = cleanLine.strip("\r")
+                        cleanline = cleanLine.strip("\n")
+                        #if cleanLine[-1] != '}':
+                        #    #Split line
+                        #    splitLine = True
+                        #    bossLine = cleanLine
+                        cleanLine = cleanLine.replace("\r", "")
+                        cleanLine = cleanLine.replace("\n", "")
+                        if not splitLine:
+                            trainerLines.append(cleanLine)
         else:
+            print(line)
             line = line.rstrip()
             line.replace(' ','') #Remove any extra spaces
-            if(line == "==Trainers=="):
+            if(line == "==Trainers==" or line == "===Trainers==="):
                 print("Trainer list found")
                 foundTrainers = True
     return trainerLines
+
 def findRegularTrainers(trainerList):
     for line in trainerList:
         if(line[0] == '='):
@@ -382,7 +418,7 @@ def findRegularTrainers(trainerList):
             continue
         #print(line)
         
-        if("Trainerentry" in line):
+        if("Trainerentry" in line or "trainerentry" in line.lower()):
             wikicode = mwparserfromhell.parse(line)
             templates = wikicode.filter_templates()
             template = templates[0]
@@ -395,6 +431,12 @@ def findRegularTrainers(trainerList):
             #Iterate through Pokemon list, parse Pokes and create objects
             tempTrainer = Trainer(trainerSprite, trainerClass, trainerName, trainerMoney, trainerPokeCount, location, region, game)
             offset = 6
+
+            try:
+                int(trainerPokeCount[0])
+            except:
+                return
+
             for i in range(0,int(trainerPokeCount[0])):
                 #print(template)
                 #print("Offset "+str(offset))
@@ -408,6 +450,8 @@ def findRegularTrainers(trainerList):
                     pokeItem = ""
                 if(pokeItem.lower() == "none"):
                     pokeItem = ""
+                #print(tempTrainer.tGame)
+                print(pokeSpecies)
                 tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel).makeFinishedPoke(tempTrainer.tLongGame))
                 offset += 5 # 5 fields make up Pokemon data
             #tempTrainer.printSelf()
@@ -462,19 +506,26 @@ def findBossTrainers(trainerList):
                 #print(template)
                 if template.name == "Party/Single":
                     tSprite = str(template.get("sprite").value)
-                    tClass = str(template.get("class").value)
+                    try:
+                        tClass = str(template.get("class").value)
+                    except:
+                        tClass = "Leader"
                     tMoney = str(template.get("prize").value) # Will require further parsing later, contains special character, plus B2W2 weirdness
                     tName = str(template.get("name").value) # More parsing required to get proper name
                     tPokeCount = int(str(template.get("pokemon").value))
                     tGame = str(template.get("game").value)
                     
                     #Additional formatting
-                    tMoney = tMoney.replace("{{PDollar}}","")
+                    tMoney = tMoney.lower()
+                    tMoney = tMoney.replace("{{pdollar}}","")
                     ##Name
-                    nameCode = mwparserfromhell.parse(tName)
-                    nameTemps = nameCode.filter_templates()
-                    nameTemp = nameTemps[0]
-                    tName = str(nameTemp.get(2).value)
+                    try:
+                        nameCode = mwparserfromhell.parse(tName)
+                        nameTemps = nameCode.filter_templates()
+                        nameTemp = nameTemps[0]
+                        tName = str(nameTemp.get(2).value)
+                    except:
+                        str(template.get("name"))
                     ##{{PK}}{{MN}}
                     tClass = tClass.replace("{{PK}}{{MN}}","Pokemon")
 
@@ -483,16 +534,43 @@ def findBossTrainers(trainerList):
                 if "Pokémon" in template.name:
                     #print(template)
                     #Parse Pokemon
-                    pDexNo = int(str(template.get("ndex").value))
+                    try:
+                        pDexNo = int(str(template.get("ndex").value))
+                    except:
+                        pDexNo = int(str(template.get("ndex").value)[:-2])
                     pSpecies = str(template.get("pokemon").value)
-                    pGender = str(template.get("gender").value)
+                    try:
+                        pGender = str(template.get("gender").value)
+                    except:
+                        pGender = "Unknown"
                     pLevel = str(template.get("level").value)
                     pMoves = []
                     try:
                         pHold = str(template.get("held").value)
                     except ValueError:
                         pHold = "" 
-                    pAbility = str(template.get("ability").value)
+                    try:
+                        pAbility = str(template.get("ability").value)
+                    except:
+                        #Gen 1 or 2, so give a random ability
+                        jsonCode = getJSON(pSpecies)
+                        #print(pSpecies)
+                        if pSpecies == "Mr. Mime": #Mr. Mime causes issues once again.  Hardcode a solution.
+                            jsonCode = getJSON("mr-mime")
+                        if pSpecies == "Nidoran♂":
+                            jsonCode = getJSON("nidoran-m")
+                        if pSpecies == "Nidoran♀":
+                            jsonCode = getJSON("nidoran-f")
+                        parsed = json.loads(jsonCode)
+                        abilityChoices = []
+                        for ability in parsed["abilities"]:
+                            #parsedAbility = json.loads(ability)
+                            #print(ability)
+                            if not ability['is_hidden']:
+                                #Don't want to give hidden abilities
+                                abilityChoices.append(ability["ability"]["name"])
+                        #Randomly choose an ability
+                        pAbility = random.choice(abilityChoices)
                     #Parse Gender
                     if(pGender == "male"):
                         pGender = 'M'
@@ -520,8 +598,11 @@ def findBossTrainers(trainerList):
 
 
 def getTrainerSprite(spriteName):
+    spriteName = spriteName.replace("{{!}}90px","")
     if not spriteName in foundSprites:
         URL = "https://bulbapedia.bulbagarden.net/wiki/File:"+spriteName.replace(" ","_")
+        URL = URL.replace("{{!}}90px","")
+        print(URL)
         #webbrowser.open(URL)
         imgPageCode=requests.get(URL)
         imgPage = imgPageCode.content
@@ -547,7 +628,7 @@ def init():
         for line in lookupFile:
             cleanLine = line.replace("\n", "")
             splitLine = cleanLine.split(",")
-            print(splitLine)
+            #print(splitLine)
             if(len(splitLine) == 2):
                 lookupTable.append(manualSpriteLookup(splitLine[0], splitLine[1]))
         lookupFile.close()
@@ -601,5 +682,5 @@ wikiPage.close()
 findRegularTrainers(trainerList)
 findBossTrainers(trainerList)
 for trainer in parsedTrainers:
-    print(trainer.makeShowdown())
+    print(trainer)
 saveData()
