@@ -32,14 +32,18 @@ class Trainer:
         self.tClass = tClass
         self.tName = tName
         #For B2W2 trainers, do extra work to parse money info
-        if(tMoney[0] == '{'):
-            levelCode = mwparserfromhell.parse(tMoney)
-            levelTemplates = levelCode.filter_templates()
-            levelTemplate = levelTemplates[0]
-            parsedLevel = levelTemplate.get(1).value
-            self.tMoney = parsedLevel
-        else:
-            self.tMoney = tMoney
+        try:
+            if(tMoney[0] == '{'):
+                #print(tMoney[0])
+                levelCode = mwparserfromhell.parse(tMoney)
+                levelTemplates = levelCode.filter_templates()
+                levelTemplate = levelTemplates[0]
+                parsedLevel = levelTemplate.get(1).value
+                self.tMoney = parsedLevel
+            else:
+                self.tMoney = tMoney
+        except:
+            self.tMoney = 0
         self.tPokeCount = tPokeCount
         self.tLocation = tLocation
         self.tRegion = tRegion
@@ -129,7 +133,7 @@ class Trainer:
                 print("Game undetermined")
                 print("Sprite Name: " + sprName)
                 print("Enter game acronym:")
-                self.tGame = input().upper()
+                self.tGame = "SM"
                 lookupTable.append(manualSpriteLookup(sprName, self.tGame))
                 self.tLongGame = self.getLongGame(self.tGame)
     def getLongGame(self, short):
@@ -241,7 +245,9 @@ class BasicPokemon:
 
     def makeFinishedPoke(self, gameID):
         jsonCode = getJSON(self.pSpecies)
-        #print(self.pSpecies)
+        print(self.pSpecies)
+        #lastPoke += self.pSpecies
+
         if self.pSpecies == "Mr. Mime": #Mr. Mime causes issues once again.  Hardcode a solution.
             jsonCode = getJSON("mr-mime")
         if self.pSpecies == "Nidoran♂":
@@ -250,6 +256,7 @@ class BasicPokemon:
             jsonCode = getJSON("nidoran-f")
         if self.pSpecies == "Farfetch'd":
             jsonCode = getJSON("farfetchd")
+        #print(jsonCode)
         parsed = json.loads(jsonCode)
         abilityChoices = []
         for ability in parsed["abilities"]:
@@ -460,7 +467,12 @@ def findRegularTrainers(trainerList):
                     pokeItem = ""
                 #print(tempTrainer.tGame)
                 #print(pokeSpecies)
-                tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel).makeFinishedPoke(tempTrainer.tLongGame))
+                try:
+                    tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel).makeFinishedPoke(tempTrainer.tLongGame))
+                except:
+                    print("Failure parsing trainer " + trainerClass + " " + trainerName + " in " + sys.argv[1])
+                    traceback.print_exc
+                    break
                 offset += 5 # 5 fields make up Pokemon data
             #tempTrainer.printSelf()
             parsedTrainers.append(tempTrainer)
@@ -653,7 +665,7 @@ def init():
 
 
 
-
+pokeList = ""
 foundSprites = []
 lookupTable = []
 parsedTrainers = []
@@ -661,7 +673,8 @@ parsedTrainers = []
 init()
 
 #Check if PKL already exists
-if(path.exists("pkl/"+sys.argv[1])):
+
+if(os.path.exists("pkl/"+str(sys.argv[1]).replace("wiki/","")+".pkl")):
     print("PKL already exists.  Exiting")
     exit()
 
@@ -678,11 +691,7 @@ for line in wikiPage:
         break
 trainerList = findTrainerList()
 if not trainerList:
-    outFile = sys.argv[1].replace("wiki/","")
-    pickleFile = "pkl/" + outFile + ".err"
-    with open(pickleFile, 'w') as output:
-        print("No trainers found")
-        output.writelines("No trainers found")
+    print("No trainers found")
 wikiPage.close()
 #print(trainerList)
 #for line in trainerList:
@@ -694,6 +703,7 @@ try:
 except Exception as e:
     print("Parse error")
     print(e)
+    traceback.print_exc()
     outFile = sys.argv[1].replace("wiki/","")
     pickleFile = "pkl/" + outFile + ".err"
     with open(pickleFile, 'w') as output:
