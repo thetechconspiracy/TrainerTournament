@@ -1,15 +1,3 @@
-'''
-TODO:
-* Download sprites based on the filename
-** This will need to parse HTML
-
-* Convert basic Pokes into finished Pokes based on PokeAPI (Find moves, pick random ability)
-* Dump trainers to JSON file
-'''
-
-
-
-
 import os
 import sys
 import re
@@ -22,8 +10,8 @@ import random
 import os.path
 import traceback
 
-if(len(sys.argv) != 2):
-    print("Usage: parseBulbapedia.py <wiki page from local drive>")
+if(len(sys.argv) < 2):
+    print("Usage: parseBulbapedia.py <wiki page from local drive>\n--force-parse: Parse the entire file, don't check for the Trainers section of the article")
     exit()
 
 class Trainer:
@@ -49,7 +37,14 @@ class Trainer:
         self.tRegion = tRegion
         self.tGame = tGame
         self.tPokes = []
-        getTrainerSprite(self.tSprite.replace("{{!}}90px",""))
+
+        self.tSprite = self.tSprite.replace("{{!}}70px","")
+        self.tSprite = self.tSprite.replace("{{!}}90px","")
+        self.tSprite = self.tSprite.replace("{{!}}100px","")
+        self.tSprite = self.tSprite.replace("{{!}}150px","")
+        self.tSprite = self.tSprite.replace("{{!}}170px","")
+
+        getTrainerSprite(self.tSprite)
         self.findGameFromSprite()
     def __str__(self):
         list = self.getList()
@@ -245,7 +240,7 @@ class BasicPokemon:
 
     def makeFinishedPoke(self, gameID):
         jsonCode = getJSON(self.pSpecies)
-        print(self.pSpecies)
+        #print(self.pSpecies)
         #lastPoke += self.pSpecies
 
         if self.pSpecies == "Mr. Mime": #Mr. Mime causes issues once again.  Hardcode a solution.
@@ -335,6 +330,18 @@ class FinishedPokemon:
         for move in self.pMoves:
             outStr += "- " + move + "\r\n"
         return outStr
+class WildPokemon:
+    def __init__(self, pDexNo, pSpecies, pGames, pArea, pMinLevel, pMaxLevel, pRate):
+        self.pDexNo = pDexNo
+        self.pSpecies = pSpecies
+        self.pGames = pGames
+        self.pArea = pArea
+        self.pMinLevel = pMinLevel
+        self.pMaxLevel = pMaxLevel
+        self.pRate = pRate
+    
+    def __str__(self):
+        return (self.pDexNo + " " + self.pSpecies + " " + self.pGames +  " " + self.pArea + " " + self.pMinLevel + " " + self.pMaxLevel + " " + self.pRate)
 
 
 def getJSON(pokeName):
@@ -355,8 +362,882 @@ def getJSON(pokeName):
         file.write(jsonCode)
     return jsonCode.decode("utf-8")
 
+def findPokeList():
+    foundPokes = False
+    pokeLines = []
+    for line in wikiPage:
+        #print(line)
+        if(foundPokes):
+            if(endHeader.match(line)):
+               foundPokes = False
+               break
+            else:
+                pokeLines.append(line.strip())
+        else:
+           if(line.replace(' ','').rstrip() == "==Pokémon=="):
+               print("Found list")
+               foundPokes = True
+    return pokeLines
+
+def parsePokemon(pokeList):
+    #Use Catch/entryx to determine how to parse game list (some have 2, some 3, some only 1)
+    for entry in pokeList:
+        print(entry)
+
+        wikicode = mwparserfromhell.parse(entry)
+        templates = wikicode.filter_templates()
+        template = ""
+        try:
+            template = templates[0]
+        except:
+            #Nothing on this line that we can work with.  Do nothing.
+            continue
+        #Figure out what generation we are dealing with
+            #entry1: RBY
+                #Don't worry about Japanese Blue, it seems Bulbapedia doesn't mention it in encounter data.  wiki.ポケモン.com does, but we aren't scraping them, are we?
+            #entry2: GSC
+            #entry3: RSE
+            #entryfl: FRLG
+            #entry4: DPPt
+            #entryhg: HGSS
+            #entry5: BWG?  Third entry likely is supposed to reflect Gray, which never happened.
+            #entry5-2: B2W2
+            #entry6: XY
+            #entryoras: ORAS
+            #entry7: SM
+            #entryusum: USUM
+            #entrype: LGPE
+            #entry8: SwSh
+        if not "entry" in str(template.name):
+            continue
+        splitHeader = str(template.name).split("/")
+        header = ""
+        if len(splitHeader) > 1 and "entry" in splitHeader[1]:
+            header = splitHeader[1].replace("entry","")
+        else:
+            #Not a Pokemon line, skip it
+            continue
+        
+        #Extract Pokemon info.  Changes depending on the generation.
+        if(header == "1"):
+            #Parse Gen 1
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(6))
+            levels = str(template.get(7))
+            rate = str(template.get(8)).replace("%","")
+
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("R")
+            if(template.get(4).lower() == "yes"):
+                games += ("B")
+            if(template.get(5).lower() == "yes"):
+                games += ("Y")
+            
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "2"):
+            #Parse Gen 2
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(6))
+            levels = str(template.get(7))
+            rate = ""
+
+            try:
+                rate = str(template.get("all")).replace("%","").replace("all=","")
+            except ValueError:
+                #Day, evening, and night
+                #Don't know what to do here, honestly.  Just take the highest
+                day = int(str(template.get(8)).replace("%",""))
+                eve = int(str(template.get(9)).replace("%",""))
+                night = int(str(template.get(10)).replace("%",""))
+
+                #Find the largest of the 3.  Sounds like a fun problem to solve
+                largest = 0
+                if (day > eve):
+                    largest = day
+                else:
+                    largest = eve #This also triggers in the event of a tie.
+                if largest < night:
+                    largest = night
+                rate = str(largest) 
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("G")
+            if(template.get(4).lower() == "yes"):
+                games += ("S")
+            if(template.get(5).lower() == "yes"):
+                games += ("C")
+            
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+                    
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "3"):
+            #Parse Gen 3
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(6))
+            levels = str(template.get(7))
+            rate = str(template.get(8)).replace("%","")
+
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("R")
+            if(template.get(4).lower() == "yes"):
+                games += ("S")
+            if(template.get(5).lower() == "yes"):
+                games += ("E")
+            
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "fl"):
+            #Parse FRLG
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(5))
+            levels = str(template.get(6))
+            rate = str(template.get(7)).replace("%","")
+
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("FR")
+            if(template.get(4).lower() == "yes"):
+                games += ("LG")
+            
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "4"):
+            #Parse Gen 4
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(6))
+            levels = str(template.get(7))
+            rate = ""
+
+            try:
+                rate = str(template.get("all")).replace("%","").replace("all=","")
+            except ValueError:
+                #Day, evening, and night
+                #Don't know what to do here, honestly.  Just take the highest
+                day = int(str(template.get(8)).replace("%",""))
+                eve = int(str(template.get(9)).replace("%",""))
+                night = int(str(template.get(10)).replace("%",""))
+
+                #Find the largest of the 3.  Sounds like a fun problem to solve
+                largest = 0
+                if (day > eve):
+                    largest = day
+                else:
+                    largest = eve #This also triggers in the event of a tie.
+                if largest < night:
+                    largest = night
+                rate = str(largest) 
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("D")
+            if(template.get(4).lower() == "yes"):
+                games += ("P")
+            if(template.get(5).lower() == "yes"):
+                games += ("Pt")
+            
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+                    
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "hs"):
+            #Parse HGSS (the worst games)
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(5))
+            levels = str(template.get(6))
+            rate = ""
+
+            try:
+                rate = str(template.get("all")).replace("%","").replace("all=","")
+            except ValueError:
+                #Day, evening, and night
+                #Don't know what to do here, honestly.  Just take the highest
+                day = int(str(template.get(7)).replace("%",""))
+                eve = int(str(template.get(8)).replace("%",""))
+                night = int(str(template.get(9)).replace("%",""))
+
+                #Find the largest of the 3.  Sounds like a fun problem to solve
+                largest = 0
+                if (day > eve):
+                    largest = day
+                else:
+                    largest = eve #This also triggers in the event of a tie.
+                if largest < night:
+                    largest = night
+                rate = str(largest) 
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("HG")
+            if(template.get(4).lower() == "yes"):
+                games += ("SS")
+            
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+                    
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "5"):
+            #Parse Gen 5
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(6))
+            levels = str(template.get(7))
+            rate = ""
+
+            try:
+                rate = str(template.get("all")).replace("%","").replace("all=","")
+            except ValueError:
+                #Seasons.  Ignore the names, the names lie.
+                #Don't know what to do here, honestly.  Just take the highest
+                if(template.get(8).replace("%","").isdecimal()):
+                    day = int(str(template.get(8)).replace("%",""))
+                else:
+                    day = 0
+                if(template.get(9).replace("%","").isdecimal()):
+                    eve = int(str(template.get(9)).replace("%",""))
+                else:
+                    eve = 0
+                if(template.get(10).replace("%","").isdecimal()):
+                    night = int(str(template.get(10)).replace("%",""))
+                else:
+                    night = 0
+                if(template.get(11).replace("%","").isdecimal()):
+                    winter = int(str(template.get(11)).replace("%",""))
+                else:
+                    winter = 0
+
+                #Find the largest of the 3.  Sounds like a fun problem to solve
+                largest = 0
+                largest2 = 0
+                if (day > eve):
+                    largest = day
+                else:
+                    largest = eve #This also triggers in the event of a tie.
+                if(night > winter):
+                    largest2 = night
+                else:
+                    largest2 = winter
+                
+                if(largest < largest2):
+                    largest = largest2
+                #No need for an else, we use largest as the winner
+                rate = str(largest)
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("B")
+            if(template.get(4).lower() == "yes"):
+                games += ("W")
+            
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+                    
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "5-2"):
+            #Parse Gen 5
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(5))
+            levels = str(template.get(6))
+            rate = ""
+
+            try:
+                rate = str(template.get("all")).replace("%","").replace("all=","")
+            except ValueError:
+                #Seasons.  Ignore the names, the names lie.
+                #Don't know what to do here, honestly.  Just take the highest
+                if(template.get(8).replace("%","").isdecimal()):
+                    day = int(str(template.get(8)).replace("%",""))
+                else:
+                    day = 0
+                if(template.get(9).replace("%","").isdecimal()):
+                    eve = int(str(template.get(9)).replace("%",""))
+                else:
+                    eve = 0
+                if(template.get(10).replace("%","").isdecimal()):
+                    night = int(str(template.get(10)).replace("%",""))
+                else:
+                    night = 0
+                if(template.get(7).replace("%","").isdecimal()):
+                    winter = int(str(template.get(7)).replace("%",""))
+                else:
+                    winter = 0
+
+                #Find the largest of the 3.  Sounds like a fun problem to solve
+                largest = 0
+                largest2 = 0
+                if (day > eve):
+                    largest = day
+                else:
+                    largest = eve #This also triggers in the event of a tie.
+                if(night > winter):
+                    largest2 = night
+                else:
+                    largest2 = winter
+                
+                if(largest < largest2):
+                    largest = largest2
+                #No need for an else, we use largest as the winner
+                rate = str(largest)
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("B2")
+            if(template.get(4).lower() == "yes"):
+                games += ("W2")
+            
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+                    
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "6"):
+            #Parse XY
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(5))
+            levels = str(template.get(6))
+            rate = str(template.get(7)).replace("%","")
+
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("X")
+            if(template.get(4).lower() == "yes"):
+                games += ("Y")
+            
+
+
+
+
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "oras"):
+            #Parse ORAS
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(5))
+            levels = str(template.get(6))
+            rate = str(template.get(7)).replace("%","")
+
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("OR")
+            if(template.get(4).lower() == "yes"):
+                games += ("AS")
+            
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "7"):
+            #Parse SM
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(5))
+            levels = str(template.get(6))
+            rate = ""
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("S")
+            if(template.get(4).lower() == "yes"):
+                games += ("M")
+            
+            try:
+                rate = str(template.get("all")).replace("%","").replace("all=","")
+            except ValueError:
+                #Day, evening, and night
+                #Don't know what to do here, honestly.  Just take the highest
+                if(str(template.get(7)).replace("%","").isdecimal()):
+                    day = int(str(template.get(7)).replace("%",""))
+                else:
+                    day = 0
+                if(str(template.get(8)).replace("%","").isdecimal()):
+                    eve = int(str(template.get(8)).replace("%",""))
+                else:
+                    night = 0
+
+                #Find the largest of the 3.  Sounds like a fun problem to solve
+                largest = 0
+                if (day > eve):
+                    largest = day
+                else:
+                    largest = eve #This also triggers in the event of a tie.
+
+                rate = str(largest) 
+
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "usum"):
+            #Parse SM
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(5))
+            levels = str(template.get(6))
+            rate = ""
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("US")
+            if(template.get(4).lower() == "yes"):
+                games += ("UM")
+            
+            try:
+                rate = str(template.get("all")).replace("%","").replace("all=","")
+            except ValueError:
+                #Day, evening, and night
+                #Don't know what to do here, honestly.  Just take the highest
+                if(str(template.get(7)).replace("%","").isdecimal()):
+                    day = int(str(template.get(7)).replace("%",""))
+                else:
+                    day = 0
+                if(str(template.get(8)).replace("%","").isdecimal()):
+                    eve = int(str(template.get(8)).replace("%",""))
+                else:
+                    night = 0
+
+                #Find the largest of the 3.  Sounds like a fun problem to solve
+                largest = 0
+                if (day > eve):
+                    largest = day
+                else:
+                    largest = eve #This also triggers in the event of a tie.
+
+                rate = str(largest) 
+
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+        if(header == "pe"):
+            #Parse Lets Go Pikachu/Eevee
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(5))
+            levels = str(template.get(6))
+            rate = str(template.get(7)).replace("%","")
+
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("Pi")
+            if(template.get(4).lower() == "yes"):
+                games += ("Ev")
+            
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+        
+        if(header == "8"):
+            #Parse SwSh
+            dexNo = str(template.get(1))
+            species = str(template.get(2))
+            games = ""
+            area = str(template.get(5))
+            levels = str(template.get(6))
+            try:
+                rate = str(template.get(7)).replace("%","")
+            except:
+                rate = "0"#Weather.  Don't bother, just ignore.  Probably won't use this anyway
+
+            #Parse games
+            if(template.get(3).lower() == "yes"):
+                games += ("Sw")
+            if(template.get(4).lower() == "yes"):
+                games += ("Sh")
+            
+            minRate = ""
+            maxRate = ""
+            #Parse levels
+            levelRange = levels.split(", ")
+            if(len(levelRange) == 1):
+                if not "-" in levelRange[0]:
+                    minRate = maxRate = levelRange[0]
+                else:
+                    levelRange = levelRange[0].split("-")
+                    minRate = levelRange[0]
+                    maxRate = levelRange[1]
+            else:
+                #Look at start to find minimum level
+                if not "-" in levelRange[0]:
+                    minRate  = levelRange[0]
+                else:
+                    levelRangeSub = levelRange[0].split("-")
+                    minRate = levelRangeSub[0]
+
+                #Look at end to find max level
+                index = len(levelRange) - 1
+                if not "-" in levelRange[index]:
+                    maxRate  = levelRange[index]
+                else:
+                    levelRangeSub = levelRange[index].split("-")
+                    maxRate = levelRangeSub[index]
+
+            parsedWilds.append(WildPokemon(dexNo, species, games, area, minRate, maxRate, rate))
+
+    for poke in parsedWilds:
+        if not poke.pRate.isdecimal():
+            poke.pRate = str(0) #Encouter rate is weird.  Probably a special encounter, so just set to 0%
+            #I believe roaming legendaries have a 100% encounter rate when on a route
+        while not poke.pDexNo.isdecimal():
+            #Alternate forms specify a letter after the dex no.  Remove it, so we can work as an int.  Form changes are purely cosmetic.  In a while loop so we can handle multiple letters.
+            poke.pDexNo = poke.pDexNo[:-1]
+
+            
+
+
 def findTrainerList():
-    foundTrainers = False
+    forceParse = False
+    foundTrainers = True # We know where trainers are, but the header is likely missing.
     bossTrainer = False
     bossLine = ""
     splitLine = False
@@ -391,7 +1272,7 @@ def findTrainerList():
                 if(line[0] == '='):
                     line = line.strip()
                     line.replace(' ', '')
-                    if(endHeader.match(line)):
+                    if(endHeader.match(line) and not forceParse):
                         foundTrainers = False
                         break
                     if("side series" in line.lower()):
@@ -669,6 +1550,7 @@ pokeList = ""
 foundSprites = []
 lookupTable = []
 parsedTrainers = []
+parsedWilds = []
 
 init()
 
@@ -689,14 +1571,31 @@ for line in wikiPage:
         if region == "innoh":
             region = "Sinnoh"
         break
+wikiPage.seek(0)
+pokeList = findPokeList()
 trainerList = findTrainerList()
+if not pokeList:
+    print("No pokemon found")
 if not trainerList:
     print("No trainers found")
 wikiPage.close()
+
+#for line in pokeList:
+#    print(line)
+#    print(",")
+
+
 #print(trainerList)
 #for line in trainerList:
 #    print(line)
 #    print(",")
+
+parsePokemon(pokeList)
+
+for pokemon in parsedWilds:
+    print(pokemon)
+
+
 try:
     findRegularTrainers(trainerList)
     findBossTrainers(trainerList)
@@ -722,7 +1621,8 @@ else:
     lookupFile.close()
 
     #Dump trainer list
-    outFile = sys.argv[1].replace("wiki/","")
-    pickleFile = "pkl/" + outFile + ".pkl"
-    with open(pickleFile, 'wb') as output:
-        pickle.dump(parsedTrainers, output, 0)
+    print("!!!!!File output disabled!!!!!")
+#    outFile = sys.argv[1].replace("wiki/","")
+#    pickleFile = "pkl/" + outFile + ".pkl"
+#    with open(pickleFile, 'wb') as output:
+#        pickle.dump(parsedTrainers, output, 0)

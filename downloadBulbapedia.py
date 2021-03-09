@@ -16,6 +16,8 @@ for div in soup.select("div[class=mw-category]"):
         linkStr = str(link.get('href'))[6:]
         if "User:" in linkStr:
             continue #This will only cause issues, there aren't any trainers here anyway
+        if "/" in linkStr:
+            continue
         wikicodeURL = "https://bulbapedia.bulbagarden.net/w/index.php?title=" + linkStr + "&action=raw"
         code = requests.get(wikicodeURL).content
         with open("wiki/"+linkStr, "wb") as f:
