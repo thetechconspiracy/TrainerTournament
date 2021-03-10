@@ -239,7 +239,15 @@ class BasicPokemon:
         return str(self)
 
     def makeFinishedPoke(self, gameID):
-        jsonCode = getJSON(self.pSpecies)
+        jsonCode = ""
+        try:
+            jsonCode = getJSON(self.pSpecies)
+        except:
+            #JSON error.  Put error handling info on, and move on.  Probably don't need this anymore, since the project changed.
+            pMoves = []
+            pMoves.append("Splash")
+            pAbility = ("Run Away")
+            return FinishedPokemon(self.pDexNo, self.pSpecies, self.pGender, self.pLevel, pMoves, self.pHold, pAbility)
         #print(self.pSpecies)
         #lastPoke += self.pSpecies
 
@@ -1499,12 +1507,19 @@ def findBossTrainers(trainerList):
 
 
 def getTrainerSprite(spriteName):
+    spriteName = spriteName.replace("{{!}}70px","")
     spriteName = spriteName.replace("{{!}}90px","")
+    spriteName = spriteName.replace("{{!}}100px","")
     spriteName = spriteName.replace("{{!}}150px","")
+    spriteName = spriteName.replace("{{!}}170px","")
     if not spriteName in foundSprites:
         URL = "https://bulbapedia.bulbagarden.net/wiki/File:"+spriteName.replace(" ","_")
+
+        URL = URL.replace("{{!}}70px","")
         URL = URL.replace("{{!}}90px","")
+        URL = URL.replace("{{!}}100px","")
         URL = URL.replace("{{!}}150px","")
+        URL = URL.replace("{{!}}170px","")
         #print(URL)
         #webbrowser.open(URL)
         imgPageCode=requests.get(URL)
@@ -1537,13 +1552,6 @@ def init():
         lookupFile.close()
     except FileNotFoundError:
         print("Lookup file not found!")
-
-    
-
-#def saveData():
-
-
-
 
 
 pokeList = ""
@@ -1592,8 +1600,8 @@ wikiPage.close()
 
 parsePokemon(pokeList)
 
-for pokemon in parsedWilds:
-    print(pokemon)
+#for pokemon in parsedWilds:
+#    print(pokemon)
 
 
 try:
@@ -1621,8 +1629,8 @@ else:
     lookupFile.close()
 
     #Dump trainer list
-    print("!!!!!File output disabled!!!!!")
-#    outFile = sys.argv[1].replace("wiki/","")
-#    pickleFile = "pkl/" + outFile + ".pkl"
-#    with open(pickleFile, 'wb') as output:
-#        pickle.dump(parsedTrainers, output, 0)
+#    print("!!!!!File output disabled!!!!!")
+    outFile = sys.argv[1].replace("wiki/","")
+    pickleFile = "pkl/" + outFile + ".pkl"
+    with open(pickleFile, 'wb') as output:
+        pickle.dump(parsedTrainers, output, 0)
