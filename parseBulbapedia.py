@@ -383,15 +383,12 @@ def findPokeList():
                 pokeLines.append(line.strip())
         else:
            if(line.replace(' ','').rstrip() == "==Pokémon=="):
-               print("Found list")
                foundPokes = True
     return pokeLines
 
 def parsePokemon(pokeList):
     #Use Catch/entryx to determine how to parse game list (some have 2, some 3, some only 1)
     for entry in pokeList:
-        print(entry)
-
         wikicode = mwparserfromhell.parse(entry)
         templates = wikicode.filter_templates()
         template = ""
@@ -1288,7 +1285,6 @@ def findTrainerList():
                         break
                 if line.strip(): #https://stackoverflow.com/questions/7896495/python-how-to-check-if-a-line-is-an-empty-line
                     if "{{Party/Single" in line:
-                        print("Found boss trainer")
                         bossTrainer = True
                         bossLine += (line.strip())
                         #trainerLines.append(line.strip())
