@@ -375,15 +375,21 @@ def findPokeList():
     pokeLines = []
     for line in wikiPage:
         #print(line)
-        if(foundPokes):
-            if(endHeader.match(line)):
-               foundPokes = False
-               break
-            else:
-                pokeLines.append(line.strip())
-        else:
-           if(line.replace(' ','').rstrip() == "==Pokémon=="):
-               foundPokes = True
+        pokeLines.append(line.strip())
+
+        #if(foundPokes):
+        #    if(line.strip() == "==Trainers==" or line.strip() == "===Trainers==="):
+        #        foundPokes = False
+        #        break
+        #    if(endHeader.match(line)):
+        #       foundPokes = False
+        #       break
+        #    else:
+        #        pokeLines.append(line.strip())
+        #else:
+        #   if(line.replace(' ','').rstrip() == "==Pokémon=="):
+        #       foundPokes = True
+        
     return pokeLines
 
 def parsePokemon(pokeList):
@@ -1241,7 +1247,7 @@ def parsePokemon(pokeList):
 
 
 def findTrainerList():
-    forceParse = False
+    forceParse = True
     foundTrainers = True # We know where trainers are, but the header is likely missing.
     bossTrainer = False
     bossLine = ""
@@ -1577,11 +1583,12 @@ for line in wikiPage:
         break
 wikiPage.seek(0)
 pokeList = findPokeList()
+wikiPage.seek(0)
 trainerList = findTrainerList()
-if not pokeList:
-    print("No pokemon found")
-if not trainerList:
-    print("No trainers found")
+#if not pokeList:
+#    print("No pokemon found")
+#if not trainerList:
+#    print("No trainers found")
 wikiPage.close()
 
 #for line in pokeList:
