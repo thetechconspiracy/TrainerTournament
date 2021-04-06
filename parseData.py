@@ -347,91 +347,25 @@ class WildPokemon:
     def __str__(self):
         return (self.pDexNo + " " + self.pSpecies + " " + self.pGames +  " " + self.pArea + " " + self.pMinLevel + " " + self.pMaxLevel + " " + self.pRate)
 
-def getJSON(sprName):
-    return 0
-
-lookupTable = []
-trainers = []
-pokemon = []
 '''
-UNCOMMENT TO COMBINE PKL FILES
+***************************
+Determine location lists
+***************************
 '''
+locations = []
+#Add special locations for progression gates
+locations.append("%SURF%")
+locations.append("%OLDROD%")
+locations.append("%GOODROD%")
+locations.append("%SUPERROD%")
+locations.append("%POSTGAME%")#Stop checking after this
 
 
-#for file in os.listdir("pkl/trainer"):
-#    with open("pkl/trainer/"+file, 'rb') as input:
-#        addList = pickle.load(input)
-#        trainers += addList
-#
-#for file in os.listdir("pkl/pokemon"):
-#    with open("pkl/pokemon/"+file, 'rb') as input:
-#        addList = pickle.load(input)
-#        pokemon += addList
-        
-#for trainer in trainers:
-#    print(trainer)
-#    print(trainer.makeShowdown())
-
-
-#with open("pkl/__fullTrainer.pkl", 'wb') as output:
-#    pickle.dump(trainers, output, 0)
-#
-#with open("pkl/__fullPokemon.pkl", 'wb') as output:
-#    pickle.dump(pokemon, output, 0)
-
-
-#
-#del trainers
-
-#Load combined PKL
-#with open("battleTrainers.pkl", "rb") as file:
-#    trainers = pickle.load(file)
-#    print(len(trainers))
-#    print(sys.getsizeof(trainers))
-
-
-del trainers
-del pokemon
-
-trainers = []
-pokemon = []
-
-with open("pkl/__fullTrainer.pkl","rb") as file:
-    trainers = pickle.load(file)
-    
-with open("pkl/__fullPokemon.pkl","rb") as file:
-    pokemon = pickle.load(file)
-    
-    
-for trainer in trainers:
-    print(trainer)
-#for wild in pokemon:
-#    print(wild)
-    
-'''
-UNCOMMENT TO VERIFY PKL
-'''
-#for trainer in trainers:
-#    print(trainer.tClass)
-    #print(trainer.elo)
-
-
-csv = []
-classes = []
-#with open("classes.csv", "r", encoding="utf-8") as file:
-#    for line in file:
-#        csv.append(line.strip("\r\n").split(",")[0])
-        #print(type(line))
-
-'''
-UNCOMMENT TO VERIFY CSV CONTAINS ALL CLASSES, WITH NO EXTRAS
-'''
-#for trainer in trainers:
-#    classes.append(trainer.tClass.split(",")[0])
-#    #print(type(trainer.tClass))
-#    if trainer.tClass not in csv:
-#        print(trainer.tClass)
-#print("Checking for extra classes in CSV")
-#for line in csv:
-#    if line not in classes:
-#        print(line)
+for f in os.listdir("pkl/trainer"):
+    with open("pkl/trainer/"+f, 'rb') as input:
+        pokeList = pickle.load(input)
+        if(pokeList[0].tRegion.lower() == sys.argv[1].lower()):
+            locations.append(f.replace(".trainer.pkl",""))
+            
+for loc in locations:
+        print(loc)

@@ -441,11 +441,11 @@ def parsePokemon(pokeList):
 
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("R")
+                games += ("R,")
             if(template.get(4).lower() == "yes"):
-                games += ("B")
+                games += ("B,")
             if(template.get(5).lower() == "yes"):
-                games += ("Y")
+                games += ("Y,")
             
             minRate = ""
             maxRate = ""
@@ -505,11 +505,11 @@ def parsePokemon(pokeList):
                 rate = str(largest) 
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("G")
+                games += ("G,")
             if(template.get(4).lower() == "yes"):
-                games += ("S")
+                games += ("S,")
             if(template.get(5).lower() == "yes"):
-                games += ("C")
+                games += ("C,")
             
             minRate = ""
             maxRate = ""
@@ -551,11 +551,11 @@ def parsePokemon(pokeList):
 
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("R")
+                games += ("Ru,")
             if(template.get(4).lower() == "yes"):
-                games += ("S")
+                games += ("S,")
             if(template.get(5).lower() == "yes"):
-                games += ("E")
+                games += ("E,")
             
             minRate = ""
             maxRate = ""
@@ -597,9 +597,9 @@ def parsePokemon(pokeList):
 
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("FR")
+                games += ("FR,")
             if(template.get(4).lower() == "yes"):
-                games += ("LG")
+                games += ("LG,")
             
             minRate = ""
             maxRate = ""
@@ -659,11 +659,11 @@ def parsePokemon(pokeList):
                 rate = str(largest) 
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("D")
+                games += ("D,")
             if(template.get(4).lower() == "yes"):
-                games += ("P")
+                games += ("P,")
             if(template.get(5).lower() == "yes"):
-                games += ("Pt")
+                games += ("Pt,")
             
             minRate = ""
             maxRate = ""
@@ -723,9 +723,9 @@ def parsePokemon(pokeList):
                 rate = str(largest) 
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("HG")
+                games += ("HG,")
             if(template.get(4).lower() == "yes"):
-                games += ("SS")
+                games += ("SS,")
             
             minRate = ""
             maxRate = ""
@@ -805,9 +805,9 @@ def parsePokemon(pokeList):
                 rate = str(largest)
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("B")
+                games += ("B,")
             if(template.get(4).lower() == "yes"):
-                games += ("W")
+                games += ("W,")
             
             minRate = ""
             maxRate = ""
@@ -887,9 +887,9 @@ def parsePokemon(pokeList):
                 rate = str(largest)
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("B2")
+                games += ("B2,")
             if(template.get(4).lower() == "yes"):
-                games += ("W2")
+                games += ("W2,")
             
             minRate = ""
             maxRate = ""
@@ -931,9 +931,9 @@ def parsePokemon(pokeList):
 
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("X")
+                games += ("X,")
             if(template.get(4).lower() == "yes"):
-                games += ("Y")
+                games += ("Y,")
             
 
 
@@ -979,9 +979,9 @@ def parsePokemon(pokeList):
 
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("OR")
+                games += ("OR,")
             if(template.get(4).lower() == "yes"):
-                games += ("AS")
+                games += ("AS,")
             
             minRate = ""
             maxRate = ""
@@ -1022,9 +1022,9 @@ def parsePokemon(pokeList):
             rate = ""
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("S")
+                games += ("Su,")
             if(template.get(4).lower() == "yes"):
-                games += ("M")
+                games += ("M,")
             
             try:
                 rate = str(template.get("all")).replace("%","").replace("all=","")
@@ -1088,9 +1088,9 @@ def parsePokemon(pokeList):
             rate = ""
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("US")
+                games += ("US,")
             if(template.get(4).lower() == "yes"):
-                games += ("UM")
+                games += ("UM,")
             
             try:
                 rate = str(template.get("all")).replace("%","").replace("all=","")
@@ -1155,9 +1155,9 @@ def parsePokemon(pokeList):
 
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("Pi")
+                games += ("Pi,")
             if(template.get(4).lower() == "yes"):
-                games += ("Ev")
+                games += ("Ev,")
             
             minRate = ""
             maxRate = ""
@@ -1202,9 +1202,9 @@ def parsePokemon(pokeList):
 
             #Parse games
             if(template.get(3).lower() == "yes"):
-                games += ("Sw")
+                games += ("Sw,")
             if(template.get(4).lower() == "yes"):
-                games += ("Sh")
+                games += ("Sh,")
             
             minRate = ""
             maxRate = ""
@@ -1318,55 +1318,58 @@ def findTrainerList():
 def findRegularTrainers(trainerList):
     game = ""
     for line in trainerList:
-        if(line[0] == '='):
-            #Header
-            game = line
-            continue
-        #print(line)
-        
-        if("Trainerentry" in line or "trainerentry" in line.lower()):
-            wikicode = mwparserfromhell.parse(line)
-            templates = wikicode.filter_templates()
-            template = templates[0]
-            #Found trainer, parse them out
-            trainerSprite = str(template.get(1).value)
-            trainerClass = str(template.get(2).value)
-            trainerName = str(template.get(3).value)
-            trainerMoney = str(template.get(4).value)
-            trainerPokeCount = str(template.get(5).value)
-            #Iterate through Pokemon list, parse Pokes and create objects
-            tempTrainer = Trainer(trainerSprite, trainerClass, trainerName, trainerMoney, trainerPokeCount, location, region, game)
-            offset = 6
+        try:
+            if(line[0] == '='):
+                #Header
+                game = line
+                continue
+            #print(line)
 
-            try:
-                int(trainerPokeCount[0])
-            except:
-                return
+            if("Trainerentry" in line or "trainerentry" in line.lower()):
+                wikicode = mwparserfromhell.parse(line)
+                templates = wikicode.filter_templates()
+                template = templates[0]
+                #Found trainer, parse them out
+                trainerSprite = str(template.get(1).value)
+                trainerClass = str(template.get(2).value)
+                trainerName = str(template.get(3).value)
+                trainerMoney = str(template.get(4).value)
+                trainerPokeCount = str(template.get(5).value)
+                #Iterate through Pokemon list, parse Pokes and create objects
+                tempTrainer = Trainer(trainerSprite, trainerClass, trainerName, trainerMoney, trainerPokeCount, location, region, game)
+                offset = 6
 
-            for i in range(0,int(trainerPokeCount[0])):
-                #print(template)
-                #print("Offset "+str(offset))
-                pokeDexNo = str(template.get(offset + 0).value)
-                pokeSpecies = str(template.get(offset + 1).value)
-                pokeGender = str(template.get(offset + 2).value)
-                pokeLevel = str(template.get(offset + 3).value)
                 try:
-                    pokeItem = str(template.get(offset + 4))
-                except ValueError:
-                    pokeItem = ""
-                if(pokeItem.lower() == "none"):
-                    pokeItem = ""
-                #print(tempTrainer.tGame)
-                #print(pokeSpecies)
-                try:
-                    tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel).makeFinishedPoke(tempTrainer.tLongGame))
+                    int(trainerPokeCount[0])
                 except:
-                    print("Failure parsing trainer " + trainerClass + " " + trainerName + " in " + sys.argv[1])
-                    traceback.print_exc
-                    break
-                offset += 5 # 5 fields make up Pokemon data
-            #tempTrainer.printSelf()
-            parsedTrainers.append(tempTrainer)
+                    return
+
+                for i in range(0,int(trainerPokeCount[0])):
+                    #print(template)
+                    #print("Offset "+str(offset))
+                    pokeDexNo = str(template.get(offset + 0).value)
+                    pokeSpecies = str(template.get(offset + 1).value)
+                    pokeGender = str(template.get(offset + 2).value)
+                    pokeLevel = str(template.get(offset + 3).value)
+                    try:
+                        pokeItem = str(template.get(offset + 4))
+                    except ValueError:
+                        pokeItem = ""
+                    if(pokeItem.lower() == "none"):
+                        pokeItem = ""
+                    #print(tempTrainer.tGame)
+                    #print(pokeSpecies)
+                    try:
+                        tempTrainer.addPoke(BasicPokemon(pokeDexNo,pokeSpecies,pokeGender,pokeLevel).makeFinishedPoke(tempTrainer.tLongGame))
+                    except:
+                        print("Failure parsing trainer " + trainerClass + " " + trainerName + " in " + sys.argv[1])
+                        traceback.print_exc
+                        break
+                    offset += 5 # 5 fields make up Pokemon data
+                #tempTrainer.printSelf()
+                parsedTrainers.append(tempTrainer)
+        except:
+            pass
 
 
 def findBossTrainers(trainerList):
@@ -1409,103 +1412,109 @@ def findBossTrainers(trainerList):
                 tGame = line[6:].strip()
         #print(",")'''
     for line in trainerList:
-        if "Party/Single" in line:
-            tempTrainer = ""
-            wikicode = mwparserfromhell.parse(line)
-            templates = wikicode.filter_templates()
-            for template in templates:
-                #print(template)
-                if template.name == "Party/Single":
-                    tSprite = str(template.get("sprite").value)
-                    try:
-                        tClass = str(template.get("class").value)
-                    except:
-                        tClass = "Leader"
-                    tMoney = str(template.get("prize").value) # Will require further parsing later, contains special character, plus B2W2 weirdness
-                    tName = str(template.get("name").value) # More parsing required to get proper name
-                    tPokeCount = int(str(template.get("pokemon").value))
-                    tGame = str(template.get("game").value)
-                    
-                    #Additional formatting
-                    tMoney = tMoney.lower()
-                    tMoney = tMoney.replace("{{pdollar}}","")
-                    ##Name
-                    try:
-                        nameCode = mwparserfromhell.parse(tName)
-                        nameTemps = nameCode.filter_templates()
-                        nameTemp = nameTemps[0]
-                        tName = str(nameTemp.get(2).value)
-                    except:
-                        str(template.get("name"))
-                    ##{{PK}}{{MN}}
-                    tClass = tClass.replace("{{PK}}{{MN}}","Pokemon")
-
-                    tempTrainer = Trainer(tSprite, tClass, tName, tMoney, tPokeCount, tLocation, tRegion, tGame)
-                    #tempTrainer.printSelf()
-                if "Pokémon" in template.name:
+        try:
+            if "Party/Single" in line:
+                tempTrainer = ""
+                wikicode = mwparserfromhell.parse(line)
+                templates = wikicode.filter_templates()
+                for template in templates:
                     #print(template)
-                    #Parse Pokemon
-                    try:
-                        pDexNo = int(str(template.get("ndex").value))
-                    except:
-                        pDexNo = int(str(template.get("ndex").value)[:-2])
-                    pSpecies = str(template.get("pokemon").value)
-                    try:
-                        pGender = str(template.get("gender").value)
-                    except:
-                        pGender = "Unknown"
-                    pLevel = str(template.get("level").value)
-                    pMoves = []
-                    try:
-                        pHold = str(template.get("held").value)
-                    except ValueError:
-                        pHold = "" 
-                    try:
-                        pAbility = str(template.get("ability").value)
-                    except:
-                        #Gen 1 or 2, so give a random ability
-                        jsonCode = getJSON(pSpecies)
-                        #print(pSpecies)
-                        if pSpecies == "Mr. Mime": #Mr. Mime causes issues once again.  Hardcode a solution.
-                            jsonCode = getJSON("mr-mime")
-                        if pSpecies == "Nidoran♂":
-                            jsonCode = getJSON("nidoran-m")
-                        if pSpecies == "Nidoran♀":
-                            jsonCode = getJSON("nidoran-f")
-                        parsed = json.loads(jsonCode)
-                        abilityChoices = []
-                        for ability in parsed["abilities"]:
-                            #parsedAbility = json.loads(ability)
-                            #print(ability)
-                            if not ability['is_hidden']:
-                                #Don't want to give hidden abilities
-                                abilityChoices.append(ability["ability"]["name"])
-                        #Randomly choose an ability
-                        pAbility = random.choice(abilityChoices)
-                    #Parse Gender
-                    if(pGender == "male"):
-                        pGender = 'M'
-                    elif(pGender == "female"):
-                        pGender = 'F'
-                    else:
-                        pGender = 'U'
-                    #Parse moves
-                    pMoves.append(str(template.get("move1").value))
-                    try:
-                        pMoves.append(str(template.get("move2").value))
-                    except ValueError:
-                        1+1 #Do nothing, filler line to stop Python from fussing
-                    try:
-                        pMoves.append(str(template.get("move3").value))
-                    except ValueError:
-                        1+1 #Do nothing, filler line to stop Python from fussing
-                    try:
-                        pMoves.append(str(template.get("move4").value))
-                    except ValueError:
-                        1+1 #Do nothing, filler line to stop Python from fussing
-                    tempTrainer.addPoke(FinishedPokemon(pDexNo, pSpecies, pGender, pLevel, pMoves, pHold, pAbility))
-            #print(tempTrainer)
-            parsedTrainers.append(tempTrainer)
+                    if template.name == "Party/Single":
+                        tSprite = str(template.get("sprite").value)
+                        try:
+                            tClass = str(template.get("class").value)
+                        except:
+                            tClass = "Leader"
+                        tMoney = str(template.get("prize").value) # Will require further parsing later, contains special character, plus B2W2 weirdness
+                        tName = str(template.get("name").value) # More parsing required to get proper name
+                        tPokeCount = int(str(template.get("pokemon").value))
+                        tGame = str(template.get("game").value)
+
+                        #Additional formatting
+                        tMoney = tMoney.lower()
+                        tMoney = tMoney.replace("{{pdollar}}","")
+                        ##Name
+                        try:
+                            nameCode = mwparserfromhell.parse(tName)
+                            nameTemps = nameCode.filter_templates()
+                            nameTemp = nameTemps[0]
+                            tName = str(nameTemp.get(2).value)
+                        except:
+                            str(template.get("name"))
+                        ##{{PK}}{{MN}}
+                        tClass = tClass.replace("{{PK}}{{MN}}","Pokemon")
+
+                        tempTrainer = Trainer(tSprite, tClass, tName, tMoney, tPokeCount, tLocation, tRegion, tGame)
+                        #tempTrainer.printSelf()
+                    if "Pokémon" in template.name:
+                        #print(template)
+                        #Parse Pokemon
+                        try:
+                            pDexNo = int(str(template.get("ndex").value))
+                        except:
+                            try:
+                                pDexNo = int(str(template.get("ndex").value)[:-2])
+                            except:
+                                pDexNo = 0 #Couldn't parse, so now it's a MissingNo.  Are you proud?
+                        pSpecies = str(template.get("pokemon").value)
+                        try:
+                            pGender = str(template.get("gender").value)
+                        except:
+                            pGender = "Unknown"
+                        pLevel = str(template.get("level").value)
+                        pMoves = []
+                        try:
+                            pHold = str(template.get("held").value)
+                        except ValueError:
+                            pHold = "" 
+                        try:
+                            pAbility = str(template.get("ability").value)
+                        except:
+                            #Gen 1 or 2, so give a random ability
+                            jsonCode = getJSON(pSpecies)
+                            #print(pSpecies)
+                            if pSpecies == "Mr. Mime": #Mr. Mime causes issues once again.  Hardcode a solution.
+                                jsonCode = getJSON("mr-mime")
+                            if pSpecies == "Nidoran♂":
+                                jsonCode = getJSON("nidoran-m")
+                            if pSpecies == "Nidoran♀":
+                                jsonCode = getJSON("nidoran-f")
+                            parsed = json.loads(jsonCode)
+                            abilityChoices = []
+                            for ability in parsed["abilities"]:
+                                #parsedAbility = json.loads(ability)
+                                #print(ability)
+                                if not ability['is_hidden']:
+                                    #Don't want to give hidden abilities
+                                    abilityChoices.append(ability["ability"]["name"])
+                            #Randomly choose an ability
+                            pAbility = random.choice(abilityChoices)
+                        #Parse Gender
+                        if(pGender == "male"):
+                            pGender = 'M'
+                        elif(pGender == "female"):
+                            pGender = 'F'
+                        else:
+                            pGender = 'U'
+                        #Parse moves
+                        pMoves.append(str(template.get("move1").value))
+                        try:
+                            pMoves.append(str(template.get("move2").value))
+                        except ValueError:
+                            1+1 #Do nothing, filler line to stop Python from fussing
+                        try:
+                            pMoves.append(str(template.get("move3").value))
+                        except ValueError:
+                            1+1 #Do nothing, filler line to stop Python from fussing
+                        try:
+                            pMoves.append(str(template.get("move4").value))
+                        except ValueError:
+                            1+1 #Do nothing, filler line to stop Python from fussing
+                        tempTrainer.addPoke(FinishedPokemon(pDexNo, pSpecies, pGender, pLevel, pMoves, pHold, pAbility))
+                #print(tempTrainer)
+                parsedTrainers.append(tempTrainer)
+        except:
+            pass
 
 
 def getTrainerSprite(spriteName):
@@ -1619,21 +1628,25 @@ except Exception as e:
     with open(pickleFile, 'w') as output:
         output.writelines("Error parsing")
 else:
-
-    #for trainer in parsedTrainers:
-    #    print(trainer)
-
-    lookupOut = ""
-    for entry in lookupTable:
-        lookupOut += str(entry)
-    #Write CSV file for manual lookup
-    lookupFile = open("manualLookup.csv", 'w')
-    lookupFile.write(lookupOut)
-    lookupFile.close()
-
     #Dump trainer list
 #    print("!!!!!File output disabled!!!!!")
     outFile = sys.argv[1].replace("wiki/","")
-    pickleFile = "pkl/" + outFile + ".pkl"
+    pickleFile = "pkl/" + outFile + ".trainer.pkl"
     with open(pickleFile, 'wb') as output:
         pickle.dump(parsedTrainers, output, 0)
+
+#for trainer in parsedTrainers:
+#    print(trainer)
+lookupOut = ""
+for entry in lookupTable:
+    lookupOut += str(entry)
+#Write CSV file for manual lookup
+lookupFile = open("manualLookup.csv", 'w')
+try:
+    lookupFile.write(lookupOut)
+except:
+    pass
+lookupFile.close()
+pickleFile = "pkl/" + outFile + ".pokemon.pkl"
+with open(pickleFile, 'wb') as output:
+    pickle.dump(parsedWilds, output, 0)
