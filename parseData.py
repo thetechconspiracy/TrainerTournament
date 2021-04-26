@@ -352,20 +352,296 @@ class WildPokemon:
 Determine location lists
 ***************************
 '''
+
+if(len(sys.argv) != 3):
+    print("Usage: parseData.py <file name in location/> <game string>")
+    exit(1)
 locations = []
-#Add special locations for progression gates
-locations.append("%SURF%")
-locations.append("%OLDROD%")
-locations.append("%GOODROD%")
-locations.append("%SUPERROD%")
-locations.append("%POSTGAME%")#Stop checking after this
+##Add special locations for progression gates
+#locations.append("%SURF%")
+#locations.append("%OLDROD%")
+#locations.append("%GOODROD%")
+#locations.append("%SUPERROD%")
+#locations.append("%POSTGAME%")#Stop checking after this
+#
+#
+#for f in os.listdir("pkl/trainer"):
+#    with open("pkl/trainer/"+f, 'rb') as input:
+#        pokeList = pickle.load(input)
+#        if(pokeList[0].tRegion.lower() == sys.argv[1].lower()):
+#            locations.append(f.replace(".trainer.pkl",""))
+#            
+#for loc in locations:
+#        print(loc)
 
 
-for f in os.listdir("pkl/trainer"):
-    with open("pkl/trainer/"+f, 'rb') as input:
-        pokeList = pickle.load(input)
-        if(pokeList[0].tRegion.lower() == sys.argv[1].lower()):
-            locations.append(f.replace(".trainer.pkl",""))
-            
-for loc in locations:
-        print(loc)
+foundLocation = False
+for f in os.listdir("location/"):
+    if f == sys.argv[1]:
+        foundLocation = True
+if not foundLocation:
+    print("File not found in location/:", sys.argv[1])
+    exit(1)
+    
+
+with open ("location/"+sys.argv[1], "r") as f:
+    for line in f:
+        locations.append(line.strip())
+        
+        
+game = sys.argv[2].lower()
+
+if(game != "rby" and
+   game != "gsc" and
+   game != "rse" and
+   game != "dppt" and
+   game != "bw" and
+   game != "b2w2" and
+   game != "xy" and
+   game != "smusum" and
+   game != "swsh" and
+   game != "frlg" and
+   game != "hgss" and
+   game != "oras" and
+   game != "lgpe"):
+    print("Invalid game string")
+    exit(1)
+
+#Determine whether progression gates have been passed
+#Old Rod, Good Rod, Super Rod, Surf
+flags = [False, False, False, False]
+specialFlags = []
+wilds = []
+trainers = []
+for location in locations:
+    areaWilds = []
+    areaTrainers = []
+    skipWilds = False
+    skipTrainers = False
+    
+    if(location[0] == '%'):
+        #Flag
+        if location == "%OLDROD%":
+            flags[0] = True
+        if location == "%GOODROD%":
+            flags[1] = True
+        if location == "%SUPERROD%":
+            flags[2] = True
+        if location == "%SURF%":
+            flags[3] = True
+        else:
+            specialFlags.append(location)
+        continue
+    try:
+        with open("pkl/pokemon/"+location+".pokemon.pkl", "rb") as f:
+            areaWilds = pickle.load(f)
+        if(len(areaWilds) == 0):
+            #Nothing in the file, skip it
+            wilds.append(location + "0")
+            skipWilds = True
+    except (FileNotFoundError):
+        #No wild pokemon in the area.  Skip it
+        wilds.append(location + "0")
+        skipWilds = True
+    
+    
+    try:
+        with open("pkl/trainer/"+location+".trainer.pkl","rb") as f:
+            areaTrainers = pickle.load(f)
+    except(FileNotFoundError):
+        trainers.append(0)
+    if(len(areaTrainers) == 0):
+        trainers.append(0)
+        
+    
+    
+    
+    '''
+    *****************************
+    Parse wild Pokemon levels
+    *****************************
+    '''
+    #Find the average of the wild Pokemon levels
+    accumulator = 0
+    counter = 0
+    print(location)
+    if not skipWilds:
+        for mon in areaWilds:
+            #Check rods/surf
+            if((mon.pArea.lower() == "fish old" and flags[0])
+               or (mon.pArea.lower() == "fish good" and flags[1])
+               or (mon.pArea.lower() == "fish super" and flags[2])
+               or (mon.pArea.lower() == "surf" and flags[3])
+               or (
+                   mon.pArea.lower() != "fish old"
+                   and mon.pArea.lower() != "fish good"
+                   and mon.pArea.lower() != "fish super"
+                   and mon.pArea.lower() != "surf"
+               )
+            ):
+                if(game == "rby"):
+                    monGame = mon.pGames
+                    if(monGame == "R," or
+                       monGame == "B," or
+                       monGame == "Y," or
+                       monGame == "R,B," or
+                       monGame == "R,Y," or
+                       monGame == "B,Y," or
+                       monGame == "R,B,Y,"):
+                        #print(mon)
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                       
+                if(game == "gsc"):
+                    monGame = mon.pGames
+                    if(monGame == "G," or
+                       monGame == "S," or
+                       monGame == "C," or
+                       monGame == "G,S," or
+                       monGame == "G,C," or
+                       monGame == "S,C," or
+                       monGame == "G,S,C,"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                
+                if(game == "rse"):
+                    monGame = mon.pGames
+                    if(monGame == "R," or
+                       monGame == "S," or
+                       monGame == "E," or
+                       monGame == "R,E," or
+                       monGame == "S,E," or
+                       monGame == "R,S," or
+                       monGame == "R,S,E,"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                
+                if(game == "frlg"):
+                    monGame = mon.pGames
+                    if(monGame == "FR," or
+                       monGame == "LG," or
+                       monGame == "FR,LG,"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                       
+                if(game == "dppt"):
+                    monGame = mon.pGames
+                    if(monGame == "D," or
+                       monGame == "P," or
+                       monGame == "Pt," or
+                       monGame == "D,P," or
+                       monGame == "D,Pt," or
+                       monGame == "P,Pt," or
+                       monGame == "D,P,Pt,"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                       
+                if(game == "hgss"):
+                    monGame = mon.pGames
+                    if(monGame == "HG," or
+                       monGame == "SS," or
+                       monGame == "HG,SS,"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                       
+                if(game == "bw"):
+                    monGame = mon.pGames
+                    if(monGame == "B," or
+                       monGame == "W," or
+                       monGame == "B,W,"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                       
+                if(game == "b2w2"):
+                    monGame = mon.pGames
+                    if(monGame == "B2," or
+                       monGame == "W2," or
+                       monGame == "B2,W2,"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                       
+                if(game == "xy"):
+                    monGame = mon.pGames
+                    if(monGame == "X," or
+                       monGame == "Y," or
+                       monGame == "X,Y,"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                       
+                if(game == "oras"):
+                    monGame = mon.pGames
+                    if(monGame == "OR," or
+                       monGame == "AS," or
+                       monGame == "OR,AS,"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                
+                if(game == "sm"):
+                    monGame = mon.pGames
+                    if(monGame == "S," or
+                       monGame == "M," or
+                       monGame == "S,M,"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                       
+                if(game == "usum"):
+                    monGame == mon.pGames
+                    if(monGame == "US," or
+                       monGame == "UM," or
+                       monGame == "US,UM,"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+                       
+                if(game == "swsh"):
+                    monGame == mon.pGames
+                    if(monGame == "Sw," or
+                       monGame == "Sh," or
+                       monGame == "Sw,Sh"):
+                        try:
+                            accumulator += (int(mon.pMinLevel) + int(mon.pMaxLevel))/2
+                            counter += 1
+                        except:
+                           pass
+        if(counter > 0):
+            wilds.append(location + str(accumulator/counter))
+        else:
+            wilds.append(location+"0")
+    
+for wild in wilds:
+    print(wild)
