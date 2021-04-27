@@ -398,7 +398,7 @@ if(game != "rby" and
    game != "bw" and
    game != "b2w2" and
    game != "xy" and
-   game != "smusum" and
+   game != "sm" and
    game != "swsh" and
    game != "frlg" and
    game != "hgss" and
@@ -413,6 +413,7 @@ flags = [False, False, False, False]
 specialFlags = []
 wilds = []
 trainers = []
+locationsClean = []
 for location in locations:
     areaWilds = []
     areaTrainers = []
@@ -432,30 +433,30 @@ for location in locations:
         else:
             specialFlags.append(location)
         continue
+    else:
+        locationsClean.append(location)
     try:
         with open("pkl/pokemon/"+location+".pokemon.pkl", "rb") as f:
             areaWilds = pickle.load(f)
         if(len(areaWilds) == 0):
             #Nothing in the file, skip it
-            wilds.append(location + "0")
+            wilds.append("0")
             skipWilds = True
     except (FileNotFoundError):
         #No wild pokemon in the area.  Skip it
-        wilds.append(location + "0")
+        wilds.append("0")
         skipWilds = True
-    
     
     try:
         with open("pkl/trainer/"+location+".trainer.pkl","rb") as f:
             areaTrainers = pickle.load(f)
-    except(FileNotFoundError):
-        trainers.append(0)
-    if(len(areaTrainers) == 0):
-        trainers.append(0)
-        
-    
-    
-    
+        if(len(areaTrainers) == 0):
+            trainers.append("0")
+            skipTrainers = True
+    except (FileNotFoundError):
+        trainers.append("0")
+        skipTrainers = True
+
     '''
     *****************************
     Parse wild Pokemon levels
@@ -464,7 +465,6 @@ for location in locations:
     #Find the average of the wild Pokemon levels
     accumulator = 0
     counter = 0
-    print(location)
     if not skipWilds:
         for mon in areaWilds:
             #Check rods/surf
@@ -618,7 +618,7 @@ for location in locations:
                            pass
                        
                 if(game == "usum"):
-                    monGame == mon.pGames
+                    monGame = mon.pGames
                     if(monGame == "US," or
                        monGame == "UM," or
                        monGame == "US,UM,"):
@@ -629,7 +629,7 @@ for location in locations:
                            pass
                        
                 if(game == "swsh"):
-                    monGame == mon.pGames
+                    monGame = mon.pGames
                     if(monGame == "Sw," or
                        monGame == "Sh," or
                        monGame == "Sw,Sh"):
@@ -639,9 +639,279 @@ for location in locations:
                         except:
                            pass
         if(counter > 0):
-            wilds.append(location + str(accumulator/counter))
+            wilds.append(str(accumulator/counter))
         else:
-            wilds.append(location+"0")
+            wilds.append("0")
     
-for wild in wilds:
-    print(wild)
+    '''
+    *****************************
+    Parse Trainer levels
+    *****************************
+    '''    
+    accumulator = 0
+    counter = 0
+    if not skipTrainers:
+        for trainer in areaTrainers:
+            if (game == "rby"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "r" or
+                   tGame == "b" or
+                   tGame == "y" or
+                   tGame == "rb" or
+                   tGame == "ry" or
+                   tGame == "by" or
+                   tGame == "rby"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    accumulator += (tAcc/tCount) #We only care about the average level
+                    counter += 1
+            
+            if (game == "gsc"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "g" or
+                   tGame == "s" or
+                   tGame == "c" or
+                   tGame == "gs" or
+                   tGame == "gc" or
+                   tGame == "sc" or
+                   tGame == "gsc"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    try:
+                        accumulator += (tAcc/tCount) #We only care about the average level
+                        counter += 1
+                    except:
+                        pass # Problem with the trainer
+                    
+            if (game == "rse"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "r" or
+                   tGame == "s" or
+                   tGame == "e" or
+                   tGame == "rs" or
+                   tGame == "re" or
+                   tGame == "se" or
+                   tGame == "rse"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    try:
+                        accumulator += (tAcc/tCount) #We only care about the average level
+                        counter += 1
+                    except:
+                        pass # Problem with the trainer
+                    
+            if (game == "frlg"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "fr" or
+                   tGame == "lg" or
+                   tGame == "frlg"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    accumulator += (tAcc/tCount) #We only care about the average level
+                    counter += 1        
+            
+            if (game == "dppt"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "d" or
+                   tGame == "p" or
+                   tGame == "pt" or
+                   tGame == "dp" or
+                   tGame == "dpt" or
+                   tGame == "ppt" or
+                   tGame == "dppt"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    try:
+                        accumulator += (tAcc/tCount) #We only care about the average level
+                        counter += 1
+                    except:
+                        pass # Problem with the trainer
+                    
+            if (game == "hgss"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "hg" or
+                   tGame == "ss" or
+                   tGame == "hgss"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    accumulator += (tAcc/tCount) #We only care about the average level
+                    counter += 1
+                    
+            if (game == "bw"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "b" or
+                   tGame == "w" or
+                   tGame == "bw"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    try:
+                        accumulator += (tAcc/tCount) #We only care about the average level
+                        counter += 1
+                    except:
+                        pass # Problem with the trainer
+            
+            if (game == "b2w2"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "b2" or
+                   tGame == "w2" or
+                   tGame == "b2w2"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    try:
+                        accumulator += (tAcc/tCount) #We only care about the average level
+                        counter += 1
+                    except:
+                        pass # Problem with the trainer
+                    
+            if (game == "xy"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "x" or
+                   tGame == "y" or
+                   tGame == "xy" or
+                   tGame == "s" or
+                   tGame == "m" or
+                   tGame == "sm"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    try:
+                        accumulator += (tAcc/tCount) #We only care about the average level
+                        counter += 1
+                    except:
+                        pass # Problem with the trainer
+            
+            if (game == "oras"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "or" or
+                   tGame == "as" or
+                   tGame == "oras" or
+                   tGame == "s" or
+                   tGame == "m" or
+                   tGame == "sm"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    try:
+                        accumulator += (tAcc/tCount) #We only care about the average level
+                        counter += 1
+                    except:
+                        pass # Problem with the trainer
+                    
+            if (game == "sm"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "s" or
+                   tGame == "m" or
+                   tGame == "sm"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    try:
+                        accumulator += (tAcc/tCount) #We only care about the average level
+                        counter += 1
+                    except:
+                        pass # Problem with the trainer
+            
+            if (game == "swsh"):
+                tGame = trainer.tGame.lower()
+                if(tGame == "sw" or
+                   tGame == "sh" or
+                   tGame == "swsh" or
+                   tGame == "s" or
+                   tGame == "m" or
+                   tGame == "sm"):
+                    trainerMons = trainer.getPokes()
+                    tAcc = 0
+                    tCount = 0
+                    for mon in trainerMons:
+                        try:
+                            tAcc += int(mon.pLevel)
+                            tCount += 1
+                        except:
+                            pass
+                    try:
+                        accumulator += (tAcc/tCount) #We only care about the average level
+                        counter += 1
+                    except:
+                        pass # Problem with the trainer
+                    
+        if(counter > 0):
+            trainers.append(str(accumulator/counter))
+        else:
+            trainers.append("0")
+
+for i in range (len(locationsClean)):
+    print(f'{locationsClean[i]},{wilds[i]},{trainers[i]}')
