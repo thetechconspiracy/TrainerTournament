@@ -389,7 +389,7 @@ with open ("location/"+sys.argv[1], "r") as f:
         locations.append(line.strip())
         
         
-game = sys.argv[2].lower()
+game = sys.argv[2].lower().strip()
 
 if(game != "rby" and
    game != "gsc" and
@@ -404,7 +404,7 @@ if(game != "rby" and
    game != "hgss" and
    game != "oras" and
    game != "lgpe"):
-    print("Invalid game string")
+    print(f"Invalid game string: {game}")
     exit(1)
 
 #Determine whether progression gates have been passed
@@ -477,6 +477,10 @@ for location in locations:
                    and mon.pArea.lower() != "fish good"
                    and mon.pArea.lower() != "fish super"
                    and mon.pArea.lower() != "surf"
+                   and mon.pArea.lower() != "gift"
+                   and mon.pArea.lower() != "only one"
+                   and mon.pArea.lower() != "special"
+                   and mon.pArea.lower() != "trade"
                )
             ):
                 if(game == "rby"):
@@ -651,6 +655,7 @@ for location in locations:
     accumulator = 0
     counter = 0
     if not skipTrainers:
+        areaLevels = []
         for trainer in areaTrainers:
             if (game == "rby"):
                 tGame = trainer.tGame.lower()
@@ -660,7 +665,8 @@ for location in locations:
                    tGame == "rb" or
                    tGame == "ry" or
                    tGame == "by" or
-                   tGame == "rby"):
+                   tGame == "rby" or
+                   tGame == "rgb"):
                     trainerMons = trainer.getPokes()
                     tAcc = 0
                     tCount = 0
@@ -909,9 +915,28 @@ for location in locations:
                         pass # Problem with the trainer
                     
         if(counter > 0):
-            trainers.append(str(accumulator/counter))
+            areaLevels.append(str(accumulator/counter))
         else:
-            trainers.append("0")
+            areaLevels.append("0")
+            
+        accumulator = 0
+        counter = 0
+        for area in areaLevels:
+            accumulator += float(area)
+            counter += 1
+        avgLevel = accumulator/counter
+        
+        #Clean the data, remove outlier trainers
+        for trainer in areaLevels:
+            if float(trainer) == 0 or not (abs( (float(trainer) - float(avgLevel) ) / float(trainer)) <= .20):
+                trainer = 0
+        
+        for area in areaLevels:
+            accumulator += float(area)
+            counter += 1
+        trainers.append(accumulator/counter)
+        
 
+print("Area, Wild, Trainer")
 for i in range (len(locationsClean)):
     print(f'{locationsClean[i]},{wilds[i]},{trainers[i]}')

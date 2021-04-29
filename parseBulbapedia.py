@@ -1650,3 +1650,7 @@ lookupFile.close()
 pickleFile = "pkl/" + outFile + ".pokemon.pkl"
 with open(pickleFile, 'wb') as output:
     pickle.dump(parsedWilds, output, 0)
+
+
+for trainer in parsedTrainers:
+    print(trainer)
