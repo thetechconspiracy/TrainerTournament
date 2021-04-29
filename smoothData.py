@@ -13,11 +13,15 @@ with open (sys.argv[1], "r") as f:
 areas = []
 wilds = []
 trainers = []
+wildMod = []
+trainerMod = []
 for line in csv:
     lineSplit = line.split(",")
     areas.append(lineSplit[0])
     wilds.append(float(lineSplit[1]))
     trainers.append(float(lineSplit[2]))
+    wildMod.append(False)
+    trainerMod.append(False)
     
 
 for i in range (1, len(areas)):
@@ -43,10 +47,12 @@ for i in range (1, len(areas)):
 
             step = diff/count
 
-            wilds[i] = -(prev + step)
+            wilds[i] = (prev + step)
+            wildMod[i] = True
 
             for j in range (i, count):
-                wilds[j] = -(wilds[j-1] + step)
+                wilds[j] = (wilds[j-1] + step)
+                wildMod[j] = True
 
 for i in range (1, len(areas)):
     if(trainers[i] < 1):
@@ -71,10 +77,13 @@ for i in range (1, len(areas)):
 
             step = diff/count
 
-            trainers[i] = -(prev + step)
+            trainers[i] = (prev + step)
+            trainerMod[i] = True
 
             for j in range (i, count):
-                trainers[j] = -(trainers[j-1] + step)
+                trainers[j] = (trainers[j-1] + step)
+                trainerMod[j] = True
+
                 
 print("area,wilds,trainers")
 for i in range(len(areas)):
@@ -84,6 +93,6 @@ if(len(sys.argv) > 2):
     exit(0)
     
 with open (sys.argv[1], "w") as out:
-    out.write("area,wilds,trainers\n")
+    out.write("area,wilds,trainers,wildMod,trainerMod\n")
     for i in range(len(areas)):
-        out.write(f'{areas[i]},{wilds[i]},{trainers[i]}\n')
+        out.write(f'{areas[i]},{wilds[i]},{trainers[i]},{wildMod[i]},{trainerMod[i]}\n')
