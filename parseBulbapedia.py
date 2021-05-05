@@ -44,6 +44,8 @@ class Trainer:
         self.tSprite = self.tSprite.replace("{{!}}150px","")
         self.tSprite = self.tSprite.replace("{{!}}170px","")
 
+        self.bossFlag = False
+        
         getTrainerSprite(self.tSprite)
         self.findGameFromSprite()
     def __str__(self):
@@ -196,6 +198,8 @@ class Trainer:
         #    print("***************************************************")
         #    print("*            POKEMON COUNT EXCEEDS 6!             *")
         #    print("***************************************************")
+    def isBoss(self):
+        self.bossFlag = True
 
 class manualSpriteLookup:
     def __init__(self, sprName, originGame):
@@ -1368,6 +1372,8 @@ def findRegularTrainers(trainerList):
                     offset += 5 # 5 fields make up Pokemon data
                 #tempTrainer.printSelf()
                 parsedTrainers.append(tempTrainer)
+            if("Rematch" in line):
+                break
         except:
             pass
 
@@ -1512,6 +1518,8 @@ def findBossTrainers(trainerList):
                             1+1 #Do nothing, filler line to stop Python from fussing
                         tempTrainer.addPoke(FinishedPokemon(pDexNo, pSpecies, pGender, pLevel, pMoves, pHold, pAbility))
                 #print(tempTrainer)
+                #Set the boss trainer flag
+                tempTrainer.isBoss()
                 parsedTrainers.append(tempTrainer)
         except:
             pass

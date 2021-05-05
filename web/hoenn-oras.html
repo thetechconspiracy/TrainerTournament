@@ -1,0 +1,297 @@
+<!-- Joseph Still-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body{
+            font-family: 'Ubuntu', 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
+        }
+        /* AXES */
+        /* ticks */
+        .axis line{
+        stroke: #706f6f;
+        stroke-width: 0.5;
+        shape-rendering: crispEdges;
+        }
+
+        /* axis contour */
+        .axis path {
+        stroke: #706f6f;
+        stroke-width: 0.7;
+        shape-rendering: crispEdges;
+        }
+
+        /* axis text */
+        .axis text {
+        fill: #2b2929;
+        font-family: Georgia;
+        font-size: 120%;
+        }
+
+        /* LINE CHART */
+        path.line-0 {
+            fill: none;
+            stroke: #ed3700;
+        }
+
+        path.line-1 {
+            fill: none;
+            stroke: #2b2929;
+            stroke-dasharray: 2;
+        }
+
+        path.line-2 {
+            fill: none;
+            stroke: #9c9c9c;
+            stroke-dasharray: 6;
+        }
+
+        .serie_label {
+          fill: #2b2929;
+          font-family: Georgia;
+          font-size: 80%;
+        }
+
+        .notes{display: none;}
+        .show {display: block;}
+    </style>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+</head>
+<body>
+    <!-- Dropdown Menu -->
+    <!-- Adapted from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown -->
+    <div class="dropdown">
+        <style>
+            .dropbtn {
+              background-color: #3498DB;
+              color: white;
+              padding: 16px;
+              font-size: 16px;
+              border: none;
+              cursor: pointer;
+            }
+            
+            .dropbtn:hover, .dropbtn:focus {
+              background-color: #2980B9;
+            }
+            
+            .dropdown {
+              position: relative;
+              display: inline-block;
+            }
+            
+            .dropdown-content {
+              display: none;
+              position: absolute;
+              background-color: #f1f1f1;
+              min-width: 160px;
+              overflow: auto;
+              box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+              z-index: 1;
+            }
+            
+            .dropdown-content a {
+              color: black;
+              padding: 12px 16px;
+              text-decoration: none;
+              display: block;
+            }
+            
+            .dropdown a:hover {background-color: #ddd;}
+            
+            .show {display: block;}
+            </style>
+        <button onclick="regionDropdownHandler()" class="dropbtn">Hoenn &darr;</button>
+        <div id="regionSelect" class="dropdown-content">
+            <a href="kanto-rby.html">Kanto</a>
+            <a href="johto-gsc.html">Johto</a>
+            <a href="hoenn-rse.html">Hoenn</a>
+            <a href="sinnoh-dppt.html">Sinnoh</a>
+            <a href="unova-bw.html">Unova</a>
+            <a href="kalos-xy.html">Kalos</a>
+            <a href="alola-sm.html">Alola</a>
+            <a href="galar-swsh.html">Galar</a>
+        </div>
+
+        <button onclick="gameDropdownHandler()" class="dropbtn">Omega Ruby and Alpha Sapphire &darr;</button>
+        <div id="gameSelect" class="dropdown-content">
+            <a href="hoenn-rse.html">Ruby and Sapphire</a>
+            <a href="hoenn-oras.html">Omega Ruby and Alpha Sapphire</a>
+        </div>
+        <script>
+            function regionDropdownHandler() {
+                document.getElementById("regionSelect").classList.toggle("show");
+            }
+
+            function gameDropdownHandler(){
+                document.getElementById("gameSelect").classList.toggle("show");
+            }
+
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function(event) {
+              if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                  var openDropdown = dropdowns[i];
+                  if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                  }
+                }
+              }
+            }
+        </script>
+    </div>
+    <div id="kanto-rby">Loading<br>Please wait...</div>
+    <script>
+        var trainers = {
+            x: [],
+            y: [],
+            type: 'scatter',
+            color: 'orange',
+            name: 'Trainers',
+            mode: 'lines+markers',
+            connectgaps: true,
+            line: {
+                color: 'orange'
+            }            
+        };
+
+        var wilds = {
+            x: [],
+            y: [],
+            type: 'scatter',
+            color: 'green',
+            name: 'Wilds',
+            mode: 'lines+markers',
+            connectgaps: true,
+            line: {
+                color: 'green'
+            }
+        };
+
+        var boss = {
+            x: [],
+            y: [],
+            text: [],
+            type: 'scatter',
+            color: 'blue',
+            name: 'Boss', 
+            mode: 'markers',
+            line: {
+                color: 'blue'
+            }
+        };
+
+        var layout = {
+            autosize: false,
+            width: $(window).width()-30, //Get the window width with JQuery, add a bit of margin to make it look pretty
+            height: 800,
+            xaxis:{
+                height: 800,
+                tickangle: 45
+            },
+            title: "Hoenn: Ruby and Sapphire"
+        };
+
+        var test = {
+            x: [1,2,3,4,5],
+            y: [10,20,30,40,50],
+            type: 'scatter',
+            color: 'orange'
+        };
+
+        var plotData = []
+
+        //Read the CSV files and populate the data
+        //https://stackoverflow.com/a/7431565
+
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url: "csv/hoenn-oras.csv",
+                dataType: "text",
+                success: function(data) {processRegular(data);}
+            })
+        })
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url: "csv/oras-boss.csv",
+                dataType: "text",
+                success: function(data) {processBoss(data);}
+            })
+        })
+
+        function processRegular(text){
+            let textLines = text.split(/\r\n|\n/);
+            let headers = textLines[0].split(",");
+            var lines  = [];
+
+            for(let i = 1; i < textLines.length; ++i){
+                let data = textLines[i].split(",");
+                lines.push(data);
+            }
+
+            for(let i = 0; i < lines.length; ++i){
+                //console.log(lines[i])
+                trainers.x.push(lines[i][0]);
+                //trainers.x.push(i);
+                wilds.x.push(lines[i][0]);
+                if(lines[i][3] == "False")
+                    wilds.y.push(lines[i][1]);
+                else(wilds.y.push(null));
+                if(lines[i][4] == "False")
+                    trainers.y.push(lines[i][2]);
+                else(trainers.y.push(null));
+            }
+
+            for(let i = 0; i < 5; ++i){
+                test.x.push(i*2);
+                test.y.push(i*10);
+            }
+            
+            plotData = [trainers, wilds, boss]
+
+            
+        }
+        function processBoss(text){
+            let textLines = text.split(/\r\n|\n/);
+            let headers = textLines[0].split(",");
+            var lines  = [];
+
+            for(let i = 1; i < textLines.length; ++i){
+                let data = textLines[i].split(",");
+                lines.push(data);
+            }
+
+            for(let i = 0; i < lines.length; ++i){
+                if(lines[i][2] == "ORAS" | lines[i][2] == "SM"){
+                    boss.x.push(lines[i][4]);
+                    boss.y.push(lines[i][3]);
+                    boss.text.push(lines[i][0] + " " + lines[i][1]);
+                }
+            }
+        }
+        
+        $(document).ready(function() {
+            setTimeout(function() {
+                document.getElementById("kanto-rby").innerHTML = "";
+                document.getElementById("notes").classList.toggle("show");
+                Plotly.newPlot('kanto-rby', plotData, layout);
+            }, 1000);//Wait for .5 seconds to let the data process
+        })
+    </script>
+    
+    <div id="notes" class="notes">
+        <h2>Notes</h2>
+        <ul>
+            <li>Trainer levels are inaccurate, especially near the start of the game.  Due to the way Bulbapedia articles are laid out, trainer rematches in the Hoenn games are in the same area as the original battles, and my parser treats them as intended battles.  I have attempted to fix the parser, however the issue remains and I lack the time to fully resolve the issue.<br>This issue originates from the changing scope of the project, as the original intention was to have a large tournament between all trainers in the series, and trainer rematch teams would be part of the tournament.</li>
+        </ul>
+    </div>
+
+    
+</body>
+</html>

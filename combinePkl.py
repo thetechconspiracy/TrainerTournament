@@ -42,6 +42,8 @@ class Trainer:
 
         getTrainerSprite(self.tSprite)
         self.findGameFromSprite()
+        
+        self.bossFlag = False
     def __str__(self):
         list = self.getList()
         output = ""

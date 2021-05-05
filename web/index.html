@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <style>
+            body{
+                font-family: 'Ubuntu', 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
+            }
+            /* AXES */
+            /* ticks */
+            .axis line{
+            stroke: #706f6f;
+            stroke-width: 0.5;
+            shape-rendering: crispEdges;
+            }
+    
+            /* axis contour */
+            .axis path {
+            stroke: #706f6f;
+            stroke-width: 0.7;
+            shape-rendering: crispEdges;
+            }
+    
+            /* axis text */
+            .axis text {
+            fill: #2b2929;
+            font-family: Georgia;
+            font-size: 120%;
+            }
+    
+            /* LINE CHART */
+            path.line-0 {
+                fill: none;
+                stroke: #ed3700;
+            }
+    
+            path.line-1 {
+                fill: none;
+                stroke: #2b2929;
+                stroke-dasharray: 2;
+            }
+    
+            path.line-2 {
+                fill: none;
+                stroke: #9c9c9c;
+                stroke-dasharray: 6;
+            }
+    
+            .serie_label {
+              fill: #2b2929;
+              font-family: Georgia;
+              font-size: 80%;
+            }
+        </style>
+        <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    </head>
+    <body>
+        <p>Kanto:
+            <ul>
+                <li><a href="kanto-rby.html">Red and Blue</a></li>
+                <li><a href="kanto-frlg.html">FireRed and LeafGreen</a></li>
+            </ul>
+        </p>
+        <p>Johto:
+            <ul>
+                <li><a href="johto-gsc.html">Gold, Silver, and Crystal</a></li>
+                <li><a href="johto-hgss.html">HeartGold and SoulSilver</a></li>
+            </ul>
+        </p>
+        <p>Hoenn:
+            <ul>
+                <li><a href="hoenn-rse.html">Ruby and Sapphire</a></li>
+                <li><a href="hoenn-oras.html">Omega Ruby and Alpha Sapphire</a></li>
+            </ul>
+        </p>
+        <p>Sinnoh:
+            <ul>
+                <li><a href="sinnoh-dppt.html">Diamond and Pearl</a></li>
+            </ul>
+        </p>
+        <p>Unova:
+            <ul>
+                <li><a href="unova-bw.html">Black and White</a></li>
+                <!--<li><a href="unova-b2w2.html">Black 2 and White 2</a></li>-->  <!--This page is broken.--> 
+            </ul>
+        </p>
+        <p>Kalos:
+            <ul>
+                <li><a href="kalos-xy.html">X and Y</a></li>
+            </ul>
+        </p>
+        <p>Alola:
+            <ul>
+                <li><a href="alola-sm.html">Sun and Moon</a></li>
+            </ul>
+        </p>
+        <p>Galar:
+            <ul>
+                <li><a href="galar-swsh.html">Sword and Shield</a></li>
+            </ul>
+        </p>
+</html>

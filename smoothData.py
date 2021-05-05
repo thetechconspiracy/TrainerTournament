@@ -23,74 +23,78 @@ for line in csv:
     wildMod.append(False)
     trainerMod.append(False)
     
+if(len(sys.argv) == 2):
+    for i in range (1, len(areas)):
+        if(wilds[i] < 1):
+            prev = wilds[i-1]
 
-for i in range (1, len(areas)):
-    if(wilds[i] < 1):
-        prev = wilds[i-1]
-        
-        nextIndex = i
-        
-        hasNext = True
-        while(wilds[nextIndex] == 0):
-            if i+1 < len(areas):
-                nextIndex += 1
-            else:
-                #Reached the end
-                hasNext = False
-                break
-        
-        if hasNext:
-            next = wilds[nextIndex]
+            nextIndex = i
 
-            diff = next-prev
-            count = nextIndex - i + 1
+            hasNext = True
+            while(wilds[nextIndex] == 0):
+                if i+1 < len(areas):
+                    nextIndex += 1
+                else:
+                    #Reached the end
+                    hasNext = False
+                    break
+                
+            if hasNext:
+                next = wilds[nextIndex]
 
-            step = diff/count
+                diff = next-prev
+                count = nextIndex - i + 1
 
-            wilds[i] = (prev + step)
+                step = diff/count
+
+                wilds[i] = (prev + step)
+                wildMod[i] = True
+
+                for j in range (i, count):
+                    wilds[j] = (wilds[j-1] + step)
+                    wildMod[j] = True
+
+    for i in range (1, len(areas)):
+        if(trainers[i] < 1):
+            prev = trainers[i-1]
+
+            nextIndex = i
+
+            hasNext = True
+            while(trainers[nextIndex] == 0):
+                if i+1 < len(areas):
+                    nextIndex += 1
+                else:
+                    #Reached the end
+                    hasNext = False
+                    break
+                
+            if hasNext:
+                next = trainers[nextIndex]
+
+                diff = next-prev
+                count = nextIndex - i + 1
+
+                step = diff/count
+
+                trainers[i] = (prev + step)
+                trainerMod[i] = True
+
+                for j in range (i, count):
+                    trainers[j] = (trainers[j-1] + step)
+                    trainerMod[j] = True
+else:
+    for i in range (1,len(areas)):
+        if int(wilds[i] == 0):
             wildMod[i] = True
-
-            for j in range (i, count):
-                wilds[j] = (wilds[j-1] + step)
-                wildMod[j] = True
-
-for i in range (1, len(areas)):
-    if(trainers[i] < 1):
-        prev = trainers[i-1]
-        
-        nextIndex = i
-        
-        hasNext = True
-        while(trainers[nextIndex] == 0):
-            if i+1 < len(areas):
-                nextIndex += 1
-            else:
-                #Reached the end
-                hasNext = False
-                break
-        
-        if hasNext:
-            next = trainers[nextIndex]
-
-            diff = next-prev
-            count = nextIndex - i + 1
-
-            step = diff/count
-
-            trainers[i] = (prev + step)
+        if int(trainers[i] == 0):
             trainerMod[i] = True
 
-            for j in range (i, count):
-                trainers[j] = (trainers[j-1] + step)
-                trainerMod[j] = True
-
                 
-print("area,wilds,trainers")
-for i in range(len(areas)):
-    print(f'{areas[i]},{wilds[i]},{trainers[i]}')
-    
-if(len(sys.argv) > 2):
-    exit(0)
+#print("area,wilds,trainers")
+#for i in range(len(areas)):
+#    print(f'{areas[i]},{wilds[i]},{trainers[i]}')
+
     
 with open (sys.argv[1], "w") as out:
     out.write("area,wilds,trainers,wildMod,trainerMod\n")
