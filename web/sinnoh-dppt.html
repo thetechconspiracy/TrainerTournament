@@ -57,7 +57,7 @@
         .show {display: block;}
     </style>
     <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 </head>
 <body>
     <!-- Dropdown Menu -->
@@ -190,7 +190,11 @@
             height: 800,
             xaxis:{
                 height: 800,
-                tickangle: 45
+                tickangle: 45,
+                fixedrange: true
+            },
+            yaxis:{
+                fixedrange: true
             },
             title: "Sinnoh: Diamond and Pearl"
         };
