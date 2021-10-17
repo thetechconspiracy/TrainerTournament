@@ -10,3 +10,5 @@
 Once articles are parsed, use
 `{ while read region game; do python parseData.py $region $game > out/$region-$game; done } < locationList`
 to generate CSV files in the `out` directory
+
+The final charts are available at https://jtstill.com/pokemonLevels/index.html
