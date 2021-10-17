@@ -1,0 +1,289 @@
+(lp0
+ccopy_reg
+_reconstructor
+p1
+(c__main__
+Trainer
+p2
+c__builtin__
+object
+p3
+Ntp4
+Rp5
+(dp6
+VtSprite
+p7
+VSpr Pt Dahlia.png
+p8
+sVtClass
+p9
+VArcade Star
+p10
+sVtName
+p11
+VDahlia
+p12
+sVtMoney
+p13
+V20{{color2|000|battle point|bp}}
+p14
+sVtPokeCount
+p15
+I3
+sVtLocation
+p16
+Vwiki/Battle_Arcade
+p17
+sVtRegion
+p18
+V
+p19
+sVtGame
+p20
+VPt
+p21
+sVtPokes
+p22
+(lp23
+g1
+(c__main__
+FinishedPokemon
+p24
+g3
+Ntp25
+Rp26
+(dp27
+VpDexNo
+p28
+I477
+sVpSpecies
+p29
+VDusknoir
+p30
+sVpGender
+p31
+VU
+p32
+sVpLevel
+p33
+V50
+p34
+sVpMoves
+p35
+(lp36
+VShadow Punch
+p37
+aVTrick Room
+p38
+aVWill-O-Wisp
+p39
+aVFling
+p40
+asVpHold
+p41
+VIron Ball
+p42
+sVpAbility
+p43
+VPressure
+p44
+sbag1
+(g24
+g3
+Ntp45
+Rp46
+(dp47
+g28
+I308
+sg29
+VMedicham
+p48
+sg31
+g32
+sg33
+V50
+p49
+sg35
+(lp50
+VZen Headbutt
+p51
+aVEndure
+p52
+aVReversal
+p53
+aVFake Out
+p54
+asg41
+VSalac Berry
+p55
+sg43
+VPure Power
+p56
+sbag1
+(g24
+g3
+Ntp57
+Rp58
+(dp59
+g28
+I272
+sg29
+VLudicolo
+p60
+sg31
+g32
+sg33
+V50
+p61
+sg35
+(lp62
+VWaterfall
+p63
+aVRazor Leaf
+p64
+aVDrain Punch
+p65
+aVSwords Dance
+p66
+asg41
+VMuscle Band
+p67
+sg43
+VSwift Swim
+p68
+sbasVbossFlag
+p69
+I01
+sVtLongGame
+p70
+Vplatinum
+p71
+sbag1
+(g2
+g3
+Ntp72
+Rp73
+(dp74
+g7
+VSpr Pt Dahlia.png
+p75
+sg9
+VArcade Star
+p76
+sg11
+VDahlia
+p77
+sg13
+V20{{color2|000|battle point|bp}}
+p78
+sg15
+I3
+sg16
+g17
+sg18
+g19
+sg20
+g21
+sg22
+(lp79
+g1
+(g24
+g3
+Ntp80
+Rp81
+(dp82
+g28
+I145
+sg29
+VZapdos
+p83
+sg31
+g32
+sg33
+V50
+p84
+sg35
+(lp85
+VThunderbolt
+p86
+aVAir Cutter
+p87
+aVHeat Wave
+p88
+aVSignal Beam
+p89
+asg41
+VBrightPowder
+p90
+sg43
+VPressure
+p91
+sbag1
+(g24
+g3
+Ntp92
+Rp93
+(dp94
+g28
+I257
+sg29
+VBlaziken
+p95
+sg31
+g32
+sg33
+V50
+p96
+sg35
+(lp97
+VFlare Blitz
+p98
+aVSuperpower
+p99
+aVThunderPunch
+p100
+aVNight Slash
+p101
+asg41
+VWhite Herb
+p102
+sg43
+VBlaze
+p103
+sbag1
+(g24
+g3
+Ntp104
+Rp105
+(dp106
+g28
+I468
+sg29
+VTogekiss
+p107
+sg31
+g32
+sg33
+V50
+p108
+sg35
+(lp109
+VAir Slash
+p110
+aVAura Sphere
+p111
+aVPsychic
+p112
+aVHyper Beam
+p113
+asg41
+VExpert Belt
+p114
+sg43
+VHustle
+p115
+sbasg69
+I01
+sg70
+g71
+sba.

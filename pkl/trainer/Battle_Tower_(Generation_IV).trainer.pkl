@@ -1,0 +1,548 @@
+(lp0
+ccopy_reg
+_reconstructor
+p1
+(c__main__
+Trainer
+p2
+c__builtin__
+object
+p3
+Ntp4
+Rp5
+(dp6
+VtSprite
+p7
+VSpr DP Palmer.png
+p8
+sVtClass
+p9
+VTower Tycoon
+p10
+sVtName
+p11
+VPalmer
+p12
+sVtMoney
+p13
+V20{{color2|000|battle point|bp}}
+p14
+sVtPokeCount
+p15
+I3
+sVtLocation
+p16
+Vwiki/Battle_Tower_(Generation_IV)
+p17
+sVtRegion
+p18
+VSinnoh
+p19
+sVtGame
+p20
+VDP
+p21
+sVtPokes
+p22
+(lp23
+g1
+(c__main__
+FinishedPokemon
+p24
+g3
+Ntp25
+Rp26
+(dp27
+VpDexNo
+p28
+I350
+sVpSpecies
+p29
+VMilotic
+p30
+sVpGender
+p31
+VU
+p32
+sVpLevel
+p33
+V50
+p34
+sVpMoves
+p35
+(lp36
+VHydro Pump
+p37
+aVHypnosis
+p38
+aVDragon Pulse
+p39
+aVRecover
+p40
+asVpHold
+p41
+VSalac Berry
+p42
+sVpAbility
+p43
+VMarvel Scale
+p44
+sbag1
+(g24
+g3
+Ntp45
+Rp46
+(dp47
+g28
+I464
+sg29
+VRhyperior
+p48
+sg31
+g32
+sg33
+V50
+p49
+sg35
+(lp50
+VFlamethrower
+p51
+aVIce Beam
+p52
+aVThunderbolt
+p53
+aVRock Wrecker
+p54
+asg41
+VExpert Belt
+p55
+sg43
+VLightningrod
+p56
+sbag1
+(g24
+g3
+Ntp57
+Rp58
+(dp59
+g28
+I149
+sg29
+VDragonite
+p60
+sg31
+g32
+sg33
+V50
+p61
+sg35
+(lp62
+VDragon Rush
+p63
+aVStone Edge
+p64
+aVAqua Tail
+p65
+aVIron Tail
+p66
+asg41
+VWide Lens
+p67
+sg43
+VInner Focus
+p68
+sbasVbossFlag
+p69
+I01
+sVtLongGame
+p70
+Vdiamond-pearl
+p71
+sbag1
+(g2
+g3
+Ntp72
+Rp73
+(dp74
+g7
+VSpr DP Palmer.png
+p75
+sg9
+VTower Tycoon
+p76
+sg11
+VPalmer
+p77
+sg13
+V20{{color2|000|battle point|bp}}
+p78
+sg15
+I3
+sg16
+g17
+sg18
+g19
+sg20
+g21
+sg22
+(lp79
+g1
+(g24
+g3
+Ntp80
+Rp81
+(dp82
+g28
+I486
+sg29
+VRegigigas
+p83
+sg31
+g32
+sg33
+V50
+p84
+sg35
+(lp85
+VCrush Grip
+p86
+aVStone Edge
+p87
+aVIce Punch
+p88
+aVBrick Break
+p89
+asg41
+VChople Berry
+p90
+sg43
+VSlow Start
+p91
+sbag1
+(g24
+g3
+Ntp92
+Rp93
+(dp94
+g28
+I485
+sg29
+VHeatran
+p95
+sg31
+g32
+sg33
+V50
+p96
+sg35
+(lp97
+VMagma Storm
+p98
+aVFlash Cannon
+p99
+aVDark Pulse
+p100
+aVExplosion
+p101
+asg41
+VBrightPowder
+p102
+sg43
+VFlash Fire
+p103
+sbag1
+(g24
+g3
+Ntp104
+Rp105
+(dp106
+g28
+I488
+sg29
+VCresselia
+p107
+sg31
+VF
+p108
+sg33
+V50
+p109
+sg35
+(lp110
+VPsychic
+p111
+aVCalm Mind
+p112
+aVShadow Ball
+p113
+aVMoonlight
+p114
+asg41
+VLeftovers
+p115
+sg43
+VLevitate
+p116
+sbasg69
+I01
+sg70
+g71
+sbag1
+(g2
+g3
+Ntp117
+Rp118
+(dp119
+g7
+VSpr Pt Palmer.png
+p120
+sg9
+VTower Tycoon
+p121
+sg11
+VPalmer
+p122
+sg13
+V20{{color2|000|battle point|bp}}
+p123
+sg15
+I3
+sg16
+g17
+sg18
+g19
+sg20
+VPt
+p124
+sg22
+(lp125
+g1
+(g24
+g3
+Ntp126
+Rp127
+(dp128
+g28
+I350
+sg29
+VMilotic
+p129
+sg31
+g32
+sg33
+V50
+p130
+sg35
+(lp131
+VSurf
+p132
+aVHypnosis
+p133
+aVIce Beam
+p134
+aVAttract
+p135
+asg41
+VShell Bell
+p136
+sg43
+VMarvel Scale
+p137
+sbag1
+(g24
+g3
+Ntp138
+Rp139
+(dp140
+g28
+I464
+sg29
+VRhyperior
+p141
+sg31
+g32
+sg33
+V50
+p142
+sg35
+(lp143
+VEarthquake
+p144
+aVCrunch
+p145
+aVRock Wrecker
+p146
+aVRoar
+p147
+asg41
+VFocus Band
+p148
+sg43
+VLightningrod
+p149
+sbag1
+(g24
+g3
+Ntp150
+Rp151
+(dp152
+g28
+I149
+sg29
+VDragonite
+p153
+sg31
+g32
+sg33
+V50
+p154
+sg35
+(lp155
+VDragon Claw
+p156
+aVDragon Dance
+p157
+aVAerial Ace
+p158
+aVThunder Wave
+p159
+asg41
+VLum Berry
+p160
+sg43
+VInner Focus
+p161
+sbasg69
+I01
+sg70
+Vplatinum
+p162
+sbag1
+(g2
+g3
+Ntp163
+Rp164
+(dp165
+g7
+VSpr Pt Palmer.png
+p166
+sg9
+VTower Tycoon
+p167
+sg11
+VPalmer
+p168
+sg13
+V20{{color2|000|battle point|bp}}
+p169
+sg15
+I3
+sg16
+g17
+sg18
+g19
+sg20
+g124
+sg22
+(lp170
+g1
+(g24
+g3
+Ntp171
+Rp172
+(dp173
+g28
+I486
+sg29
+VRegigigas
+p174
+sg31
+g32
+sg33
+V50
+p175
+sg35
+(lp176
+VCrush Grip
+p177
+aVStone Edge
+p178
+aVEarthquake
+p179
+aVDrain Punch
+p180
+asg41
+VBrightPowder
+p181
+sg43
+VSlow Start
+p182
+sbag1
+(g24
+g3
+Ntp183
+Rp184
+(dp185
+g28
+I485
+sg29
+VHeatran
+p186
+sg31
+g32
+sg33
+V50
+p187
+sg35
+(lp188
+VMagma Storm
+p189
+aVFlash Cannon
+p190
+aVEarth Power
+p191
+aVExplosion
+p192
+asg41
+VFocus Sash
+p193
+sg43
+VFlash Fire
+p194
+sbag1
+(g24
+g3
+Ntp195
+Rp196
+(dp197
+g28
+I488
+sg29
+VCresselia
+p198
+sg31
+g108
+sg33
+V50
+p199
+sg35
+(lp200
+VPsychic
+p201
+aVSignal Beam
+p202
+aVIce Beam
+p203
+aVMoonlight
+p204
+asg41
+VLeftovers
+p205
+sg43
+VLevitate
+p206
+sbasg69
+I01
+sg70
+g162
+sba.

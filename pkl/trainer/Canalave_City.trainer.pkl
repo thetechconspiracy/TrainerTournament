@@ -1,0 +1,1257 @@
+(lp0
+ccopy_reg
+_reconstructor
+p1
+(c__main__
+Trainer
+p2
+c__builtin__
+object
+p3
+Ntp4
+Rp5
+(dp6
+VtSprite
+p7
+VSpr DP Guitarist.png
+p8
+sVtClass
+p9
+VGuitarist
+p10
+sVtName
+p11
+VArturo
+p12
+sVtMoney
+p13
+g1
+(cmwparserfromhell.wikicode
+Wikicode
+p14
+g3
+Ntp15
+Rp16
+(dp17
+V_nodes
+p18
+g1
+(cmwparserfromhell.smart_list.smart_list
+SmartList
+p19
+c__builtin__
+list
+p20
+(lp21
+g1
+(cmwparserfromhell.nodes.text
+Text
+p22
+g3
+Ntp23
+Rp24
+(dp25
+V_value
+p26
+V552
+p27
+sbatp28
+Rp29
+(dp30
+V_children
+p31
+(dp32
+sbsbsVtPokeCount
+p33
+V1
+p34
+sVtLocation
+p35
+Vwiki/Canalave_City
+p36
+sVtRegion
+p37
+VSinnoh
+p38
+sVtGame
+p39
+VDP
+p40
+sVtPokes
+p41
+(lp42
+g1
+(c__main__
+FinishedPokemon
+p43
+g3
+Ntp44
+Rp45
+(dp46
+VpDexNo
+p47
+V402
+p48
+sVpSpecies
+p49
+VKricketune
+p50
+sVpGender
+p51
+VM
+p52
+sVpLevel
+p53
+V23
+p54
+sVpMoves
+p55
+(lp56
+Vperish-song
+p57
+aVfury-cutter
+p58
+aVx-scissor
+p59
+aVbug-buzz
+p60
+asVpHold
+p61
+V
+p62
+sVpAbility
+p63
+Vswarm
+p64
+sbasVbossFlag
+p65
+I00
+sVtLongGame
+p66
+Vdiamond-pearl
+p67
+sbag1
+(g2
+g3
+Ntp68
+Rp69
+(dp70
+g7
+VSpr DP Barry.png
+p71
+sg9
+VPokemon Trainer
+p72
+sg11
+VBarry
+p73
+sg13
+V3500
+p74
+sg33
+I5
+sg35
+g36
+sg37
+g38
+sg39
+g40
+sg41
+(lp75
+g1
+(g43
+g3
+Ntp76
+Rp77
+(dp78
+g47
+I397
+sg49
+VStaravia
+p79
+sg51
+g52
+sg53
+V31
+p80
+sg55
+(lp81
+VAerial Ace
+p82
+aVDouble Team
+p83
+aVQuick Attack
+p84
+aVTake Down
+p85
+asg61
+g62
+sg63
+VIntimidate
+p86
+sbag1
+(g43
+g3
+Ntp87
+Rp88
+(dp89
+g47
+I214
+sg49
+VHeracross
+p90
+sg51
+g52
+sg53
+V30
+p91
+sg55
+(lp92
+VHorn Attack
+p93
+aVNight Slash
+p94
+aVAerial Ace
+p95
+aVBrick Break
+p96
+asg61
+g62
+sg63
+VSwarm
+p97
+sbag1
+(g43
+g3
+Ntp98
+Rp99
+(dp100
+g47
+I315
+sg49
+VRoselia
+p101
+sg51
+g52
+sg53
+V32
+p102
+sg55
+(lp103
+VGiga Drain
+p104
+aVGrassWhistle
+p105
+aVLeech Seed
+p106
+aVToxic Spikes
+p107
+asg61
+g62
+sg63
+VNatural Cure
+p108
+sbag1
+(g43
+g3
+Ntp109
+Rp110
+(dp111
+g47
+I418
+sg49
+VBuizel
+p112
+sg51
+g52
+sg53
+V32
+p113
+sg55
+(lp114
+VSwift
+p115
+aVAqua Jet
+p116
+aVPursuit
+p117
+aVQuick Attack
+p118
+asg61
+g62
+sg63
+VSwift Swim
+p119
+sbag1
+(g43
+g3
+Ntp120
+Rp121
+(dp122
+g47
+I391
+sg49
+VMonferno
+p123
+sg51
+g52
+sg53
+V35
+p124
+sg55
+(lp125
+VFlame Wheel
+p126
+aVMach Punch
+p127
+aVAerial Ace
+p128
+aVBrick Break
+p129
+asg61
+g62
+sg63
+VBlaze
+p130
+sbasg65
+I01
+sg66
+g67
+sbag1
+(g2
+g3
+Ntp131
+Rp132
+(dp133
+g7
+VSpr DP Barry.png
+p134
+sg9
+VPokemon Trainer
+p135
+sg11
+VBarry
+p136
+sg13
+V3500
+p137
+sg33
+I5
+sg35
+g36
+sg37
+g38
+sg39
+g40
+sg41
+(lp138
+g1
+(g43
+g3
+Ntp139
+Rp140
+(dp141
+g47
+I397
+sg49
+VStaravia
+p142
+sg51
+g52
+sg53
+V31
+p143
+sg55
+(lp144
+VAerial Ace
+p145
+aVDouble Team
+p146
+aVQuick Attack
+p147
+aVTake Down
+p148
+asg61
+g62
+sg63
+VIntimidate
+p149
+sbag1
+(g43
+g3
+Ntp150
+Rp151
+(dp152
+g47
+I214
+sg49
+VHeracross
+p153
+sg51
+g52
+sg53
+V30
+p154
+sg55
+(lp155
+VHorn Attack
+p156
+aVNight Slash
+p157
+aVAerial Ace
+p158
+aVBrick Break
+p159
+asg61
+g62
+sg63
+VSwarm
+p160
+sbag1
+(g43
+g3
+Ntp161
+Rp162
+(dp163
+g47
+I77
+sg49
+VPonyta
+p164
+sg51
+g52
+sg53
+V32
+p165
+sg55
+(lp166
+VTake Down
+p167
+aVStomp
+p168
+aVFire Spin
+p169
+aVTail Whip
+p170
+asg61
+g62
+sg63
+VRun Away
+p171
+sbag1
+(g43
+g3
+Ntp172
+Rp173
+(dp174
+g47
+I315
+sg49
+VRoselia
+p175
+sg51
+g52
+sg53
+V32
+p176
+sg55
+(lp177
+VGiga Drain
+p178
+aVGrassWhistle
+p179
+aVLeech Seed
+p180
+aVToxic Spikes
+p181
+asg61
+g62
+sg63
+VNatural Cure
+p182
+sbag1
+(g43
+g3
+Ntp183
+Rp184
+(dp185
+g47
+I394
+sg49
+VPrinplup
+p186
+sg51
+g52
+sg53
+V35
+p187
+sg55
+(lp188
+VFury Attack
+p189
+aVBubbleBeam
+p190
+aVMetal Claw
+p191
+aVAerial Ace
+p192
+asg61
+g62
+sg63
+VTorrent
+p193
+sbasg65
+I01
+sg66
+g67
+sbag1
+(g2
+g3
+Ntp194
+Rp195
+(dp196
+g7
+VSpr DP Barry.png
+p197
+sg9
+VPokemon Trainer
+p198
+sg11
+VBarry
+p199
+sg13
+V3500
+p200
+sg33
+I5
+sg35
+g36
+sg37
+g38
+sg39
+g40
+sg41
+(lp201
+g1
+(g43
+g3
+Ntp202
+Rp203
+(dp204
+g47
+I397
+sg49
+VStaravia
+p205
+sg51
+g52
+sg53
+V31
+p206
+sg55
+(lp207
+VAerial Ace
+p208
+aVDouble Team
+p209
+aVQuick Attack
+p210
+aVTake Down
+p211
+asg61
+g62
+sg63
+VIntimidate
+p212
+sbag1
+(g43
+g3
+Ntp213
+Rp214
+(dp215
+g47
+I214
+sg49
+VHeracross
+p216
+sg51
+g52
+sg53
+V30
+p217
+sg55
+(lp218
+VHorn Attack
+p219
+aVNight Slash
+p220
+aVAerial Ace
+p221
+aVBrick Break
+p222
+asg61
+g62
+sg63
+VSwarm
+p223
+sbag1
+(g43
+g3
+Ntp224
+Rp225
+(dp226
+g47
+I418
+sg49
+VBuizel
+p227
+sg51
+g52
+sg53
+V32
+p228
+sg55
+(lp229
+VSwift
+p230
+aVAqua Jet
+p231
+aVPursuit
+p232
+aVQuick Attack
+p233
+asg61
+g62
+sg63
+VSwift Swim
+p234
+sbag1
+(g43
+g3
+Ntp235
+Rp236
+(dp237
+g47
+I77
+sg49
+VPonyta
+p238
+sg51
+g52
+sg53
+V32
+p239
+sg55
+(lp240
+VTake Down
+p241
+aVStomp
+p242
+aVFire Spin
+p243
+aVTail Whip
+p244
+asg61
+g62
+sg63
+VRun Away
+p245
+sbag1
+(g43
+g3
+Ntp246
+Rp247
+(dp248
+g47
+I388
+sg49
+VGrotle
+p249
+sg51
+g52
+sg53
+V35
+p250
+sg55
+(lp251
+VRazor Leaf
+p252
+aVLeech Seed
+p253
+aVBite
+p254
+aVMega Drain
+p255
+asg61
+g62
+sg63
+VOvergrow
+p256
+sbasg65
+I01
+sg66
+g67
+sbag1
+(g2
+g3
+Ntp257
+Rp258
+(dp259
+g7
+VSpr Pt Barry.png
+p260
+sg9
+VPokemon Trainer
+p261
+sg11
+VBarry (game)
+p262
+sg13
+V3800
+p263
+sg33
+I5
+sg35
+g36
+sg37
+g38
+sg39
+VPt
+p264
+sg41
+(lp265
+g1
+(g43
+g3
+Ntp266
+Rp267
+(dp268
+g47
+I398
+sg49
+VStaraptor
+p269
+sg51
+g52
+sg53
+V36
+p270
+sg55
+(lp271
+VAerial Ace
+p272
+aVTake Down
+p273
+aVQuick Attack
+p274
+aVDouble Team
+p275
+asg61
+g62
+sg63
+VIntimidate
+p276
+sbag1
+(g43
+g3
+Ntp277
+Rp278
+(dp279
+g47
+I214
+sg49
+VHeracross
+p280
+sg51
+g52
+sg53
+V37
+p281
+sg55
+(lp282
+VBrick Break
+p283
+aVAerial Ace
+p284
+aVNight Slash
+p285
+aVHorn Attack
+p286
+asg61
+g62
+sg63
+VSwarm
+p287
+sbag1
+(g43
+g3
+Ntp288
+Rp289
+(dp290
+g47
+I419
+sg49
+VFloatzel
+p291
+sg51
+g52
+sg53
+V35
+p292
+sg55
+(lp293
+VAqua Jet
+p294
+aVPursuit
+p295
+aVQuick Attack
+p296
+aVSwift
+p297
+asg61
+g62
+sg63
+VSwift Swim
+p298
+sbag1
+(g43
+g3
+Ntp299
+Rp300
+(dp301
+g47
+I407
+sg49
+VRoserade
+p302
+sg51
+g52
+sg53
+V35
+p303
+sg55
+(lp304
+VGiga Drain
+p305
+aVToxic Spikes
+p306
+aVLeech Seed
+p307
+aVGrassWhistle
+p308
+asg61
+g62
+sg63
+VNatural Cure
+p309
+sbag1
+(g43
+g3
+Ntp310
+Rp311
+(dp312
+g47
+I392
+sg49
+VInfernape
+p313
+sg51
+g52
+sg53
+V38
+p314
+sg55
+(lp315
+VBrick Break
+p316
+aVFlame Wheel
+p317
+aVMach Punch
+p318
+aVAerial Ace
+p319
+asg61
+g62
+sg63
+VBlaze
+p320
+sbasg65
+I01
+sg66
+Vplatinum
+p321
+sbag1
+(g2
+g3
+Ntp322
+Rp323
+(dp324
+g7
+VSpr Pt Barry.png
+p325
+sg9
+VPokemon Trainer
+p326
+sg11
+VBarry (game)
+p327
+sg13
+V3800
+p328
+sg33
+I5
+sg35
+g36
+sg37
+g38
+sg39
+g264
+sg41
+(lp329
+g1
+(g43
+g3
+Ntp330
+Rp331
+(dp332
+g47
+I398
+sg49
+VStaraptor
+p333
+sg51
+g52
+sg53
+V36
+p334
+sg55
+(lp335
+VAerial Ace
+p336
+aVTake Down
+p337
+aVQuick Attack
+p338
+aVDouble Team
+p339
+asg61
+g62
+sg63
+VIntimidate
+p340
+sbag1
+(g43
+g3
+Ntp341
+Rp342
+(dp343
+g47
+I214
+sg49
+VHeracross
+p344
+sg51
+g52
+sg53
+V37
+p345
+sg55
+(lp346
+VBrick Break
+p347
+aVAerial Ace
+p348
+aVNight Slash
+p349
+aVHorn Attack
+p350
+asg61
+g62
+sg63
+VSwarm
+p351
+sbag1
+(g43
+g3
+Ntp352
+Rp353
+(dp354
+g47
+I78
+sg49
+VRapidash
+p355
+sg51
+g52
+sg53
+V35
+p356
+sg55
+(lp357
+VFire Spin
+p358
+aVTake Down
+p359
+aVStomp
+p360
+aVTail Whip
+p361
+asg61
+g62
+sg63
+VRun Away
+p362
+sbag1
+(g43
+g3
+Ntp363
+Rp364
+(dp365
+g47
+I407
+sg49
+VRoserade
+p366
+sg51
+g52
+sg53
+V35
+p367
+sg55
+(lp368
+VGiga Drain
+p369
+aVToxic Spikes
+p370
+aVLeech Seed
+p371
+aVGrassWhistle
+p372
+asg61
+g62
+sg63
+VNatural Cure
+p373
+sbag1
+(g43
+g3
+Ntp374
+Rp375
+(dp376
+g47
+I395
+sg49
+VEmpoleon
+p377
+sg51
+g52
+sg53
+V38
+p378
+sg55
+(lp379
+VBubbleBeam
+p380
+aVAerial Ace
+p381
+aVMetal Claw
+p382
+aVFury Attack
+p383
+asg61
+g62
+sg63
+VTorrent
+p384
+sbasg65
+I01
+sg66
+g321
+sbag1
+(g2
+g3
+Ntp385
+Rp386
+(dp387
+g7
+VSpr Pt Barry.png
+p388
+sg9
+VPokemon Trainer
+p389
+sg11
+VBarry (game)
+p390
+sg13
+V3800
+p391
+sg33
+I5
+sg35
+g36
+sg37
+g38
+sg39
+g264
+sg41
+(lp392
+g1
+(g43
+g3
+Ntp393
+Rp394
+(dp395
+g47
+I398
+sg49
+VStaraptor
+p396
+sg51
+g52
+sg53
+V36
+p397
+sg55
+(lp398
+VAerial Ace
+p399
+aVTake Down
+p400
+aVQuick Attack
+p401
+aVDouble Team
+p402
+asg61
+g62
+sg63
+VIntimidate
+p403
+sbag1
+(g43
+g3
+Ntp404
+Rp405
+(dp406
+g47
+I214
+sg49
+VHeracross
+p407
+sg51
+g52
+sg53
+V37
+p408
+sg55
+(lp409
+VBrick Break
+p410
+aVAerial Ace
+p411
+aVNight Slash
+p412
+aVHorn Attack
+p413
+asg61
+g62
+sg63
+VSwarm
+p414
+sbag1
+(g43
+g3
+Ntp415
+Rp416
+(dp417
+g47
+I419
+sg49
+VFloatzel
+p418
+sg51
+g52
+sg53
+V35
+p419
+sg55
+(lp420
+VAqua Jet
+p421
+aVPursuit
+p422
+aVQuick Attack
+p423
+aVSwift
+p424
+asg61
+g62
+sg63
+VSwift Swim
+p425
+sbag1
+(g43
+g3
+Ntp426
+Rp427
+(dp428
+g47
+I78
+sg49
+VRapidash
+p429
+sg51
+g52
+sg53
+V35
+p430
+sg55
+(lp431
+VFire Spin
+p432
+aVTake Down
+p433
+aVStomp
+p434
+aVTail Whip
+p435
+asg61
+g62
+sg63
+VRun Away
+p436
+sbag1
+(g43
+g3
+Ntp437
+Rp438
+(dp439
+g47
+I389
+sg49
+VTorterra
+p440
+sg51
+g52
+sg53
+V38
+p441
+sg55
+(lp442
+VRazor Leaf
+p443
+aVBite
+p444
+aVMega Drain
+p445
+aVLeech Seed
+p446
+asg61
+g62
+sg63
+VOvergrow
+p447
+sbasg65
+I01
+sg66
+g321
+sba.

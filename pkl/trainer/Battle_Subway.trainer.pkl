@@ -1,0 +1,2918 @@
+(lp0
+ccopy_reg
+_reconstructor
+p1
+(c__main__
+Trainer
+p2
+c__builtin__
+object
+p3
+Ntp4
+Rp5
+(dp6
+VtSprite
+p7
+VSpr B2W2 Ingo.png
+p8
+sVtClass
+p9
+VSubway Boss
+p10
+sVtName
+p11
+VIngo
+p12
+sVtMoney
+p13
+V10{{color2|000|battle point|bp}}
+p14
+sVtPokeCount
+p15
+I3
+sVtLocation
+p16
+Vwiki/Battle_Subway
+p17
+sVtRegion
+p18
+VUnova
+p19
+sVtGame
+p20
+VB2W2
+p21
+sVtPokes
+p22
+(lp23
+g1
+(c__main__
+FinishedPokemon
+p24
+g3
+Ntp25
+Rp26
+(dp27
+VpDexNo
+p28
+I558
+sVpSpecies
+p29
+VCrustle
+p30
+sVpGender
+p31
+VU
+p32
+sVpLevel
+p33
+V50
+p34
+sVpMoves
+p35
+(lp36
+VStone Edge
+p37
+aVX-Scissor
+p38
+aVEarthquake
+p39
+aVFlail
+p40
+asVpHold
+p41
+VRocky Helmet
+p42
+sVpAbility
+p43
+VSturdy
+p44
+sbag1
+(g24
+g3
+Ntp45
+Rp46
+(dp47
+g28
+I601
+sg29
+VKlinklang
+p48
+sg31
+g32
+sg33
+V50
+p49
+sg35
+(lp50
+VVolt Switch
+p51
+aVShift Gear
+p52
+aVGiga Impact
+p53
+aVGear Grind
+p54
+asg41
+VOcca Berry
+p55
+sg43
+VPlus
+p56
+sbag1
+(g24
+g3
+Ntp57
+Rp58
+(dp59
+g28
+I569
+sg29
+VGarbodor
+p60
+sg31
+g32
+sg33
+V50
+p61
+sg35
+(lp62
+VToxic
+p63
+aVFocus Blast
+p64
+aVVenoshock
+p65
+aVPsychic
+p66
+asg41
+VBlack Sludge
+p67
+sg43
+VWeak Armor
+p68
+sbasVbossFlag
+p69
+I01
+sVtLongGame
+p70
+Vblack-2-white-2
+p71
+sbag1
+(g2
+g3
+Ntp72
+Rp73
+(dp74
+g7
+VSpr B2W2 Ingo.png
+p75
+sg9
+VSubway Boss
+p76
+sg11
+VIngo
+p77
+sg13
+V30{{color2|000|battle point|bp}}
+p78
+sg15
+I3
+sg16
+g17
+sg18
+g19
+sg20
+g21
+sg22
+(lp79
+g1
+(g24
+g3
+Ntp80
+Rp81
+(dp82
+g28
+I530
+sg29
+VExcadrill
+p83
+sg31
+g32
+sg33
+V50
+p84
+sg35
+(lp85
+VRock Slide
+p86
+aVEarthquake
+p87
+aVPoison Jab
+p88
+aVAerial Ace
+p89
+asg41
+VLife Orb
+p90
+sg43
+VSand Rush
+p91
+sbag1
+(g24
+g3
+Ntp92
+Rp93
+(dp94
+g28
+I612
+sg29
+VHaxorus
+p95
+sg31
+g32
+sg33
+V50
+p96
+sg35
+(lp97
+VDragon Dance
+p98
+aVDragon Claw
+p99
+aVEarthquake
+p100
+aVDragon Tail
+p101
+asg41
+VYache Berry
+p102
+sg43
+VMold Breaker
+p103
+sbag1
+(g24
+g3
+Ntp104
+Rp105
+(dp106
+g28
+I609
+sg29
+VChandelure
+p107
+sg31
+g32
+sg33
+V50
+p108
+sg35
+(lp109
+VProtect
+p110
+aVWill-O-Wisp
+p111
+aVOverheat
+p112
+aVShadow Ball
+p113
+asg41
+VWhite Herb
+p114
+sg43
+VFlame Body
+p115
+sbasg69
+I01
+sg70
+g71
+sbag1
+(g2
+g3
+Ntp116
+Rp117
+(dp118
+g7
+VSpr B2W2 Emmet.png
+p119
+sg9
+VSubway Boss
+p120
+sg11
+VEmmet
+p121
+sg13
+V10{{color2|000|battle point|bp}}
+p122
+sg15
+I4
+sg16
+g17
+sg18
+g19
+sg20
+g21
+sg22
+(lp123
+g1
+(g24
+g3
+Ntp124
+Rp125
+(dp126
+g28
+I558
+sg29
+VCrustle
+p127
+sg31
+g32
+sg33
+V50
+p128
+sg35
+(lp129
+VStone Edge
+p130
+aVX-Scissor
+p131
+aVEarthquake
+p132
+aVFlail
+p133
+asg41
+VRocky Helmet
+p134
+sg43
+VSturdy
+p135
+sbag1
+(g24
+g3
+Ntp136
+Rp137
+(dp138
+g28
+I601
+sg29
+VKlinklang
+p139
+sg31
+g32
+sg33
+V50
+p140
+sg35
+(lp141
+VThunderbolt
+p142
+aVFlash Cannon
+p143
+aVProtect
+p144
+aVToxic
+p145
+asg41
+VSteel Gem
+p146
+sg43
+VMinus
+p147
+sbag1
+(g24
+g3
+Ntp148
+Rp149
+(dp150
+g28
+I569
+sg29
+VGarbodor
+p151
+sg31
+g32
+sg33
+V50
+p152
+sg35
+(lp153
+VFocus Blast
+p154
+aVVenoshock
+p155
+aVPsychic
+p156
+aVToxic
+p157
+asg41
+VBlack Sludge
+p158
+sg43
+VWeak Armor
+p159
+sbag1
+(g24
+g3
+Ntp160
+Rp161
+(dp162
+g28
+I632
+sg29
+VDurant
+p163
+sg31
+g32
+sg33
+V50
+p164
+sg35
+(lp165
+VX-Scissor
+p166
+aVRock Slide
+p167
+aVShadow Claw
+p168
+aVIron Head
+p169
+asg41
+VOcca Berry
+p170
+sg43
+VSwarm
+p171
+sbasg69
+I01
+sg70
+g71
+sbag1
+(g2
+g3
+Ntp172
+Rp173
+(dp174
+g7
+VSpr B2W2 Emmet.png
+p175
+sg9
+VSubway Boss
+p176
+sg11
+VEmmet
+p177
+sg13
+V30{{color2|000|battle point|bp}}
+p178
+sg15
+I4
+sg16
+g17
+sg18
+g19
+sg20
+g21
+sg22
+(lp179
+g1
+(g24
+g3
+Ntp180
+Rp181
+(dp182
+g28
+I530
+sg29
+VExcadrill
+p183
+sg31
+g32
+sg33
+V50
+p184
+sg35
+(lp185
+VAerial Ace
+p186
+aVEarthquake
+p187
+aVPoison Jab
+p188
+aVRock Slide
+p189
+asg41
+VLife Orb
+p190
+sg43
+VSand Rush
+p191
+sbag1
+(g24
+g3
+Ntp192
+Rp193
+(dp194
+g28
+I612
+sg29
+VHaxorus
+p195
+sg31
+g32
+sg33
+V50
+p196
+sg35
+(lp197
+VEarthquake
+p198
+aVDragon Claw
+p199
+aVDragon Tail
+p200
+aVDragon Dance
+p201
+asg41
+VYache Berry
+p202
+sg43
+VMold Breaker
+p203
+sbag1
+(g24
+g3
+Ntp204
+Rp205
+(dp206
+g28
+I609
+sg29
+VChandelure
+p207
+sg31
+g32
+sg33
+V50
+p208
+sg35
+(lp209
+VShadow Ball
+p210
+aVProtect
+p211
+aVOverheat
+p212
+aVWill-O-Wisp
+p213
+asg41
+VWhite Herb
+p214
+sg43
+VFlame Body
+p215
+sbag1
+(g24
+g3
+Ntp216
+Rp217
+(dp218
+g28
+I604
+sg29
+VEelektross
+p219
+sg31
+g32
+sg33
+V50
+p220
+sg35
+(lp221
+VThunder Wave
+p222
+aVThunderbolt
+p223
+aVDischarge
+p224
+aVGastro Acid
+p225
+asg41
+VMagnet
+p226
+sg43
+VLevitate
+p227
+sbasg69
+I01
+sg70
+g71
+sbag1
+(g2
+g3
+Ntp228
+Rp229
+(dp230
+g7
+V{{#switch: {{#expr: {{#time: U}} mod 4}}|0=BW Hilbert|1=BW Hilda|2=B2W2 Nate|B2W2 Rosa}} Back.png
+p231
+sg9
+VPokemon Trainer
+p232
+sg11
+Vif female player in BW
+p233
+sg13
+Vn/a
+p234
+sg15
+I2
+sg16
+g17
+sg18
+g19
+sg20
+VSM
+p235
+sg22
+(lp236
+g1
+(g24
+g3
+Ntp237
+Rp238
+(dp239
+g28
+I530
+sg29
+VExcadrill
+p240
+sg31
+g32
+sg33
+V50
+p241
+sg35
+(lp242
+VDig
+p243
+aVMetal Sound
+p244
+aVMetal Claw
+p245
+aVSwords Dance
+p246
+asg41
+VChople Berry
+p247
+sg43
+VSand Rush
+p248
+sbag1
+(g24
+g3
+Ntp249
+Rp250
+(dp251
+g28
+I530
+sg29
+VExcadrill
+p252
+sg31
+g32
+sg33
+V50
+p253
+sg35
+(lp254
+VEarthquake
+p255
+aVAerial Ace
+p256
+aVPoison Jab
+p257
+aVRock Slide
+p258
+asg41
+VLife Orb
+p259
+sg43
+VSand Rush
+p260
+sbag1
+(g24
+g3
+Ntp261
+Rp262
+(dp263
+g28
+I534
+sg29
+VConkeldurr
+p264
+sg31
+g32
+sg33
+V50
+p265
+sg35
+(lp266
+VBulk Up
+p267
+aVDrain Punch
+p268
+aVPayback
+p269
+aVStone Edge
+p270
+asg41
+VSitrus Berry
+p271
+sg43
+VGuts
+p272
+sbag1
+(g24
+g3
+Ntp273
+Rp274
+(dp275
+g28
+I534
+sg29
+VConkeldurr
+p276
+sg31
+g32
+sg33
+V50
+p277
+sg35
+(lp278
+VFling
+p279
+aVRock Slide
+p280
+aVSuperpower
+p281
+aVMach Punch
+p282
+asg41
+VIron Ball
+p283
+sg43
+VGuts
+p284
+sbag1
+(g24
+g3
+Ntp285
+Rp286
+(dp287
+g28
+I539
+sg29
+VSawk
+p288
+sg31
+VM
+p289
+sg33
+V50
+p290
+sg35
+(lp291
+VEarthquake
+p292
+aVPayback
+p293
+aVEndure
+p294
+aVReversal
+p295
+asg41
+VFocus Sash
+p296
+sg43
+VSturdy
+p297
+sbag1
+(g24
+g3
+Ntp298
+Rp299
+(dp300
+g28
+I539
+sg29
+VSawk
+p301
+sg31
+g289
+sg33
+V50
+p302
+sg35
+(lp303
+VClose Combat
+p304
+aVPayback
+p305
+aVLow Sweep
+p306
+aVEarthquake
+p307
+asg41
+VExpert Belt
+p308
+sg43
+VSturdy
+p309
+sbag1
+(g24
+g3
+Ntp310
+Rp311
+(dp312
+g28
+I539
+sg29
+VSawk
+p313
+sg31
+g289
+sg33
+V50
+p314
+sg35
+(lp315
+VClose Combat
+p316
+aVBulldoze
+p317
+aVStone Edge
+p318
+aVTaunt
+p319
+asg41
+VLife Orb
+p320
+sg43
+VSturdy
+p321
+sbag1
+(g24
+g3
+Ntp322
+Rp323
+(dp324
+g28
+I553
+sg29
+VKrookodile
+p325
+sg31
+g32
+sg33
+V50
+p326
+sg35
+(lp327
+VEarthquake
+p328
+aVCrunch
+p329
+aVStone Edge
+p330
+aVDragon Tail
+p331
+asg41
+VDark Gem
+p332
+sg43
+VIntimidate
+p333
+sbag1
+(g24
+g3
+Ntp334
+Rp335
+(dp336
+g28
+I553
+sg29
+VKrookodile
+p337
+sg31
+g32
+sg33
+V50
+p338
+sg35
+(lp339
+VEarthquake
+p340
+aVPursuit
+p341
+aVLow Sweep
+p342
+aVRock Slide
+p343
+asg41
+VLiechi Berry
+p344
+sg43
+VIntimidate
+p345
+sbag1
+(g24
+g3
+Ntp346
+Rp347
+(dp348
+g28
+I555
+sg29
+VDarmanitan
+p349
+sg31
+g32
+sg33
+V50
+p350
+sg35
+(lp351
+VFlame Charge
+p352
+aVEarthquake
+p353
+aVFlare Blitz
+p354
+aVBrick Break
+p355
+asg41
+VLiechi Berry
+p356
+sg43
+VSheer Force
+p357
+sbag1
+(g24
+g3
+Ntp358
+Rp359
+(dp360
+g28
+I567
+sg29
+VArcheops
+p361
+sg31
+g32
+sg33
+V50
+p362
+sg35
+(lp363
+VQuick Attack
+p364
+aVAcrobatics
+p365
+aVCrunch
+p366
+aVU-turn
+p367
+asg41
+VSitrus Berry
+p368
+sg43
+VDefeatist
+p369
+sbag1
+(g24
+g3
+Ntp370
+Rp371
+(dp372
+g28
+I567
+sg29
+VArcheops
+p373
+sg31
+g32
+sg33
+V50
+p374
+sg35
+(lp375
+VEarthquake
+p376
+aVEarth Power
+p377
+aVEndeavor
+p378
+aVAncientPower
+p379
+asg41
+VEnigma Berry
+p380
+sg43
+VDefeatist
+p381
+sbag1
+(g24
+g3
+Ntp382
+Rp383
+(dp384
+g28
+I567
+sg29
+VArcheops
+p385
+sg31
+g32
+sg33
+V50
+p386
+sg35
+(lp387
+VAerial Ace
+p388
+aVEarthquake
+p389
+aVHead Smash
+p390
+aVU-turn
+p391
+asg41
+VChoice Band
+p392
+sg43
+VDefeatist
+p393
+sbag1
+(g24
+g3
+Ntp394
+Rp395
+(dp396
+g28
+I567
+sg29
+VArcheops
+p397
+sg31
+g32
+sg33
+V50
+p398
+sg35
+(lp399
+VRock Slide
+p400
+aVEarthquake
+p401
+aVAerial Ace
+p402
+aVProtect
+p403
+asg41
+VSitrus Berry
+p404
+sg43
+VDefeatist
+p405
+sbag1
+(g24
+g3
+Ntp406
+Rp407
+(dp408
+g28
+I579
+sg29
+VReuniclus
+p409
+sg31
+g32
+sg33
+V50
+p410
+sg35
+(lp411
+VCalm Mind
+p412
+aVPsychic
+p413
+aVFocus Blast
+p414
+aVShadow Ball
+p415
+asg41
+VColbur Berry
+p416
+sg43
+VOvercoat
+p417
+sbag1
+(g24
+g3
+Ntp418
+Rp419
+(dp420
+g28
+I584
+sg29
+VVanilluxe
+p421
+sg31
+g32
+sg33
+V50
+p422
+sg35
+(lp423
+VAvalanche
+p424
+aVIce Shard
+p425
+aVNatural Gift
+p426
+aVGiga Impact
+p427
+asg41
+VOcca Berry
+p428
+sg43
+VIce Body
+p429
+sbag1
+(g24
+g3
+Ntp430
+Rp431
+(dp432
+g28
+I589
+sg29
+VEscavalier
+p433
+sg31
+g32
+sg33
+V50
+p434
+sg35
+(lp435
+VPursuit
+p436
+aVCounter
+p437
+aVX-Scissor
+p438
+aVSwords Dance
+p439
+asg41
+VQuick Claw
+p440
+sg43
+VSwarm
+p441
+sbag1
+(g24
+g3
+Ntp442
+Rp443
+(dp444
+g28
+I604
+sg29
+VEelektross
+p445
+sg31
+g32
+sg33
+V50
+p446
+sg35
+(lp447
+VBrick Break
+p448
+aVU-turn
+p449
+aVGrass Knot
+p450
+aVWild Charge
+p451
+asg41
+VSitrus Berry
+p452
+sg43
+VLevitate
+p453
+sbag1
+(g24
+g3
+Ntp454
+Rp455
+(dp456
+g28
+I609
+sg29
+VChandelure
+p457
+sg31
+g32
+sg33
+V50
+p458
+sg35
+(lp459
+VOverheat
+p460
+aVShadow Ball
+p461
+aVProtect
+p462
+aVWill-O-Wisp
+p463
+asg41
+VWhite Herb
+p464
+sg43
+VFlash Fire
+p465
+sbag1
+(g24
+g3
+Ntp466
+Rp467
+(dp468
+g28
+I612
+sg29
+VHaxorus
+p469
+sg31
+g32
+sg33
+V50
+p470
+sg35
+(lp471
+VOutrage
+p472
+aVRock Slide
+p473
+aVCounter
+p474
+aVDragon Dance
+p475
+asg41
+VPersim Berry
+p476
+sg43
+VRivalry
+p477
+sbag1
+(g24
+g3
+Ntp478
+Rp479
+(dp480
+g28
+I612
+sg29
+VHaxorus
+p481
+sg31
+g32
+sg33
+V50
+p482
+sg35
+(lp483
+VDragon Dance
+p484
+aVDragon Claw
+p485
+aVDragon Tail
+p486
+aVEarthquake
+p487
+asg41
+VYache Berry
+p488
+sg43
+VRivalry
+p489
+sbag1
+(g24
+g3
+Ntp490
+Rp491
+(dp492
+g28
+I614
+sg29
+VBeartic
+p493
+sg31
+g32
+sg33
+V50
+p494
+sg35
+(lp495
+VShadow Claw
+p496
+aVStone Edge
+p497
+aVAvalanche
+p498
+aVBulk Up
+p499
+asg41
+VSitrus Berry
+p500
+sg43
+VSnow Cloak
+p501
+sbag1
+(g24
+g3
+Ntp502
+Rp503
+(dp504
+g28
+I614
+sg29
+VBeartic
+p505
+sg31
+g32
+sg33
+V50
+p506
+sg35
+(lp507
+VSwords Dance
+p508
+aVAvalanche
+p509
+aVRock Slide
+p510
+aVBrick Break
+p511
+asg41
+VSitrus Berry
+p512
+sg43
+VSnow Cloak
+p513
+sbag1
+(g24
+g3
+Ntp514
+Rp515
+(dp516
+g28
+I614
+sg29
+VBeartic
+p517
+sg31
+g32
+sg33
+V50
+p518
+sg35
+(lp519
+VIcy Wind
+p520
+aVIcicle Crash
+p521
+aVRock Slide
+p522
+aVBrick Break
+p523
+asg41
+VLax Incense
+p524
+sg43
+VSnow Cloak
+p525
+sbag1
+(g24
+g3
+Ntp526
+Rp527
+(dp528
+g28
+I615
+sg29
+VCryogonal
+p529
+sg31
+g32
+sg33
+V50
+p530
+sg35
+(lp531
+VIcy Wind
+p532
+aVFlash Cannon
+p533
+aVBlizzard
+p534
+aVSheer Cold
+p535
+asg41
+VOcca Berry
+p536
+sg43
+VLevitate
+p537
+sbag1
+(g24
+g3
+Ntp538
+Rp539
+(dp540
+g28
+I617
+sg29
+VAccelgor
+p541
+sg31
+g32
+sg33
+V50
+p542
+sg35
+(lp543
+VEnergy Ball
+p544
+aVSludge Bomb
+p545
+aVBug Buzz
+p546
+aVEndure
+p547
+asg41
+VPetaya Berry
+p548
+sg43
+VHydration
+p549
+sbag1
+(g24
+g3
+Ntp550
+Rp551
+(dp552
+g28
+I620
+sg29
+VMienshao
+p553
+sg31
+g32
+sg33
+V50
+p554
+sg35
+(lp555
+VFake Out
+p556
+aVFling
+p557
+aVAcrobatics
+p558
+aVHi Jump Kick
+p559
+asg41
+VKing's Rock
+p560
+sg43
+VInner Focus
+p561
+sbag1
+(g24
+g3
+Ntp562
+Rp563
+(dp564
+g28
+I620
+sg29
+VMienshao
+p565
+sg31
+g32
+sg33
+V50
+p566
+sg35
+(lp567
+VLow Kick
+p568
+aVFake Out
+p569
+aVHi Jump Kick
+p570
+aVU-turn
+p571
+asg41
+VFocus Sash
+p572
+sg43
+VInner Focus
+p573
+sbag1
+(g24
+g3
+Ntp574
+Rp575
+(dp576
+g28
+I621
+sg29
+VDruddigon
+p577
+sg31
+g32
+sg33
+V50
+p578
+sg35
+(lp579
+VOutrage
+p580
+aVEarthquake
+p581
+aVSuperpower
+p582
+aVDragon Tail
+p583
+asg41
+VChoice Band
+p584
+sg43
+VRough Skin
+p585
+sbag1
+(g24
+g3
+Ntp586
+Rp587
+(dp588
+g28
+I623
+sg29
+VGolurk
+p589
+sg31
+g32
+sg33
+V50
+p590
+sg35
+(lp591
+VDynamicPunch
+p592
+aVShadow Punch
+p593
+aVEarthquake
+p594
+aVRock Slide
+p595
+asg41
+VLum Berry
+p596
+sg43
+VIron Fist
+p597
+sbag1
+(g24
+g3
+Ntp598
+Rp599
+(dp600
+g28
+I625
+sg29
+VBisharp
+p601
+sg31
+g32
+sg33
+V50
+p602
+sg35
+(lp603
+VIron Head
+p604
+aVNight Slash
+p605
+aVLow Sweep
+p606
+aVSucker Punch
+p607
+asg41
+VChople Berry
+p608
+sg43
+VDefiant
+p609
+sbag1
+(g24
+g3
+Ntp610
+Rp611
+(dp612
+g28
+I625
+sg29
+VBisharp
+p613
+sg31
+g32
+sg33
+V50
+p614
+sg35
+(lp615
+VTaunt
+p616
+aVSucker Punch
+p617
+aVRock Smash
+p618
+aVIron Head
+p619
+asg41
+VFocus Sash
+p620
+sg43
+VDefiant
+p621
+sbag1
+(g24
+g3
+Ntp622
+Rp623
+(dp624
+g28
+I626
+sg29
+VBouffalant
+p625
+sg31
+g32
+sg33
+V50
+p626
+sg35
+(lp627
+VSwords Dance
+p628
+aVEarthquake
+p629
+aVHead Charge
+p630
+aVPayback
+p631
+asg41
+VSitrus Berry
+p632
+sg43
+VReckless
+p633
+sbag1
+(g24
+g3
+Ntp634
+Rp635
+(dp636
+g28
+I626
+sg29
+VBouffalant
+p637
+sg31
+g32
+sg33
+V50
+p638
+sg35
+(lp639
+VEarthquake
+p640
+aVHead Charge
+p641
+aVPayback
+p642
+aVProtect
+p643
+asg41
+VLife Orb
+p644
+sg43
+VReckless
+p645
+sbag1
+(g24
+g3
+Ntp646
+Rp647
+(dp648
+g28
+I628
+sg29
+VBraviary
+p649
+sg31
+g289
+sg33
+V50
+p650
+sg35
+(lp651
+VThrash
+p652
+aVBulk Up
+p653
+aVSuperpower
+p654
+aVPluck
+p655
+asg41
+VPersim Berry
+p656
+sg43
+VKeen Eye
+p657
+sbag1
+(g24
+g3
+Ntp658
+Rp659
+(dp660
+g28
+I628
+sg29
+VBraviary
+p661
+sg31
+g289
+sg33
+V50
+p662
+sg35
+(lp663
+VBrave Bird
+p664
+aVReturn
+p665
+aVU-turn
+p666
+aVRock Slide
+p667
+asg41
+VFlying Gem
+p668
+sg43
+VKeen Eye
+p669
+sbag1
+(g24
+g3
+Ntp670
+Rp671
+(dp672
+g28
+I628
+sg29
+VBraviary
+p673
+sg31
+g289
+sg33
+V50
+p674
+sg35
+(lp675
+VBrave Bird
+p676
+aVTailwind
+p677
+aVSuperpower
+p678
+aVGiga Impact
+p679
+asg41
+VWacan Berry
+p680
+sg43
+VKeen Eye
+p681
+sbasg69
+I01
+sg70
+Vsun-moon
+p682
+sbag1
+(g2
+g3
+Ntp683
+Rp684
+(dp685
+g7
+V{{#switch: {{#expr: {{#time: U}} mod 4}}|1=BW Hilbert|0=BW Hilda|3=B2W2 Nate|B2W2 Rosa}} Back.png
+p686
+sg9
+VPokemon Trainer
+p687
+sg11
+Vif female player in BW
+p688
+sg13
+Vn/a
+p689
+sg15
+I2
+sg16
+g17
+sg18
+g19
+sg20
+VSM
+p690
+sg22
+(lp691
+g1
+(g24
+g3
+Ntp692
+Rp693
+(dp694
+g28
+I531
+sg29
+VAudino
+p695
+sg31
+g32
+sg33
+V50
+p696
+sg35
+(lp697
+VHyper Beam
+p698
+aVSimple Beam
+p699
+aVThunder
+p700
+aVHeal Pulse
+p701
+asg41
+VLeftovers
+p702
+sg43
+VHealer
+p703
+sbag1
+(g24
+g3
+Ntp704
+Rp705
+(dp706
+g28
+I531
+sg29
+VAudino
+p707
+sg31
+g32
+sg33
+V50
+p708
+sg35
+(lp709
+VDouble-Edge
+p710
+aVSweet Kiss
+p711
+aVAttract
+p712
+aVHeal Pulse
+p713
+asg41
+VShell Bell
+p714
+sg43
+VHealer
+p715
+sbag1
+(g24
+g3
+Ntp716
+Rp717
+(dp718
+g28
+I591
+sg29
+VAmoonguss
+p719
+sg31
+g32
+sg33
+V50
+p720
+sg35
+(lp721
+VGiga Drain
+p722
+aVDouble Team
+p723
+aVIngrain
+p724
+aVSpore
+p725
+asg41
+VLeftovers
+p726
+sg43
+VEffect Spore
+p727
+sbag1
+(g24
+g3
+Ntp728
+Rp729
+(dp730
+g28
+I593
+sg29
+VJellicent
+p731
+sg31
+g32
+sg33
+V50
+p732
+sg35
+(lp733
+VHydro Pump
+p734
+aVHex
+p735
+aVRecover
+p736
+aVToxic
+p737
+asg41
+VLeftovers
+p738
+sg43
+VWater Absorb
+p739
+sbag1
+(g24
+g3
+Ntp740
+Rp741
+(dp742
+g28
+I594
+sg29
+VAlomomola
+p743
+sg31
+g32
+sg33
+V50
+p744
+sg35
+(lp745
+VDive
+p746
+aVAqua Ring
+p747
+aVHealing Wish
+p748
+aVWide Guard
+p749
+asg41
+VLeftovers
+p750
+sg43
+VHealer
+p751
+sbag1
+(g24
+g3
+Ntp752
+Rp753
+(dp754
+g28
+I518
+sg29
+VMusharna
+p755
+sg31
+g32
+sg33
+V50
+p756
+sg35
+(lp757
+VStored Power
+p758
+aVCalm Mind
+p759
+aVShadow Ball
+p760
+aVRest
+p761
+asg41
+VChesto Berry
+p762
+sg43
+VForewarn
+p763
+sbag1
+(g24
+g3
+Ntp764
+Rp765
+(dp766
+g28
+I526
+sg29
+VGigalith
+p767
+sg31
+g32
+sg33
+V50
+p768
+sg35
+(lp769
+VIron Defense
+p770
+aVSandstorm
+p771
+aVLock-On
+p772
+aVRock Blast
+p773
+asg41
+VHard Stone
+p774
+sg43
+VSturdy
+p775
+sbag1
+(g24
+g3
+Ntp776
+Rp777
+(dp778
+g28
+I526
+sg29
+VGigalith
+p779
+sg31
+g32
+sg33
+V50
+p780
+sg35
+(lp781
+VRock Slide
+p782
+aVStealth Rock
+p783
+aVCurse
+p784
+aVEarthquake
+p785
+asg41
+VLeftovers
+p786
+sg43
+VSturdy
+p787
+sbag1
+(g24
+g3
+Ntp788
+Rp789
+(dp790
+g28
+I534
+sg29
+VConkeldurr
+p791
+sg31
+g32
+sg33
+V50
+p792
+sg35
+(lp793
+VMach Punch
+p794
+aVHammer Arm
+p795
+aVBulk Up
+p796
+aVFling
+p797
+asg41
+VIron Ball
+p798
+sg43
+VGuts
+p799
+sbag1
+(g24
+g3
+Ntp800
+Rp801
+(dp802
+g28
+I538
+sg29
+VThroh
+p803
+sg31
+g289
+sg33
+V50
+p804
+sg35
+(lp805
+VProtect
+p806
+aVToxic
+p807
+aVCircle Throw
+p808
+aVWide Guard
+p809
+asg41
+VPayapa Berry
+p810
+sg43
+VGuts
+p811
+sbag1
+(g24
+g3
+Ntp812
+Rp813
+(dp814
+g28
+I549
+sg29
+VLilligant
+p815
+sg31
+VF
+p816
+sg33
+V50
+p817
+sg35
+(lp818
+VIngrain
+p819
+aVLeech Seed
+p820
+aVToxic
+p821
+aVProtect
+p822
+asg41
+VBig Root
+p823
+sg43
+VChlorophyll
+p824
+sbag1
+(g24
+g3
+Ntp825
+Rp826
+(dp827
+g28
+I549
+sg29
+VLilligant
+p828
+sg31
+g816
+sg33
+V50
+p829
+sg35
+(lp830
+VQuiver Dance
+p831
+aVEnergy Ball
+p832
+aVLeech Seed
+p833
+aVProtect
+p834
+asg41
+VLeftovers
+p835
+sg43
+VChlorophyll
+p836
+sbag1
+(g24
+g3
+Ntp837
+Rp838
+(dp839
+g28
+I560
+sg29
+VScrafty
+p840
+sg31
+g32
+sg33
+V50
+p841
+sg35
+(lp842
+VBulk Up
+p843
+aVPayback
+p844
+aVProtect
+p845
+aVDrain Punch
+p846
+asg41
+VLeftovers
+p847
+sg43
+VShed Skin
+p848
+sbag1
+(g24
+g3
+Ntp849
+Rp850
+(dp851
+g28
+I563
+sg29
+VCofagrigus
+p852
+sg31
+g32
+sg33
+V50
+p853
+sg35
+(lp854
+VNight Shade
+p855
+aVWill-O-Wisp
+p856
+aVMean Look
+p857
+aVRest
+p858
+asg41
+VChesto Berry
+p859
+sg43
+VMummy
+p860
+sbag1
+(g24
+g3
+Ntp861
+Rp862
+(dp863
+g28
+I563
+sg29
+VCofagrigus
+p864
+sg31
+g32
+sg33
+V50
+p865
+sg35
+(lp866
+VWill-O-Wisp
+p867
+aVToxic
+p868
+aVHex
+p869
+aVCalm Mind
+p870
+asg41
+VLeftovers
+p871
+sg43
+VMummy
+p872
+sbag1
+(g24
+g3
+Ntp873
+Rp874
+(dp875
+g28
+I576
+sg29
+VGothitelle
+p876
+sg31
+g32
+sg33
+V50
+p877
+sg35
+(lp878
+VCharm
+p879
+aVSafeguard
+p880
+aVPsychic
+p881
+aVCharge Beam
+p882
+asg41
+VSitrus Berry
+p883
+sg43
+VFrisk
+p884
+sbag1
+(g24
+g3
+Ntp885
+Rp886
+(dp887
+g28
+I579
+sg29
+VReuniclus
+p888
+sg31
+g32
+sg33
+V50
+p889
+sg35
+(lp890
+VTrick
+p891
+aVPsychic
+p892
+aVFocus Blast
+p893
+aVRecover
+p894
+asg41
+VToxic Orb
+p895
+sg43
+VOvercoat
+p896
+sbag1
+(g24
+g3
+Ntp897
+Rp898
+(dp899
+g28
+I584
+sg29
+VVanilluxe
+p900
+sg31
+g32
+sg33
+V50
+p901
+sg35
+(lp902
+VTaunt
+p903
+aVIce Beam
+p904
+aVAcid Armor
+p905
+aVMirror Coat
+p906
+asg41
+VSitrus Berry
+p907
+sg43
+VIce Body
+p908
+sbag1
+(g24
+g3
+Ntp909
+Rp910
+(dp911
+g28
+I598
+sg29
+VFerrothorn
+p912
+sg31
+g32
+sg33
+V50
+p913
+sg35
+(lp914
+VIron Head
+p915
+aVThunder Wave
+p916
+aVSandstorm
+p917
+aVIngrain
+p918
+asg41
+VLeftovers
+p919
+sg43
+VIron Barbs
+p920
+sbag1
+(g24
+g3
+Ntp921
+Rp922
+(dp923
+g28
+I598
+sg29
+VFerrothorn
+p924
+sg31
+g32
+sg33
+V50
+p925
+sg35
+(lp926
+VRest
+p927
+aVPayback
+p928
+aVGyro Ball
+p929
+aVCurse
+p930
+asg41
+VChesto Berry
+p931
+sg43
+VIron Barbs
+p932
+sbag1
+(g24
+g3
+Ntp933
+Rp934
+(dp935
+g28
+I598
+sg29
+VFerrothorn
+p936
+sg31
+g32
+sg33
+V50
+p937
+sg35
+(lp938
+VCurse
+p939
+aVRock Smash
+p940
+aVGyro Ball
+p941
+aVIngrain
+p942
+asg41
+VLeftovers
+p943
+sg43
+VIron Barbs
+p944
+sbag1
+(g24
+g3
+Ntp945
+Rp946
+(dp947
+g28
+I601
+sg29
+VKlinklang
+p948
+sg31
+g32
+sg33
+V50
+p949
+sg35
+(lp950
+VGear Grind
+p951
+aVThunder Wave
+p952
+aVScreech
+p953
+aVVolt Switch
+p954
+asg41
+VShuca Berry
+p955
+sg43
+VPlus
+p956
+sbag1
+(g24
+g3
+Ntp957
+Rp958
+(dp959
+g28
+I601
+sg29
+VKlinklang
+p960
+sg31
+g32
+sg33
+V50
+p961
+sg35
+(lp962
+VFlash Cannon
+p963
+aVThunderbolt
+p964
+aVProtect
+p965
+aVToxic
+p966
+asg41
+VSteel Gem
+p967
+sg43
+VPlus
+p968
+sbag1
+(g24
+g3
+Ntp969
+Rp970
+(dp971
+g28
+I604
+sg29
+VEelektross
+p972
+sg31
+g32
+sg33
+V50
+p973
+sg35
+(lp974
+VCharge Beam
+p975
+aVGrass Knot
+p976
+aVFlamethrower
+p977
+aVProtect
+p978
+asg41
+VLeftovers
+p979
+sg43
+VLevitate
+p980
+sbag1
+(g24
+g3
+Ntp981
+Rp982
+(dp983
+g28
+I609
+sg29
+VChandelure
+p984
+sg31
+g32
+sg33
+V50
+p985
+sg35
+(lp986
+VEnergy Ball
+p987
+aVRest
+p988
+aVHeat Wave
+p989
+aVWill-O-Wisp
+p990
+asg41
+VChesto Berry
+p991
+sg43
+VFlash Fire
+p992
+sbag1
+(g24
+g3
+Ntp993
+Rp994
+(dp995
+g28
+I609
+sg29
+VChandelure
+p996
+sg31
+g32
+sg33
+V50
+p997
+sg35
+(lp998
+VCalm Mind
+p999
+aVWill-O-Wisp
+p1000
+aVShadow Ball
+p1001
+aVHeat Wave
+p1002
+asg41
+VLeftovers
+p1003
+sg43
+VFlash Fire
+p1004
+sbag1
+(g24
+g3
+Ntp1005
+Rp1006
+(dp1007
+g28
+I617
+sg29
+VAccelgor
+p1008
+sg31
+g32
+sg33
+V50
+p1009
+sg35
+(lp1010
+VBug Buzz
+p1011
+aVEncore
+p1012
+aVFocus Blast
+p1013
+aVProtect
+p1014
+asg41
+VFocus Sash
+p1015
+sg43
+VHydration
+p1016
+sbag1
+(g24
+g3
+Ntp1017
+Rp1018
+(dp1019
+g28
+I620
+sg29
+VMienshao
+p1020
+sg31
+g32
+sg33
+V50
+p1021
+sg35
+(lp1022
+VFeint
+p1023
+aVFake Out
+p1024
+aVHi Jump Kick
+p1025
+aVWide Guard
+p1026
+asg41
+VMuscle Band
+p1027
+sg43
+VInner Focus
+p1028
+sbag1
+(g24
+g3
+Ntp1029
+Rp1030
+(dp1031
+g28
+I630
+sg29
+VMandibuzz
+p1032
+sg31
+g816
+sg33
+V50
+p1033
+sg35
+(lp1034
+VTaunt
+p1035
+aVFlatter
+p1036
+aVRoost
+p1037
+aVToxic
+p1038
+asg41
+VWacan Berry
+p1039
+sg43
+VBig Pecks
+p1040
+sbag1
+(g24
+g3
+Ntp1041
+Rp1042
+(dp1043
+g28
+I630
+sg29
+VMandibuzz
+p1044
+sg31
+g816
+sg33
+V50
+p1045
+sg35
+(lp1046
+VNasty Plot
+p1047
+aVDark Pulse
+p1048
+aVAir Slash
+p1049
+aVIncinerate
+p1050
+asg41
+VSitrus Berry
+p1051
+sg43
+VBig Pecks
+p1052
+sbag1
+(g24
+g3
+Ntp1053
+Rp1054
+(dp1055
+g28
+I630
+sg29
+VMandibuzz
+p1056
+sg31
+g816
+sg33
+V50
+p1057
+sg35
+(lp1058
+VSubstitute
+p1059
+aVSwagger
+p1060
+aVPunishment
+p1061
+aVRoost
+p1062
+asg41
+VLeftovers
+p1063
+sg43
+VBig Pecks
+p1064
+sbag1
+(g24
+g3
+Ntp1065
+Rp1066
+(dp1067
+g28
+I632
+sg29
+VDurant
+p1068
+sg31
+g32
+sg33
+V50
+p1069
+sg35
+(lp1070
+VDig
+p1071
+aVIron Defense
+p1072
+aVAgility
+p1073
+aVBaton Pass
+p1074
+asg41
+VPower Herb
+p1075
+sg43
+VSwarm
+p1076
+sbag1
+(g24
+g3
+Ntp1077
+Rp1078
+(dp1079
+g28
+I632
+sg29
+VDurant
+p1080
+sg31
+g32
+sg33
+V50
+p1081
+sg35
+(lp1082
+VEntrainment
+p1083
+aVX-Scissor
+p1084
+aVIron Head
+p1085
+aVProtect
+p1086
+asg41
+VFocus Sash
+p1087
+sg43
+VSwarm
+p1088
+sbasg69
+I01
+sg70
+g682
+sba.

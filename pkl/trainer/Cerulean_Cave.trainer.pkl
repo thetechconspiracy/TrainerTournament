@@ -1,0 +1,253 @@
+(lp0
+ccopy_reg
+_reconstructor
+p1
+(c__main__
+Trainer
+p2
+c__builtin__
+object
+p3
+Ntp4
+Rp5
+(dp6
+VtSprite
+p7
+VVSGreen PE.png
+p8
+sVtClass
+p9
+VPokémon Trainer
+p10
+sVtName
+p11
+VGreen (game)
+p12
+sVtMoney
+p13
+V19,040
+p14
+sVtPokeCount
+p15
+I6
+sVtLocation
+p16
+Vwiki/Cerulean_Cave
+p17
+sVtRegion
+p18
+VKanto
+p19
+sVtGame
+p20
+VLGPE
+p21
+sVtPokes
+p22
+(lp23
+g1
+(c__main__
+FinishedPokemon
+p24
+g3
+Ntp25
+Rp26
+(dp27
+VpDexNo
+p28
+I36
+sVpSpecies
+p29
+VClefable
+p30
+sVpGender
+p31
+VF
+p32
+sVpLevel
+p33
+V66
+p34
+sVpMoves
+p35
+(lp36
+VMoonblast
+p37
+aVLight Screen
+p38
+aVReflect
+p39
+aVTri Attack
+p40
+asVpHold
+p41
+V
+p42
+sVpAbility
+p43
+Vmagic-guard
+p44
+sbag1
+(g24
+g3
+Ntp45
+Rp46
+(dp47
+g28
+I94
+sg29
+VGengar
+p48
+sg31
+VM
+p49
+sg33
+V66
+p50
+sg35
+(lp51
+VDark Pulse
+p52
+aVShadow Ball
+p53
+aVSludge Bomb
+p54
+aVWill-O-Wisp
+p55
+asg41
+g42
+sg43
+Vcursed-body
+p56
+sbag1
+(g24
+g3
+Ntp57
+Rp58
+(dp59
+g28
+I71
+sg29
+VVictreebel
+p60
+sg31
+g49
+sg33
+V66
+p61
+sg35
+(lp62
+VPower Whip
+p63
+aVPoison Jab
+p64
+aVSucker Punch
+p65
+aVLeech Life
+p66
+asg41
+g42
+sg43
+Vchlorophyll
+p67
+sbag1
+(g24
+g3
+Ntp68
+Rp69
+(dp70
+g28
+I38
+sg29
+VNinetales
+p71
+sg31
+g32
+sg33
+V66
+p72
+sg35
+(lp73
+VFire Blast
+p74
+aVDark Pulse
+p75
+aVFoul Play
+p76
+aVHyper Beam
+p77
+asg41
+g42
+sg43
+Vflash-fire
+p78
+sbag1
+(g24
+g3
+Ntp79
+Rp80
+(dp81
+g28
+I115
+sg29
+VKangaskhan
+p82
+sg31
+g32
+sg33
+V66
+p83
+sg35
+(lp84
+VDizzy Punch
+p85
+aVSucker Punch
+p86
+aVThunder Punch
+p87
+aVBrick Break
+p88
+asg41
+g42
+sg43
+Vearly-bird
+p89
+sbag1
+(g24
+g3
+Ntp90
+Rp91
+(dp92
+g28
+I9
+sg29
+VBlastoise
+p93
+sg31
+g49
+sg33
+V68
+p94
+sg35
+(lp95
+VHydro Pump
+p96
+aVFlash Cannon
+p97
+aVIce Beam
+p98
+aVFake Out
+p99
+asg41
+g42
+sg43
+Vtorrent
+p100
+sbasVbossFlag
+p101
+I01
+sVtLongGame
+p102
+Vsun-moon
+p103
+sba.
