@@ -1,9 +1,6 @@
 UnovaRt3.txt
-*.pkl
 *.csv
-json/*
 wiki/*
 sprites/*
-pkl/*
 *.txt
 ~$*
